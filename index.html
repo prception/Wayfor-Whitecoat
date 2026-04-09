@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WayFor Whitecoat - Global Journey</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- external css -->
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/new.css">
+    <link rel="stylesheet" href="assets/css/navfoot.css">
+</head>
+<body>
+    <main>
+    <header id="navbar-placeholder"></header>
+    
+    <!-- Master pinned container -->
+    <section id="pinned-container">
+        
+        <!-- Background element to animate colors -->
+        <div class="dynamic-bg"></div>
+
+        <!-- WebGL Canvas -->
+        <div class="webgl-container">
+            <canvas id="webgl-canvas"></canvas>
+            
+            <!-- Pin Overlays (HTML layered on top of 3D) -->
+            <div id="html-pins-container">
+                <div class="country-pin" id="pin-russia"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>Russia</span></div>
+                <div class="country-pin" id="pin-kazakhstan"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>Kazakhstan</span></div>
+                <div class="country-pin" id="pin-uzbekistan"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>Uzbekistan</span></div>
+                <div class="country-pin" id="pin-kyrgyzstan"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>Kyrgyzstan</span></div>
+                <div class="country-pin" id="pin-georgia"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>Georgia</span></div>
+                <div class="country-pin" id="pin-egypt"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>EGYPT</span></div>
+                <div class="country-pin" id="pin-tajikistan"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>TAJIKISTAN</span></div>
+                <div class="country-pin" id="pin-bangladesh"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>Bangladesh</span></div>
+                <div class="country-pin" id="pin-nepal"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg><span>Nepal</span></div>
+            </div>
+        </div>
+
+        <!-- UI Layers -->
+        <div class="ui-layer">
+            <!-- Phase 1 Content -->
+            <div class="content-block left-aligned initial-text">
+                <h1 class="image-hero-title fw-bold mb-4">Unlock The Door To Your <br class="d-none d-lg-block">New Medical Career.</h1>
+                <p class="image-hero-subtitle mb-5 fs-5">We'll help you find the key to your dream university. Experience the joy of achieving your medical degree. Let us make your admission journey simple.</p>
+                
+                <div class="d-flex flex-wrap align-items-center gap-4 mt-2">
+                    <a href="#contact" class="btn-primary-pill text-nowrap rounded-pill text-decoration-none shadow-sm fw-bold px-4 py-3">GET STARTED</a>
+                    <a href="#video" class="btn-play d-flex align-items-center text-decoration-none">
+                        <span class="play-icon d-flex align-items-center justify-content-center me-3 border rounded-circle border-dark">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        </span>
+                        <span class="fw-bold">Watch Video</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Phase 2 Content -->
+            <div class="content-block final-text w-100 h-100 d-flex align-items-center justify-content-between px-4 px-lg-5">
+                
+                <!-- Subheading at completely top of section -->
+                <div class="final-text-header">
+                    <h2 class="glass-text">Top Destinations</h2>
+                    <p class="light-para">Explore globally recognized universities waiting for you.</p>
+                </div>
+
+                <!-- Left side: Description and CTA -->
+                <div class="country-info ps-lg-5">
+                    <div class="globe-detail-badge mb-3 d-inline-block px-3 py-1 rounded-pill">Featured Destination</div>
+                    <h3 id="country-title" class="fw-bold mb-3 display-5">Russia</h3>
+                    <p id="country-desc" class="mb-4 text-white p-0 m-0">Experience world-class medical education with advanced facilities and highly affordable tuition fees.</p>
+                    <div class="mt-4">
+                        <a href="#contact" class="btn btn-outline-light rounded-pill px-4 py-2 me-2 btn-thick-border">View Details</a>
+                    </div>
+                </div>
+
+                <!-- Right side: Vertical Carousel -->
+                <div class="country-carousel pe-lg-5 d-none d-md-block">
+                    <div class="carousel-title text-end mb-4 text-white-50 small text-uppercase fw-bold">Select Country</div>
+                    <div class="vertical-carousel-container position-relative" id="country-scroll-container">
+                        <ul class="country-list list-unstyled m-0 p-0 text-end" id="country-list">
+                            <!-- Items generated dynamically or static -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+      <!-- ==============================================
+             ABOUT SECTION
+        =============================================== -->
+        <section class="about-section bg-white position-relative" id="about">
+            <div class="about-section-fade w-100"></div>
+            <div class="container py-5">
+                <div class="row align-items-center g-5">
+                    <!-- Left Side: Typography & Text -->
+                    <div class="col-lg-6">
+                        <span class="about-subtitle text-uppercase fw-bold mb-2 d-block">Who We Are</span>
+                        <h2 class="about-title display-4 fw-bold text-dark mb-4">Guiding Your Journey to Medical Excellence.</h2>
+                        <p class="about-text fs-5 text-secondary mb-4">
+                            At WayFor Whitecoat, we believe that becoming a doctor is a calling, not just a career. Our mission is to simplify the complex journey of medical admissions for aspiring students worldwide. 
+                        </p>
+                        <p class="about-text-small text-secondary mb-4">
+                            With years of expertise, transparent guidance, and deep partnerships with globally recognized medical universities, we provide an end-to-end admission ecosystem. From your first consultation to your graduation day, we stand by you.
+                        </p>
+                        
+                        <div class="d-flex align-items-center gap-4 mt-5">
+                            <div>
+                                <h3 class="about-stat-number fw-bold text-dark mb-0 fs-1">10+</h3>
+                                <span class="about-stat-label text-secondary small fw-medium">Years Experience</span>
+                            </div>
+                            <div class="about-divider bg-secondary opacity-25"></div>
+                            <div>
+                                <h3 class="about-stat-number fw-bold text-dark mb-0 fs-1">5000+</h3>
+                                <span class="about-stat-label text-secondary small fw-medium">Students Placed</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Right Side: Modern Geometric Element / Image Placeholder -->
+                    <div class="col-lg-6">
+                        <div class="position-relative p-4 mt-4 mt-lg-0">
+                            <!-- Background accent shape -->
+                            <div class="about-accent-shape position-absolute rounded-circle"></div>
+                            
+                            <!-- Simple photo or illustration slot -->
+                            <div class="about-image-wrapper position-relative z-1 rounded-4 overflow-hidden shadow-lg">
+                                <img src="https://i.pinimg.com/736x/2a/18/e5/2a18e5eef76d32c74ea55737767f944f.jpg" alt="Medical students studying" class="w-100 h-100 object-fit-cover transition-scale">
+                            </div>
+                            
+                            <!-- Floating badge -->
+                            <div class="about-floating-badge position-absolute bottom-0 start-0 translate-middle-y bg-white rounded-3 shadow p-4 z-2">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="about-badge-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold text-dark mb-1 d-block">Authorized Partner</h6>
+                                        <span class="text-secondary small">Top Universities</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+     <!-- ==============================================
+             CONTACT SECTION
+        =============================================== -->
+        <section class="contact-section position-relative py-5 min-vh-100 d-flex align-items-center" id="contact">
+            <!-- Liquid Glass Background -->
+            <div class="contact-bg-shapes">
+                <div class="contact-shape contact-shape-1"></div>
+                <div class="contact-shape contact-shape-2"></div>
+                <div class="contact-shape contact-shape-3"></div>
+            </div>
+
+            <div class="container position-relative z-1 py-5">
+                <div class="row align-items-center g-5">
+                    <!-- Left Content -->
+                    <div class="col-lg-6 contact-content pe-lg-5">
+                        <div class="urgency-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-white border-opacity-10 mb-4">
+                            <span class="pulse-dot rounded-circle bg-secondary d-inline-block shadow-sm" style="width: 8px; height: 8px;"></span> 
+                            <span class="text-secondary fw-semibold small">Admissions Open 2026</span>
+                        </div>
+                        
+                        <h2 class="contact-title display-5 fw-bold mb-4 text-white">
+                            Ready to Secure Your <br>
+                            <span class="highlight-text d-inline-block">MBBS Seat?</span>
+                        </h2>
+                        
+                        <p class="contact-subtitle text-secondary fs-5 mb-5 pe-lg-4">
+                            Get free expert counseling today. Let us handle the admission complexities while you focus on becoming a great doctor.
+                        </p>
+                        
+                        <div class="mb-5">
+                            <button class="btn btn-secondary glass-btn px-4 py-3 border border-white border-opacity-25 rounded-3 fw-bold text-white shadow-sm d-inline-flex align-items-center gap-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                                WhatsApp Us Instead
+                            </button>
+                        </div>
+
+                        <div class="row g-4 mb-5 trust-indicators fw-medium">
+                            <div class="col-sm-6 d-flex align-items-center gap-2 text-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                                Free Consultation
+                            </div>
+                            <div class="col-sm-6 d-flex align-items-center gap-2 text-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                                Visa Assistance
+                            </div>
+                            <div class="col-sm-6 d-flex align-items-center gap-2 text-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                                Airport Pickup
+                            </div>
+                            <div class="col-sm-6 d-flex align-items-center gap-2 text-light">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+                                End-to-End Support
+                            </div>
+                        </div>
+
+                        <div class="destination-options">
+                            <span class="text-secondary fw-semibold d-block mb-3">Popular Destinations</span>
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge border border-secondary text-light rounded-pill px-3 py-2 fw-medium tag">🇷🇺 Russia</span>
+                                <span class="badge border border-secondary text-light rounded-pill px-3 py-2 fw-medium tag">🇰🇿 Kazakhstan</span>
+                                <span class="badge border border-secondary text-light rounded-pill px-3 py-2 fw-medium tag">🇺🇿 Uzbekistan</span>
+                                <span class="badge border border-secondary text-light rounded-pill px-3 py-2 fw-medium tag">🇬🇪 Georgia</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Form -->
+                    <div class="col-lg-6 ps-lg-4 mt-5 mt-lg-0">
+                        <div class="glass-form p-4 p-md-5 rounded-4 border border-white border-opacity-10 shadow-lg">
+                            <h3 class="fw-bold mb-2 text-white fs-3">Secure Your Seat</h3>
+                            <p class="text-secondary mb-4 pb-2">Check your eligibility instantly</p>
+                            <form action="#" method="POST">
+                                <div class="mb-4">
+                                    <label for="name" class="form-label text-light fw-medium mb-2 w-100 text-start">Full Name</label>
+                                    <input type="text" id="name" name="name" class="form-control bg-dark bg-opacity-25 border-white border-opacity-10 text-white py-3 rounded-3 shadow-none custom-input" placeholder="Enter your full name" required>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <label for="phone" class="form-label text-light fw-medium mb-2 w-100 text-start">Phone Number</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-dark bg-opacity-25 border-white border-opacity-10 border-end-0 text-secondary fw-medium px-3">+91</span>
+                                        <input type="tel" id="phone" name="phone" class="form-control bg-dark bg-opacity-25 border-white border-opacity-10 text-white py-3 border-start-0 rounded-end-3 shadow-none custom-input" placeholder="Enter your mobile number" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-4 pb-2">
+                                    <label for="neet" class="form-label text-light fw-medium mb-2 w-100 text-start">NEET Status</label>
+                                    <select id="neet" name="neet" class="form-select bg-dark bg-opacity-25 border-white border-opacity-10 text-light py-3 rounded-3 shadow-none custom-input" required>
+                                        <option value="" disabled selected>Select NEET status</option>
+                                        <option value="qualified" class="bg-dark text-white">Qualified</option>
+                                        <option value="not_qualified" class="bg-dark text-white">Not Qualified</option>
+                                        <option value="appearing_2026" class="bg-dark text-white">Appearing in 2026</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn-submit">Get Free Consultation</button>
+                            </form>
+                            
+                            <div class="d-flex align-items-center justify-content-center gap-2 mt-4 pt-2 text-secondary small fw-medium">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                100% Secure & Confidential
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- external js -->
+    <script src="assets/js/navfoot.js"></script>
+    <script src="assets/js/new.js"></script>
+</body>
+</html>
