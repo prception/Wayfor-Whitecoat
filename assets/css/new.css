@@ -18,6 +18,99 @@ body {
     background: #020617; /* Matches contact section to prevent 1px sub-pixel bleed */
 }
 
+/* ==================================================
+   PREMIUM PRELOADER
+================================================== */
+.premium-preloader {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    background: #ffffff; /* pure white for contrast */
+    z-index: 99999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.preloader-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* SVG Animations */
+.medical-globe-svg {
+    overflow: visible;
+}
+
+.medical-globe-svg .globe-lines {
+    opacity: 0;
+    animation: fadeInLines 1s ease-in-out 0.8s forwards;
+}
+
+.medical-globe-svg .globe-outline {
+    stroke-dasharray: 277;
+    stroke-dashoffset: 277;
+    animation: drawPath 1.2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.medical-globe-svg .ecg-line {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: drawPath 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0.4s forwards;
+}
+
+@keyframes drawPath {
+    to { stroke-dashoffset: 0; }
+}
+
+@keyframes fadeInLines {
+    to { opacity: 0.5; }
+}
+
+/* Text & Progress */
+.preloader-text-wrap {
+    text-align: center;
+    opacity: 0;
+    animation: fadeInText 0.8s ease forwards 1.2s;
+}
+
+.preloader-brand {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #041a3b;
+    letter-spacing: -0.5px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+.progress-bar-container {
+    width: 140px;
+    height: 3px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: #2563eb;
+    animation: progressFill 2s ease-in-out forwards;
+}
+
+@keyframes progressFill {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+@keyframes fadeInText {
+    to { opacity: 1; transform: translateY(0); }
+}
+
 /* Master Pin Container */
 #pinned-container {
     position: relative;
@@ -30,7 +123,7 @@ body {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: var(--white-bg);
+    background: rgb(232, 238, 255);
     z-index: 0;
 }
 
@@ -47,7 +140,7 @@ body {
 /* UI Layer */
 .ui-layer {
     position: absolute;
-    top: 0; left: 0;
+    top: 0; left: 0; right: 0;
     width: 100%; height: 100%;
     z-index: 2;
     pointer-events: none;
@@ -57,7 +150,7 @@ body {
 
 .content-block {
     position: absolute;
-    padding: 0 10%;
+    left: 0; right: 0; margin: 0 auto;
     width: 100%;
     box-sizing: border-box;
     pointer-events: none; /* Make clicks pass through to the globe */
@@ -65,8 +158,8 @@ body {
 
 .initial-text {
     text-align: left;
-    max-width: 1100px;
     top: 35%;
+    padding: 0 10px;
 }
 
 .final-text {
@@ -78,7 +171,7 @@ body {
 
 .final-text-header {
     position: absolute;
-    top: 15%;
+    top: 8%;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -88,7 +181,7 @@ body {
 
 /* Phase 1 & 2 Restored Inline Styles */
 .image-hero-title, .btn-play { color: var(--primary-blue); pointer-events: auto; }
-.image-hero-subtitle { color: var(--text-gray-dark); pointer-events: none;}
+.image-hero-subtitle { color: var(--text-gray-dark); pointer-events: none; width: 700px;}
 .btn-primary-pill { background: var(--primary-blue); color: white; border: none; pointer-events: auto; }
 .btn-primary-pill:hover { color: white; }
 .country-info { pointer-events: auto; max-width: 380px; text-align: left; }
@@ -849,4 +942,298 @@ select.form-control option {
         margin-left: 0;
         margin-bottom: -30px;
     }
+}
+
+/* ========== PREMIUM GLASS BUTTON SYSTEM ========== */
+@property --angle-1 {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: -75deg;
+}
+
+@property --angle-2 {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: -45deg;
+}
+
+.button-wrap {
+  --global--size: clamp(2rem, 4vw, 5rem);
+  --anim--hover-time: 400ms;
+  --anim--hover-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  position: relative;
+  z-index: 2;
+  border-radius: 999vw;
+  background: transparent;
+  pointer-events: none;
+  transition: all var(--anim--hover-time) var(--anim--hover-ease);
+  display: inline-block; /* ensure it wraps content tightly */
+}
+
+/* Button Shadow Container */
+.button-shadow {
+  --shadow-cuttoff-fix: 2em;
+  position: absolute;
+  width: calc(100% + var(--shadow-cuttoff-fix));
+  height: calc(100% + var(--shadow-cuttoff-fix));
+  top: calc(0% - var(--shadow-cuttoff-fix) / 2);
+  left: calc(0% - var(--shadow-cuttoff-fix) / 2);
+  filter: blur(clamp(2px, 0.125em, 12px));
+  -webkit-filter: blur(clamp(2px, 0.125em, 12px));
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Shadow */
+.button-shadow::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: 999vw;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.1));
+  width: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+  height: calc(100% - var(--shadow-cuttoff-fix) - 0.25em);
+  top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+  left: calc(var(--shadow-cuttoff-fix) - 0.875em);
+  padding: 0.125em;
+  box-sizing: border-box;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  transition: all var(--anim--hover-time) var(--anim--hover-ease);
+  overflow: visible;
+  opacity: 1;
+}
+
+/* ========== BUTTON BASE STYLES ========== */
+.premium-glass-btn {
+  --border-width: clamp(1px, 0.0625em, 4px);
+  all: unset;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  pointer-events: auto;
+  z-index: 3;
+  background: linear-gradient(
+    -75deg,
+    rgba(255, 255, 255, 0.5),
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.5)
+  );
+  border-radius: 999vw;
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+    0 0 0 0 rgba(255, 255, 255, 1);
+  backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  transition: all var(--anim--hover-time) var(--anim--hover-ease);
+  display: block; /* So it wraps span correctly */
+  text-decoration: none !important;
+}
+
+.premium-glass-btn:hover {
+  transform: scale(0.975);
+  backdrop-filter: blur(0.01em);
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
+    0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5),
+    0 0 0 0 rgba(255, 255, 255, 1);
+}
+
+/* Button Text */
+.premium-glass-btn > span {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-family: inherit;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #041a3b;
+  text-shadow: 0em 0.25em 0.05em rgba(0, 0, 0, 0.1);
+  transition: all var(--anim--hover-time) var(--anim--hover-ease);
+  padding-inline: 1.5em;
+  padding-block: 0.875em;
+  white-space: nowrap;
+}
+
+.premium-glass-btn:hover > span {
+  text-shadow: 0.025em 0.025em 0.025em rgba(0, 0, 0, 0.12);
+}
+
+/* Shine overlay */
+.premium-glass-btn > span::after {
+  content: "";
+  display: block;
+  position: absolute;
+  z-index: 1;
+  width: calc(100% - var(--border-width));
+  height: calc(100% - var(--border-width));
+  top: calc(0% + var(--border-width) / 2);
+  left: calc(0% + var(--border-width) / 2);
+  box-sizing: border-box;
+  border-radius: 999vw;
+  overflow: clip;
+  background: linear-gradient(
+    var(--angle-2),
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.5) 40% 50%,
+    rgba(255, 255, 255, 0) 55%
+  );
+  z-index: 3;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  transition:
+    background-position calc(var(--anim--hover-time) * 1.25) var(--anim--hover-ease),
+    --angle-2 calc(var(--anim--hover-time) * 1.25) var(--anim--hover-ease);
+}
+
+.premium-glass-btn:hover > span::after {
+  background-position: 25% 50%;
+}
+
+.premium-glass-btn:active > span::after {
+  background-position: 50% 15%;
+  --angle-2: -15deg;
+}
+
+/* Outline Profile */
+.premium-glass-btn::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: 999vw;
+  width: calc(100% + var(--border-width));
+  height: calc(100% + var(--border-width));
+  top: calc(0% - var(--border-width) / 2);
+  left: calc(0% - var(--border-width) / 2);
+  padding: var(--border-width);
+  box-sizing: border-box;
+  background: conic-gradient(
+      from var(--angle-1) at 50% 50%,
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0) 5% 40%,
+      rgba(255, 255, 255, 0.8) 50%,
+      rgba(255, 255, 255, 0) 60% 95%,
+      rgba(255, 255, 255, 0.5)
+    ),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  -webkit-mask-composite: xor;
+  transition: all var(--anim--hover-time) var(--anim--hover-ease), --angle-1 500ms ease;
+  box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255, 255, 255, 0.5);
+}
+
+.premium-glass-btn:hover::after {
+  --angle-1: -125deg;
+}
+
+.premium-glass-btn:active::after {
+  --angle-1: -75deg;
+}
+
+/* Shadow Hover */
+.button-wrap:has(.premium-glass-btn:hover) .button-shadow {
+  filter: blur(clamp(2px, 0.0625em, 6px));
+  -webkit-filter: blur(clamp(2px, 0.0625em, 6px));
+}
+
+.button-wrap:has(.premium-glass-btn:hover) .button-shadow::after {
+  top: calc(var(--shadow-cuttoff-fix) - 0.875em);
+  opacity: 1;
+}
+
+/* Rotation */
+.button-wrap:has(.premium-glass-btn:active) {
+  transform: rotate3d(1, 0, 0, 25deg);
+}
+
+.button-wrap:has(.premium-glass-btn:active) .premium-glass-btn {
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.125em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+    0 0.225em 0.05em 0 rgba(0, 0, 0, 0.05),
+    0 0.25em 0 0 rgba(255, 255, 255, 0.75),
+    inset 0 0.25em 0.05em 0 rgba(0, 0, 0, 0.15);
+}
+
+.button-wrap:has(.premium-glass-btn:active) .button-shadow {
+  filter: blur(clamp(2px, 0.125em, 12px));
+}
+
+.button-wrap:has(.premium-glass-btn:active) .button-shadow::after {
+  top: calc(var(--shadow-cuttoff-fix) - 0.5em);
+  opacity: 0.75;
+}
+
+.button-wrap:has(.premium-glass-btn:active) > span {
+  text-shadow: 0.025em 0.25em 0.05em rgba(0, 0, 0, 0.12);
+}
+
+/* Dark theme specific override */
+.dark-theme-btn .premium-glass-btn > span {
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+}
+.dark-theme-btn .premium-glass-btn {
+    background: linear-gradient(-75deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05));
+    box-shadow: inset 0 0.125em 0.125em rgba(255, 255, 255, 0.1), 
+                inset 0 -0.125em 0.125em rgba(0, 0, 0, 0.5), 
+                0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.5), 
+                0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.1), 
+                0 0 0 0 rgba(0, 0, 0, 1);
+}
+
+/* ==================================================
+   SWEEPING SHINE HOVER EFFECT (Buttons & Navbar)
+================================================== */
+.premium-glass-btn::before,
+.liquid-navbar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit; /* Matches pill shape exactly */
+    background: linear-gradient(
+        110deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0) 40%,
+        rgba(255, 255, 255, 0.6) 50%,
+        rgba(255, 255, 255, 0) 60%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 250% 100%;
+    background-position: 150% 0;
+    transition: background-position 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    pointer-events: none;
+}
+
+/* Specific z-index adjustments so shine is above bg but below content */
+.premium-glass-btn::before {
+    z-index: 1; /* Below text (z-index 3) */
+}
+.liquid-navbar::after {
+    z-index: 0; /* Below navbar content */
+}
+
+/* Fire animations on hover! */
+.premium-glass-btn:hover::before,
+.liquid-navbar:hover::after {
+    background-position: -50% 0;
 }

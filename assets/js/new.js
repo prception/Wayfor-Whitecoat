@@ -157,7 +157,7 @@ const tl = gsap.timeline({
 // A. Move globe to center and push it lower down
 tl.to(globeGroup.position, {
     x: 0, 
-    y: -1.2, // Pushed further down to make plenty of room for "Top Destinations"
+    y: -0.8, // Raised up slightly compared to before
     z: 0,
     duration: 1,
     ease: "power2.inOut"
@@ -337,3 +337,40 @@ setTimeout(() => {
     detectCenterItem();
     resetAutoScroll();
 }, 500);
+
+// ==============================================
+// 7. Preloader Logic & GSAP Entrance Animations
+// ==============================================
+
+// Set up the entrance timeline in paused state so it hides elements immediately
+const introTl = gsap.timeline({ paused: true });
+
+introTl.from(globeGroup.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 2.5, ease: "power3.out" }, 0.2)
+       .from("#navbar-placeholder", { y: -30, opacity: 0, duration: 1.5, ease: "power3.out" }, 0.5)
+       .from(".image-hero-title", { y: 40, opacity: 0, duration: 1.5, ease: "power3.out" }, 0.7)
+       .from(".image-hero-subtitle", { y: 30, opacity: 0, duration: 1.5, ease: "power3.out" }, 0.9)
+       .from(".initial-text > div", { y: 20, opacity: 0, duration: 1, ease: "power2.out" }, 1.1);
+
+window.addEventListener('load', () => {
+    const preloader = document.getElementById('preloader');
+    if (preloader) {
+        // Wait for 3D textures and buffering to completely clear
+        setTimeout(() => {
+            // Fade out preloader
+            gsap.to(preloader, {
+                opacity: 0,
+                duration: 2.5,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    preloader.style.display = 'none';
+                }
+            });
+            
+            // Simultaneously play entrance animations so elements rise beautifully
+            introTl.play();
+            
+        }, 1500);
+    } else {
+        introTl.play();
+    }
+});

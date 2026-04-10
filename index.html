@@ -24,6 +24,30 @@
     <link rel="stylesheet" href="assets/css/navfoot.css">
 </head>
 <body>
+    <!-- Premium Preloader -->
+    <div id="preloader" class="premium-preloader">
+        <div class="preloader-inner">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120" class="medical-globe-svg">
+                <!-- Soft longitudes -->
+                <ellipse class="globe-lines" cx="50" cy="50" rx="18" ry="44" fill="none" stroke="#cbd5e1" stroke-width="1.5" />
+                <line class="globe-lines" x1="50" y1="6" x2="50" y2="94" stroke="#cbd5e1" stroke-width="1.5" />
+                
+                <!-- Outer circle -->
+                <circle class="globe-outline" cx="50" cy="50" r="44" fill="none" stroke="#041a3b" stroke-width="2.5" />
+                
+                <!-- ECG / Heartbeat Equator -->
+                <path class="ecg-line" d="M -5,50 L 25,50 L 35,25 L 48,80 L 60,35 L 70,50 L 105,50" fill="none" stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            
+            <div class="preloader-text-wrap mt-4">
+                <span class="preloader-brand">WayFor<span class="fw-medium" style="color: #2563eb">Whitecoat</span></span>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <main>
     <header id="navbar-placeholder"></header>
     
@@ -54,18 +78,27 @@
         <!-- UI Layers -->
         <div class="ui-layer">
             <!-- Phase 1 Content -->
-            <div class="content-block left-aligned initial-text">
-                <h1 class="image-hero-title fw-bold mb-4">Unlock The Door To Your <br class="d-none d-lg-block">New Medical Career.</h1>
+            <div class="container content-block left-aligned initial-text">
+                <h1 class="image-hero-title fw-bold mb-4">The Door To Your <br class="d-none d-lg-block">New Medical Career.</h1>
                 <p class="image-hero-subtitle mb-5 fs-5">We'll help you find the key to your dream university. Experience the joy of achieving your medical degree. Let us make your admission journey simple.</p>
                 
                 <div class="d-flex flex-wrap align-items-center gap-4 mt-2">
-                    <a href="#contact" class="btn-primary-pill text-nowrap rounded-pill text-decoration-none shadow-sm fw-bold px-4 py-3">GET STARTED</a>
-                    <a href="#video" class="btn-play d-flex align-items-center text-decoration-none">
-                        <span class="play-icon d-flex align-items-center justify-content-center me-3 border rounded-circle border-dark">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                        </span>
-                        <span class="fw-bold">Watch Video</span>
-                    </a>
+                    <div class="button-wrap">
+                        <a href="#contact" class="premium-glass-btn">
+                            <span>GET STARTED</span>
+                        </a>
+                        <div class="button-shadow"></div>
+                    </div>
+                    
+                    <div class="button-wrap">
+                        <a href="#video" class="premium-glass-btn">
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                                Watch Video
+                            </span>
+                        </a>
+                        <div class="button-shadow"></div>
+                    </div>
                 </div>
             </div>
 
@@ -84,7 +117,12 @@
                     <h3 id="country-title" class="fw-bold mb-3 display-5">Russia</h3>
                     <p id="country-desc" class="mb-4 text-white p-0 m-0">Experience world-class medical education with advanced facilities and highly affordable tuition fees.</p>
                     <div class="mt-4">
-                        <a href="#contact" class="btn btn-outline-light rounded-pill px-4 py-2 me-2 btn-thick-border">View Details</a>
+                        <div class="button-wrap dark-theme-btn">
+                            <a href="#contact" class="premium-glass-btn">
+                                <span>View Details</span>
+                            </a>
+                            <div class="button-shadow"></div>
+                        </div>
                     </div>
                 </div>
 
@@ -192,10 +230,15 @@
                         </p>
                         
                         <div class="mb-5">
-                            <button class="btn btn-secondary glass-btn px-4 py-3 border border-white border-opacity-25 rounded-3 fw-bold text-white shadow-sm d-inline-flex align-items-center gap-2">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
-                                WhatsApp Us Instead
-                            </button>
+                            <div class="button-wrap dark-theme-btn">
+                                <button class="premium-glass-btn">
+                                    <span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="me-2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+                                        WhatsApp Us Instead
+                                    </span>
+                                </button>
+                                <div class="button-shadow"></div>
+                            </div>
                         </div>
 
                         <div class="row g-4 mb-5 trust-indicators fw-medium">
@@ -256,7 +299,12 @@
                                         <option value="appearing_2026" class="bg-dark text-white">Appearing in 2026</option>
                                     </select>
                                 </div>
-                                <button type="submit" class="btn-submit">Get Free Consultation</button>
+                                <div class="button-wrap dark-theme-btn w-100 mt-2">
+                                    <button type="submit" class="premium-glass-btn w-100 text-center" style="display:block;">
+                                        <span class="w-100 text-center" style="display:block;">Get Free Consultation</span>
+                                    </button>
+                                    <div class="button-shadow"></div>
+                                </div>
                             </form>
                             
                             <div class="d-flex align-items-center justify-content-center gap-2 mt-4 pt-2 text-secondary small fw-medium">
