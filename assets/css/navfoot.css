@@ -224,3 +224,25 @@
     .mobile-toggle { display: block; }
     .nav-container { padding: 14px 20px; }
 }
+
+/* ==================================================
+   PREMIUM FOOTER
+================================================== */
+.premium-footer {
+    background-color: #020617; /* Very Dark Blue matches Phase 2 */
+    color: #f8fafc;
+    border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+.premium-footer .hover-white:hover {
+    color: #fff !important;
+}
+
+.premium-footer .hover-scale:hover {
+    transform: scale(1.1);
+    background-color: rgba(255,255,255,0.2) !important;
+}
+
+.premium-footer .custom-placeholder::placeholder {
+    color: rgba(255,255,255,0.4);
+}

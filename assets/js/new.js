@@ -42,7 +42,7 @@ scene.add(globeGroup);
 // Initial Position (right side on desktop, slightly lower)
 const initialX = sizes.width > 768 ? 2.5 : 0;
 // Note: initial rotation shows back of globe, we will spin it to Asia during scroll
-globeGroup.position.set(initialX, -0.8, 0); 
+globeGroup.position.set(initialX, -0.6, 0); 
 globeGroup.rotation.y = -Math.PI / 2;
 globeGroup.rotation.x = 0.2;
 
@@ -157,7 +157,7 @@ const tl = gsap.timeline({
 // A. Move globe to center and push it lower down
 tl.to(globeGroup.position, {
     x: 0, 
-    y: -0.8, // Raised up slightly compared to before
+    y: -0.6, // Raised up slightly compared to before
     z: 0,
     duration: 1,
     ease: "power2.inOut"
