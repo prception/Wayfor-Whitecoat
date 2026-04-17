@@ -56,7 +56,7 @@ scene.add(directionalLight);
 
 // 3. Setup Pins (Lat, Lng)
 const locations = [
-    { id: 'pin-russia', lat: 61.5240, lng: 105.3188, name: 'Russia', desc: 'Experience world-class medical education with advanced facilities and highly affordable tuition fees.' },
+    { id: 'pin-russia', lat: 55.7558, lng: 37.6173, name: 'Russia', desc: 'Experience world-class medical education with advanced facilities and highly affordable tuition fees.' },
     { id: 'pin-kazakhstan', lat: 48.0196, lng: 66.9237, name: 'Kazakhstan', desc: 'A modern hub for international medical students offering WHO-approved programs in English.' },
     { id: 'pin-uzbekistan', lat: 41.3775, lng: 64.5853, name: 'Uzbekistan', desc: 'Rich in history and culture, offering top-tier medical universities with a secure environment.' },
     { id: 'pin-kyrgyzstan', lat: 41.2044, lng: 74.7661, name: 'Kyrgyzstan', desc: 'Affordable medical study options with English medium instruction and great clinical exposure.' },
@@ -111,9 +111,11 @@ function updateHTMLPins() {
             el.style.left = `${x}px`;
             el.style.top = `${y}px`;
             el.style.opacity = '1';
+            el.style.pointerEvents = 'auto';
         } else {
-            // Point is currenly on the back of the globe
+            // Point is currently on the back of the globe
             el.style.opacity = '0';
+            el.style.pointerEvents = 'none';
         }
     });
 }
@@ -207,16 +209,54 @@ tl.to(".final-text", {
     duration: 0.4
 }, 0.6);
 
-// F. Reveal Pins
+// F. Phase 2 Reveal
 tl.to("#html-pins-container", {
     opacity: 1,
     duration: 0.3,
-    onStart: () => { pinsVisible = true; },
+    onStart: () => { 
+        pinsVisible = true; 
+    },
     onReverseComplete: () => { 
         pinsVisible = false; 
         document.getElementById('html-pins-container').style.opacity = '0';
     }
 }, 0.7);
+
+// G. About Section High-End Reveals
+gsap.from(".about-manifesto", {
+    scrollTrigger: {
+        trigger: ".about-dark-area",
+        start: "top 80%",
+    },
+    y: 50,
+    opacity: 0,
+    duration: 1.5,
+    ease: "power4.out"
+});
+
+gsap.from(".feature-card", {
+    scrollTrigger: {
+        trigger: ".about-features-area",
+        start: "top 80%",
+    },
+    y: 60,
+    opacity: 0,
+    stagger: 0.2,
+    duration: 1.2,
+    ease: "power3.out"
+});
+
+gsap.from(".stat-item", {
+    scrollTrigger: {
+        trigger: ".stat-banner",
+        start: "top 90%",
+    },
+    scale: 0.8,
+    opacity: 0,
+    stagger: 0.2,
+    duration: 1,
+    ease: "back.out(1.7)"
+});
 
 // ==============================================
 // 6. Vertical Carousel Integration
@@ -233,38 +273,61 @@ locations.forEach((loc, index) => {
     const li = document.createElement('li');
     li.textContent = loc.name;
     li.dataset.index = index;
-    // Click to scroll to this item easily
+    // Click to scroll to this item easily (Reverted to click as requested)
     li.addEventListener('click', () => {
         const topOfItem = li.offsetTop - scrollContainer.offsetTop;
         const middlePos = topOfItem - (scrollContainer.clientHeight / 2) + (li.clientHeight / 2);
-        scrollContainer.scrollTo({ top: middlePos, behavior: 'smooth' });
+        
+        gsap.to(scrollContainer, {
+            scrollTo: { y: middlePos },
+            duration: 0.8,
+            ease: "power2.inOut"
+        });
+        updateActiveCountry(index);
     });
+    
+    // Pause auto-scroll on hover
+    li.addEventListener('mouseenter', () => { isPaused = true; });
+    li.addEventListener('mouseleave', () => { isPaused = false; resetAutoScroll(); });
+    
     countryListEl.appendChild(li);
 
     // Add Click listener to the corresponding pin on the globe
     const pinEl = document.getElementById(loc.id);
     if(pinEl) {
-        pinEl.addEventListener('click', () => {
+        pinEl.addEventListener('mouseenter', () => {
             const topOfItem = li.offsetTop - scrollContainer.offsetTop;
             const middlePos = topOfItem - (scrollContainer.clientHeight / 2) + (li.clientHeight / 2);
-            scrollContainer.scrollTo({ top: middlePos, behavior: 'smooth' });
+            
+            gsap.to(scrollContainer, {
+                scrollTo: { y: middlePos },
+                duration: 0.8,
+                ease: "power2.inOut"
+            });
+            updateActiveCountry(index);
         });
+
+        // Pause auto-scroll on hover
+        pinEl.addEventListener('mouseenter', () => { isPaused = true; });
+        pinEl.addEventListener('mouseleave', () => { isPaused = false; resetAutoScroll(); });
     }
 });
 
 // Update UI Function
-function updateActiveCountry(index) {
-    if(index === activeIndex || index < 0 || index >= locations.length) return;
+function updateActiveCountry(index, force = false) {
+    if(!force && index === activeIndex || index < 0 || index >= locations.length) return;
     activeIndex = index;
     const loc = locations[index];
 
     // Update Text on Left
-    titleEl.textContent = loc.name;
-    descEl.textContent = loc.desc;
+    if(titleEl) titleEl.textContent = loc.name;
+    if(descEl) descEl.textContent = loc.desc;
 
     // Update List UI
-    Array.from(countryListEl.children).forEach(li => li.classList.remove('active'));
-    countryListEl.children[index].classList.add('active');
+    Array.from(countryListEl.children).forEach(child => child.classList.remove('active'));
+    if(countryListEl.children[index]) {
+        countryListEl.children[index].classList.add('active');
+    }
 
     // Update Pins on Globe
     document.querySelectorAll('.country-pin').forEach(pin => {
@@ -276,7 +339,7 @@ function updateActiveCountry(index) {
         const activePin = document.getElementById(loc.id);
         if(activePin) {
             activePin.classList.add('active-layer');
-            activePin.classList.add('active-pin'); // Triggers animation and styling
+            activePin.classList.add('active-pin'); 
         }
     }, 50);
 }
@@ -304,9 +367,10 @@ function detectCenterItem() {
 // Throttle scroll listener slightly
 let isScrolling;
 let autoScrollTimer = null;
+let isPaused = false; // New variable to track manual interaction status
 
 function moveToNextCountry() {
-    if (!pinsVisible) return; // Only auto-move when section is in view
+    if (!pinsVisible || isPaused) return; // Stop auto-move if user is hovering or section hidden
     let nextIndex = activeIndex + 1;
     if (nextIndex >= locations.length) {
         nextIndex = 0; // Loop back to start
@@ -315,13 +379,18 @@ function moveToNextCountry() {
     if(li) {
         const topOfItem = li.offsetTop - scrollContainer.offsetTop;
         const middlePos = topOfItem - (scrollContainer.clientHeight / 2) + (li.clientHeight / 2);
-        scrollContainer.scrollTo({ top: middlePos, behavior: 'smooth' });
+        
+        gsap.to(scrollContainer, {
+            scrollTo: { y: middlePos },
+            duration: 1.2, // Slower, more majestic auto-scroll
+            ease: "power2.inOut"
+        });
     }
 }
 
 function resetAutoScroll() {
     clearInterval(autoScrollTimer);
-    autoScrollTimer = setInterval(moveToNextCountry, 3500); // Wait 3.5s per item
+    autoScrollTimer = setInterval(moveToNextCountry, 5000); // Increased to 5s for better readability
 }
 
 scrollContainer.addEventListener('scroll', () => {
@@ -335,21 +404,34 @@ scrollContainer.addEventListener('scroll', () => {
 // Initialize first active item after a short delay and start auto play
 setTimeout(() => {
     detectCenterItem();
+    // Force Russia (index 0) to be technically active and showing details initially
+    updateActiveCountry(0, true); 
     resetAutoScroll();
-}, 500);
+}, 1000);
 
 // ==============================================
 // 7. Preloader Logic & GSAP Entrance Animations
 // ==============================================
 
-// Set up the entrance timeline in paused state so it hides elements immediately
+// Set up the entrance timeline
 const introTl = gsap.timeline({ paused: true });
 
-introTl.from(globeGroup.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 2.5, ease: "power3.out" }, 0.2)
-       .from("#navbar-placeholder", { y: -30, opacity: 0, duration: 1.5, ease: "power3.out" }, 0.5)
-       .from(".image-hero-title", { y: 40, opacity: 0, duration: 1.5, ease: "power3.out" }, 0.7)
-       .from(".image-hero-subtitle", { y: 30, opacity: 0, duration: 1.5, ease: "power3.out" }, 0.9)
-       .from(".initial-text > div", { y: 20, opacity: 0, duration: 1, ease: "power2.out" }, 1.1);
+// Check if we need to split title for cinematic effect
+const heroTitleEl = document.querySelector('.image-hero-title');
+if (heroTitleEl) {
+    const text = heroTitleEl.innerHTML;
+    const words = text.split(/(<br.*?>)/);
+    heroTitleEl.innerHTML = words.map(w => {
+        if (w.includes('<br')) return w;
+        return ` <span class="hero-word" style="display:inline-block; opacity:0; transform:translateY(30px)">${w}</span>`;
+    }).join('');
+}
+
+introTl.from(globeGroup.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 2.5, ease: "power4.out" }, 0.2)
+       .from("#nav-wrapper", { y: -30, opacity: 0, duration: 1.2, ease: "power3.out" }, 0.5)
+       .to(".hero-word", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out" }, 0.7)
+       .from(".image-hero-subtitle", { y: 30, opacity: 0, duration: 1.2, ease: "power3.out" }, 1.1)
+       .from(".initial-text .button-wrap", { y: 20, opacity: 0, stagger: 0.2, duration: 1, ease: "power2.out" }, 1.3);
 
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
@@ -373,4 +455,6 @@ window.addEventListener('load', () => {
     } else {
         introTl.play();
     }
+    // Final refresh to lock in page dimensions
+    ScrollTrigger.refresh();
 });
