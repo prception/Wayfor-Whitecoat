@@ -7,6 +7,15 @@
     --text-light: #E6F1FF;
     --text-gray-light: #8892B0;
     --cta-color: #64FFDA;
+
+    /* ===== NEW MATCHING PRIMARY COLORS ===== */
+    --primary-deep: #0D1B8C;
+    --primary-mid: #2E3FBF;
+    --sec-lavender: #8C90C7;
+    --sec-muted: #B0B4D9;
+    --light-cool: #E6E8F2;
+    --light-tint: #F4F6FB;
+    --gradient-card: linear-gradient(135deg, rgba(13,27,140,0.8), rgba(46,63,191,0.8));
 }
 
 body {
@@ -220,9 +229,8 @@ body {
 }
 
 /* Phase 1 & 2 Restored Inline Styles */
-.image-hero-title,
-.btn-play {
-    color: var(--primary-blue);
+.image-hero-title {
+    color: var(--primary-deep);
     pointer-events: auto;
 }
 
@@ -233,14 +241,52 @@ body {
 }
 
 .btn-primary-pill {
-    background: var(--primary-blue);
+    background-color: var(--primary-deep);
     color: white;
-    border: none;
+    padding: 18px 40px;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
     pointer-events: auto;
 }
 
 .btn-primary-pill:hover {
+    background-color: var(--primary-mid);
     color: white;
+    box-shadow: 0 10px 20px rgba(13, 27, 140, 0.2);
+}
+
+.btn-play {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--primary-deep);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+}
+
+.play-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--sec-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.btn-play:hover .play-icon {
+    border-color: var(--primary-deep);
+    background: rgba(13, 27, 140, 0.05);
 }
 
 .country-info {
@@ -593,6 +639,7 @@ p {
 .highlight-text {
     background: linear-gradient(90deg, var(--sec-muted), var(--sec-lavender));
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     display: inline-block;
 }
@@ -1648,4 +1695,62 @@ select.form-control option {
     .video-preview-box img {
         height: 400px;
     }
+}
+
+/* ==================================================
+   LIQUID GLASS BUTTON
+================================================== */
+.liquid-glass-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 8px 32px 0 rgba(13, 27, 140, 0.1), inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    color: var(--primary-deep);
+    border-radius: 40px;
+    padding: 16px 36px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    text-decoration: none !important;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+.liquid-glass-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.5) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-20deg);
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
+}
+
+.liquid-glass-btn:hover {
+    background: rgba(255, 255, 255, 0.6);
+    border-color: rgba(255, 255, 255, 0.8);
+    color: var(--primary-deep);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px 0 rgba(13, 27, 140, 0.2), inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+}
+
+.liquid-glass-btn:hover::before {
+    left: 200%;
 }

@@ -247,6 +247,7 @@
     z-index: 10;
     width: 100%;
     display: block;
+    overflow: hidden;
 }
 
 .footer-brand-title {
