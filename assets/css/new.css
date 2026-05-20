@@ -1754,3 +1754,104 @@ select.form-control option {
 .liquid-glass-btn:hover::before {
     left: 200%;
 }
+
+/* ==================================================
+   NEW HERO & TRANSITION SECTIONS
+================================================== */
+#hero-section {
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+#transition-section {
+    min-height: 100vh;
+    width: 100%;
+    background: linear-gradient(to bottom, #f1f5f9 0%, #0A192F 100%);
+    position: relative;
+    z-index: 2;
+}
+
+#transition-section .transition-title {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+#transition-section .transition-subtitle {
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+/* ==================================================
+   ANIMATED 3D IMAGE CONSULTATION SCENE (Hero Section)
+   Sits behind WebGL canvas (z:0 < z:1).
+================================================== */
+.consultation-img-wrap {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center center;
+    /* Opacity animated by GSAP */
+}
+
+.consultation-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: right center;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+    opacity: 0.85;
+}
+
+/* Vignette to blend edges and protect text legibility on the left */
+.img-vignette {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, #f1f5f9 0%, rgba(241,245,249, 0.9) 35%, transparent 70%), 
+                radial-gradient(circle at center, transparent 50%, rgba(241,245,249, 0.5) 100%);
+}
+
+/* Dark mode transition handling via GSAP */
+.dark-mode .img-vignette {
+    background: linear-gradient(to right, #020617 0%, rgba(2,6,23, 0.9) 35%, transparent 70%),
+                radial-gradient(circle at center, transparent 50%, rgba(2,6,23, 0.7) 100%);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 992px) {
+    .consultation-img-wrap {
+        opacity: 0.8;
+    }
+}
+
+@media (max-width: 768px) {
+    .consultation-img-wrap {
+        width: 100%;
+        height: 70vh;
+        right: 0;
+        bottom: 0;
+        opacity: 0.4;
+        -webkit-mask-image: linear-gradient(to top, black 50%, transparent 100%);
+    }
+    .consultation-img {
+        object-position: bottom center;
+    }
+}
+
+@media (max-width: 500px) {
+    .consultation-img-wrap {
+        display: none;
+    }
+}
