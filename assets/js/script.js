@@ -39,12 +39,12 @@ globeGroup.add(globeMesh);
 
 scene.add(globeGroup);
 
-// Initial Position (right side on desktop, slightly lower)
-const initialX = sizes.width > 768 ? 2.5 : 0;
-// Note: initial rotation shows back of globe, we will spin it to Asia during scroll
-globeGroup.position.set(initialX, -0.6, 0); 
+// Initial Position — centered and hidden (scale 0)
+globeGroup.position.set(0, 0, 0);
+globeGroup.scale.set(0, 0, 0);
 globeGroup.rotation.y = -Math.PI / 2;
 globeGroup.rotation.x = 0.2;
+
 
 // Lighting for premium shading
 const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
@@ -123,13 +123,14 @@ function updateHTMLPins() {
 // 4. Animation loop
 const clock = new THREE.Clock();
 function tick() {
-    renderer.render(scene, camera);
+    // Idle rotation Ã¢â‚¬â€ speed differs by phase; GSAP overrides during scroll
+    globeGroup.rotation.y += pinsVisible ? 0.00025 : 0.002;
     
-    // Tiny idle animation once pins are visible
     if(pinsVisible) {
-        globeGroup.rotation.y += 0.00025;
         updateHTMLPins();
     }
+    
+    renderer.render(scene, camera);
     window.requestAnimationFrame(tick);
 }
 tick();
@@ -144,8 +145,33 @@ window.addEventListener('resize', () => {
 });
 
 
-// 5. GSAP Scroll Sequence
-// We pin the main container for exactly 2000px of scroll length.
+// 5. GSAP Scroll Sequence — "Transition" and "Globe Pin"
+// Transition Section Text Reveals
+gsap.to(".transition-title", {
+    scrollTrigger: {
+        trigger: "#transition-section",
+        start: "top 60%",
+        end: "top 30%",
+        scrub: 1
+    },
+    opacity: 1,
+    y: 0,
+    duration: 1
+});
+
+gsap.to(".transition-subtitle", {
+    scrollTrigger: {
+        trigger: "#transition-section",
+        start: "top 50%",
+        end: "top 20%",
+        scrub: 1
+    },
+    opacity: 1,
+    y: 0,
+    duration: 1
+});
+
+// Pin container for 2000px of scroll distance.
 const tl = gsap.timeline({
     scrollTrigger: {
         trigger: "#pinned-container",
@@ -156,68 +182,63 @@ const tl = gsap.timeline({
     }
 });
 
-// A. Move globe to center and push it lower down
-tl.to(globeGroup.position, {
-    x: 0, 
-    y: -0.6, // Raised up slightly compared to before
-    z: 0,
-    duration: 1,
+// ═══ Phase 1: Globe scales up from 0 to 1, darkens (0–40%) ═══
+tl.to(globeGroup.scale, {
+    x: 1, y: 1, z: 1,
+    duration: 0.6,
     ease: "power2.inOut"
 }, 0);
 
-// Rotate the globe so Central Asia/Eurasia faces the camera perfectly
+tl.to(globeGroup.position, {
+    x: 0,
+    y: -0.6,
+    z: 0,
+    duration: 0.6,
+    ease: "power2.inOut"
+}, 0);
+
+// Rotate globe so Central Asia/Eurasia faces the camera
 tl.to(globeGroup.rotation, {
-    y: Math.PI * 1.02, // Horizontally center the Middle-East to Russia block
-    x: Math.PI * 0.15,  // Tilt downward to spread out northern locations
-    duration: 1,
+    y: Math.PI * 1.02,
+    x: Math.PI * 0.15,
+    duration: 0.6,
     ease: "power2.inOut",
     onUpdate: () => {
-        // keep updating pins position if they are visible
         if(pinsVisible) updateHTMLPins();
     }
 }, 0);
 
-// B. Transition Background from White to Dark Blue
+// Background transitions from light to dark
 tl.to(".dynamic-bg", {
     backgroundColor: "#020617",
-    duration: 1,
+    duration: 0.6,
     ease: "none"
 }, 0);
 
-// C. Transition Globe Material Color to Dark Blue
-// We use a custom object to proxy the color tween since Three.js Color object can be directly tweened in GSAP
+// Globe material: white/silver → dark blue
 tl.to(material.color, {
     r: colorBlueState.r,
     g: colorBlueState.g,
     b: colorBlueState.b,
-    duration: 0.8,
+    duration: 0.5,
     ease: "none"
-}, 0.2);
+}, 0.1);
 
-
-
-// E. UI Text Transitions
-tl.to(".initial-text", {
-    opacity: 0, 
-    y: -50,
-    duration: 0.4
-}, 0);
-
+// ═══ Phase 2: Destination UI appears (50–100%) ═══
 tl.to(".final-text", {
-    opacity: 1, 
+    opacity: 1,
     y: 0,
     duration: 0.4
-}, 0.6);
+}, 0.4);
 
-// F. Phase 2 Reveal
 tl.to("#html-pins-container", {
     opacity: 1,
     duration: 0.3,
-    onStart: () => { 
-        pinsVisible = true; 
+    onStart: () => {
+        pinsVisible = true;
     },
-    onReverseComplete: () => { 
-        pinsVisible = false; 
+    onReverseComplete: () => {
+        pinsVisible = false;
         document.getElementById('html-pins-container').style.opacity = '0';
     }
 }, 0.7);
@@ -410,51 +431,43 @@ setTimeout(() => {
 }, 1000);
 
 // ==============================================
-// 7. Preloader Logic & GSAP Entrance Animations
+// 7. Preloader Logic & Entrance Animations
 // ==============================================
 
-// Set up the entrance timeline
 const introTl = gsap.timeline({ paused: true });
 
-// Check if we need to split title for cinematic effect
 const heroTitleEl = document.querySelector('.image-hero-title');
 if (heroTitleEl) {
     const text = heroTitleEl.innerHTML;
     const words = text.split(/(<br.*?>)/);
     heroTitleEl.innerHTML = words.map(w => {
         if (w.includes('<br')) return w;
-        return ` <span class="hero-word" style="display:inline-block; opacity:0; transform:translateY(30px)">${w}</span>`;
+        return `<span class="hero-word" style="display:inline-block; opacity:0; transform:translateY(30px)">${w}</span>`;
     }).join('');
 }
 
-introTl.from(globeGroup.scale, { x: 0.001, y: 0.001, z: 0.001, duration: 2.5, ease: "power4.out" }, 0.2)
-       .from("#nav-wrapper", { y: -30, opacity: 0, duration: 1.2, ease: "power3.out" }, 0.5)
-       .to(".hero-word", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out" }, 0.7)
-       .from(".image-hero-subtitle", { y: 30, opacity: 0, duration: 1.2, ease: "power3.out" }, 1.1)
-       .from(".initial-text .button-wrap", { y: 20, opacity: 0, stagger: 0.2, duration: 1, ease: "power2.out" }, 1.3);
+introTl.from(".consultation-img-wrap", { opacity: 0, scale: 0.95, duration: 2, ease: "power3.out" }, 0.2)
+       .from("#nav-wrapper", { y: -30, opacity: 0, duration: 1.2, ease: "power3.out" }, 0.3)
+       .to(".hero-word", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out" }, 0.5)
+       .from(".image-hero-subtitle", { y: 30, opacity: 0, duration: 1.2, ease: "power3.out" }, 0.9)
+       .from(".initial-text .liquid-glass-btn", { y: 20, opacity: 0, stagger: 0.2, duration: 1, ease: "power2.out" }, 1.1);
 
 window.addEventListener('load', () => {
     const preloader = document.getElementById('preloader');
     if (preloader) {
-        // Wait for 3D textures and buffering to completely clear
         setTimeout(() => {
-            // Fade out preloader
             gsap.to(preloader, {
                 opacity: 0,
-                duration: 2.5,
+                duration: 1.5,
                 ease: "power2.inOut",
                 onComplete: () => {
                     preloader.style.display = 'none';
+                    introTl.play();
                 }
             });
-            
-            // Simultaneously play entrance animations so elements rise beautifully
-            introTl.play();
-            
         }, 1500);
     } else {
         introTl.play();
     }
-    // Final refresh to lock in page dimensions
     ScrollTrigger.refresh();
 });
