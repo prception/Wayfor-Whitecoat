@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | WayForWhitecoat</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/new.css">
+    <link rel="stylesheet" href="assets/css/navfoot.css">
+    
+</head>
+<body class="contact">
+    
+    <div id="custom-scrollbar-track">
+        <div id="custom-scrollbar-thumb"></div>
+    </div>
+
+    <!-- Standard Header -->
+    <header id="nav-wrapper">
+        <div id="header-container" class="w-100"></div>
+    </header>
+
+    <main>
+
+        <section class="contact-hero-section position-relative vh-100 d-flex align-items-center justify-content-center overflow-hidden" style="background-color: #020617;">
+            
+            <!-- Ambient Glowing Orbs -->
+            <div class="hero-orb orb-primary"></div>
+            <div class="hero-orb orb-secondary"></div>
+
+            <!-- Dot Grid Overlay -->
+            <div class="position-absolute inset-0 z-0 pointer-events-none opacity-25" style="background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px); background-size: 40px 40px;"></div>
+
+            <div class="container position-relative z-2 text-center mt-5 pt-5">
+                
+                <div class="reveal-up mb-4">
+                    <div class="urgency-badge d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill border border-white border-opacity-10 bg-white bg-opacity-5 backdrop-blur liquid-glass-badge">
+                        <span class="pulse-dot bg-info"></span>
+                        <span class="text-info fw-bold small text-uppercase tracking-wider">We're Here To Help</span>
+                    </div>
+                </div>
+
+                <h1 class="display-1 fw-bold text-white mb-4 reveal-text" id="contact-hero-title">
+                    Let's Build Your <br>
+                    <span class="highlight-text-blue">Global Career.</span>
+                </h1>
+
+                <p class="fs-4 text-secondary mx-auto mb-5 reveal-up" style="max-width: 700px;">
+                    Whether you have a question about universities, visa processing, or fee structures, our expert counselors are ready to guide you.
+                </p>
+
+                <!-- Anti-Gravity Floating Contact Pills -->
+                <div class="anti-gravity-container d-flex justify-content-center flex-wrap gap-4 reveal-up">
+                    
+                    <a href="mailto:contact@wayforwhitecoat.com" class="floating-pill liquid-glass-card text-decoration-none d-flex align-items-center gap-3 px-4 py-3 rounded-pill hover-scale">
+                        <div class="icon-circle bg-info bg-opacity-10 text-info d-flex align-items-center justify-content-center rounded-circle" style="width: 44px; height: 44px;">
+                            <i class="fa-solid fa-envelope fs-5"></i>
+                        </div>
+                        <div class="text-start pe-2">
+                            <span class="d-block text-white fw-bold lh-1 mb-1">Email Us</span>
+                            <span class="text-secondary small">contact@wayforwhitecoat.com</span>
+                        </div>
+                    </a>
+
+                    <a href="tel:+18001234567" class="floating-pill liquid-glass-card text-decoration-none d-flex align-items-center gap-3 px-4 py-3 rounded-pill hover-scale" style="animation-delay: -2s;">
+                        <div class="icon-circle bg-success bg-opacity-10 text-success d-flex align-items-center justify-content-center rounded-circle" style="width: 44px; height: 44px;">
+                            <i class="fa-solid fa-phone fs-5"></i>
+                        </div>
+                        <div class="text-start pe-2">
+                            <span class="d-block text-white fw-bold lh-1 mb-1">Call Us</span>
+                            <span class="text-secondary small">+1 (800) 123-4567</span>
+                        </div>
+                    </a>
+
+                    <div class="floating-pill liquid-glass-card text-decoration-none d-flex align-items-center gap-3 px-4 py-3 rounded-pill hover-scale" style="animation-delay: -4s;">
+                        <div class="icon-circle bg-warning bg-opacity-10 text-warning d-flex align-items-center justify-content-center rounded-circle" style="width: 44px; height: 44px;">
+                            <i class="fa-solid fa-location-dot fs-5"></i>
+                        </div>
+                        <div class="text-start pe-2">
+                            <span class="d-block text-white fw-bold lh-1 mb-1">Visit Us</span>
+                            <span class="text-secondary small">New Delhi, India</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <section class="min-vh-100 position-relative d-flex align-items-center pt-5 pb-5 mt-5 bg-white">
+            
+            <!-- Ambient Elements -->
+            <div class="contact-orb orb-1 opacity-50"></div>
+            <div class="contact-orb orb-2 opacity-50"></div>
+            
+            <!-- Massive Faded Background Text -->
+            <div class="faded-bg-text-container">
+                <h1 class="faded-bg-text parallax-text-1  opacity-25">GET IN TOUCH</h1>
+                <h1 class="faded-bg-text solid parallax-text-2  opacity-25">WAYFOR WHITECOAT</h1>
+            </div>
+
+            <!-- Dot Grid Overlay -->
+            <div class="position-absolute inset-0 z-0 pointer-events-none opacity-25" style="background-image: radial-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px); background-size: 30px 30px;"></div>
+
+            <div class="container position-relative z-2 pt-5 mt-4">
+                <div class="row align-items-start g-5">
+                    
+                    <!-- LEFT: Text & Contact Info -->
+                    <div class="col-lg-5 col-xl-5 contact-info-col">
+                        <div class="urgency-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-dark border-opacity-10 mb-4 bg-opacity-5 backdrop-blur reveal-up">
+                            <span class="pulse-dot bg-info"></span>
+                            <span class="text-info fw-bold small text-uppercase tracking-wider">Admissions Open 2026-27</span>
+                        </div>
+                        
+                        <h1 class="display-3 fw-bold text-dark mb-4 reveal-up text-animation">
+                            Let's Start Your <br>
+                            <span class="highlight-text d-inline-block">Medical Journey.</span>
+                        </h1>
+                        
+                        <p class="text-secondary fs-5 mb-2 reveal-up" style="max-width: 90%;">
+                            Have questions about universities, fees, or the visa process? Our expert counselors are ready to give you 100% transparent answers.
+                        </p>
+
+                        <!-- Contact Cards -->
+                        <div class="d-flex flex-column gap-3 mb-5">
+                            
+                            <div class="contact-info-card reveal-up" style="background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.05); padding: 1.5rem; border-radius: 1rem; display: flex; gap: 1rem; align-items: center;">
+                                <div class="contact-icon-wrap bg-light d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px;"><i class="fa-solid fa-location-dot text-dark fs-5"></i></div>
+                                <div>
+                                    <h5 class="text-dark fw-bold mb-1">Global Headquarters</h5>
+                                    <p class="text-secondary small mb-0">123 Education Boulevard, Tech Park,<br>New Delhi, India 110001</p>
+                                </div>
+                            </div>
+
+                            <a href="mailto:contact@wayforwhitecoat.com" class="contact-info-card text-decoration-none reveal-up" style="background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.05); padding: 1.5rem; border-radius: 1rem; display: flex; gap: 1rem; align-items: center; transition: all 0.3s ease;">
+                                <div class="contact-icon-wrap bg-light d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px;"><i class="fa-solid fa-envelope text-dark fs-5"></i></div>
+                                <div>
+                                    <h5 class="text-dark fw-bold mb-1">Email Us</h5>
+                                    <p class="text-secondary small mb-0">contact@wayforwhitecoat.com<br>admissions@wayforwhitecoat.com</p>
+                                </div>
+                            </a>
+
+                            <a href="tel:+18001234567" class="contact-info-card text-decoration-none reveal-up" style="background: rgba(0, 0, 0, 0.02); border: 1px solid rgba(0, 0, 0, 0.05); padding: 1.5rem; border-radius: 1rem; display: flex; gap: 1rem; align-items: center; transition: all 0.3s ease;">
+                                <div class="contact-icon-wrap bg-light d-flex align-items-center justify-content-center rounded-circle" style="width: 48px; height: 48px;"><i class="fa-solid fa-phone-volume text-dark fs-5"></i></div>
+                                <div>
+                                    <h5 class="text-dark fw-bold mb-1">Call for Consultation</h5>
+                                    <p class="text-secondary small mb-0">+91 98765 43210 (India)<br>+1 (800) 123-4567 (Toll Free)</p>
+                                </div>
+                            </a>
+                        </div>
+
+                        <!-- Socials -->
+                        <!-- <div class="d-flex flex-wrap gap-3 reveal-up mt-5">
+                            <a href="#" class="social-pill text-dark border-dark border-opacity-10 bg-light text-decoration-none px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2"><i class="fa-brands fa-whatsapp fs-5"></i> WhatsApp</a>
+                            <a href="#" class="social-pill text-dark border-dark border-opacity-10 bg-light text-decoration-none px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2"><i class="fa-brands fa-instagram fs-5"></i> Instagram</a>
+                            <a href="#" class="social-pill text-dark border-dark border-opacity-10 bg-light text-decoration-none px-4 py-2 rounded-pill d-inline-flex align-items-center gap-2"><i class="fa-brands fa-youtube fs-5"></i> YouTube</a>
+                        </div> -->
+                    </div>
+
+                    <!-- RIGHT: Dedicated Glass Form -->
+                    <div class="col-lg-7 col-xl-6 offset-xl-1">
+                        <div class="glass-form dedicated-form p-4 p-md-5 rounded-4 position-relative overflow-hidden reveal-up shadow-sm border border-dark border-opacity-10 bg-white">
+                            <!-- Sweeping Shine -->
+                            <div class="solution-shine opacity-10"></div>
+                            
+                            <div class="mb-3 border-bottom border-dark border-opacity-10 pb-3">
+                                <h3 class="fw-bold mb-2 text-dark fs-2">Request a Callback</h3>
+                                <!-- <p class="text-secondary mb-0">Fill out the form below and an expert will contact you within 24 hours.</p> -->
+                            </div>
+
+                            <form action="#" method="POST" id="contactForm">
+                                <div class="row g-4 mt-1">
+                                    <div class="col-md-6">
+                                        <label for="firstName" class="form-label text-dark fw-medium mb-2 small text-uppercase tracking-wider">First Name</label>
+                                        <input type="text" id="firstName" name="firstName" class="form-control text-dark bg-light border-dark border-opacity-10 rounded-3 shadow-none custom-input py-2" placeholder="John" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="lastName" class="form-label text-dark fw-medium mb-2 small text-uppercase tracking-wider">Last Name</label>
+                                        <input type="text" id="lastName" name="lastName" class="form-control text-dark bg-light border-dark border-opacity-10 rounded-3 shadow-none custom-input py-2" placeholder="Doe" required>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <label for="email" class="form-label text-dark fw-medium mb-2 small text-uppercase tracking-wider">Email Address</label>
+                                        <input type="email" id="email" name="email" class="form-control text-dark bg-light border-dark border-opacity-10 rounded-3 shadow-none custom-input py-2" placeholder="john@example.com" required>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="phone" class="form-label text-dark fw-medium mb-2 small text-uppercase tracking-wider">Phone Number</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text bg-light border-dark border-opacity-10 border-end-0 text-secondary fw-medium px-3 py-2">+91</span>
+                                            <input type="tel" id="phone" name="phone" class="form-control text-dark bg-light border-dark border-opacity-10 border-start-0 rounded-end-3 shadow-none custom-input py-2" placeholder="98765 43210" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="neetStatus" class="form-label text-dark fw-medium mb-2 small text-uppercase tracking-wider">NEET Status</label>
+                                        <select id="neetStatus" name="neetStatus" class="form-select text-dark bg-light border-dark border-opacity-10 rounded-3 shadow-none custom-input py-2" required>
+                                            <option value="" disabled selected>Select status</option>
+                                            <option value="qualified" class="bg-white text-dark">Qualified</option>
+                                            <option value="not_qualified" class="bg-white text-dark">Not Qualified</option>
+                                            <option value="appearing_2026" class="bg-white text-dark">Appearing in 2026</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="destination" class="form-label text-dark fw-medium mb-2 small text-uppercase tracking-wider">Preferred Destination</label>
+                                        <select id="destination" name="destination" class="form-select text-dark bg-light border-dark border-opacity-10 rounded-3 shadow-none custom-input py-2">
+                                            <option value="" disabled selected>Not Sure Yet</option>
+                                            <option value="russia" class="bg-white text-dark">Russia</option>
+                                            <option value="philippines" class="bg-white text-dark">Philippines</option>
+                                            <option value="uzbekistan" class="bg-white text-dark">Uzbekistan</option>
+                                            <option value="georgia" class="bg-white text-dark">Georgia</option>
+                                            <option value="other" class="bg-white text-dark">Other</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="message" class="form-label text-dark fw-medium mb-2 small text-uppercase tracking-wider">Your Message (Optional)</label>
+                                        <textarea id="message" name="message" class="form-control text-dark bg-light border-dark border-opacity-10 rounded-3 shadow-none custom-input py-2" rows="3" placeholder="Tell us about your requirements..."></textarea>
+                                    </div>
+
+                                    <div class="col-12 mt-4">
+                                        <button type="submit" class="liquid-glass-btn w-100 fs-5 border-0 py-3 rounded-pill text-white fw-bold" style="background: linear-gradient(45deg, var(--bs-primary), var(--bs-info));">
+                                            Send Message <i class="fa-solid fa-paper-plane ms-2"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            <div class="d-flex align-items-center justify-content-center gap-2 mt-4 text-secondary small fw-medium">
+                                <i class="fa-solid fa-lock text-success"></i> Your information is 100% secure and confidential.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="premium-footer">
+            <!-- Ambient Glows -->
+            <div class="footer-glow footer-glow-top"></div>
+            <div class="footer-glow footer-glow-bottom"></div>
+
+            <div class="container position-relative z-1">
+                <div class="row gx-4 gy-5">
+                    <!-- Brand Column -->
+                    <div class="col-lg-4 col-md-12">
+                        <a href="index.html"
+                            class="nav-brand footer-brand-title text-white fw-bold d-inline-flex align-items-center gap-2 mb-4 text-decoration-none">
+                            <div class="bg-info bg-opacity-10 p-2 rounded-3 border border-info border-opacity-25">
+                                <svg class="brand-icon text-info" xmlns="http://www.w3.org/2000/svg" width="28"
+                                    height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                </svg>
+                            </div>
+                            <span>WayFor<span class="text-info fw-normal">Whitecoat</span></span>
+                        </a>
+                        <p class="footer-desc-text mb-4">
+                            Empowering the next generation of global medical professionals with ethical guidance and
+                            end-to-end support for MBBS abroad.
+                        </p>
+                        <div class="social-links mt-4">
+                            <a href="#" class="footer-social-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="footer-social-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                            </a>
+                            <a href="#" class="footer-social-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z">
+                                    </path>
+                                </svg>
+                            </a>
+                            <a href="#" class="footer-social-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                    </path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Links Columns -->
+                    <div class="col-lg-2 col-md-6 col-6">
+                        <h6 class="text-white fw-bold mb-4">Destinations</h6>
+                        <ul class="footer-link-list">
+                            <li><a href="#" class="footer-link">MBBS in Russia</a></li>
+                            <li><a href="#" class="footer-link">MBBS in Uzbekistan</a></li>
+                            <li><a href="#" class="footer-link">MBBS in Kazakhstan</a></li>
+                            <li><a href="#" class="footer-link">MBBS in Georgia</a></li>
+                            <li><a href="#" class="footer-link">MBBS in Philippines</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 col-6">
+                        <h6 class="text-white fw-bold mb-4">Resources</h6>
+                        <ul class="footer-link-list">
+                            <li><a href="#" class="footer-link">University Selection</a></li>
+                            <li><a href="#" class="footer-link">Visa Assistance</a></li>
+                            <li><a href="#" class="footer-link">Experience Center</a></li>
+                            <li><a href="#" class="footer-link">FMGE / NEXT Info</a></li>
+                            <li><a href="#" class="footer-link">Loan Support</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Newsletter & contact -->
+                    <div class="col-lg-4 col-md-12">
+                        <div class="footer-newsletter-box">
+                            <h6 class="text-white fw-bold mb-3">Join our community</h6>
+                            <p class="small text-secondary mb-4">Get the latest updates on admissions and scholarships
+                                directly in your inbox.</p>
+                            <form>
+                                <div class="newsletter-input-group">
+                                    <input type="email" class="form-control" placeholder="Email address" required>
+                                    <button class="btn btn-info newsletter-submit" type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="mt-4 pt-2">
+                                <div
+                                    class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all mb-2">
+                                    <div class="footer-contact-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <span class="small text-white">+1 (800) 123-4567</span>
+                                </div>
+                                <div
+                                    class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all">
+                                    <div class="footer-contact-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                            </path>
+                                            <polyline points="22,6 12,13 2,6"></polyline>
+                                        </svg>
+                                    </div>
+                                    <span class="small text-white">contact@wayforwhitecoat.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recognition Badges -->
+                <!-- <div class="footer-recognition d-flex justify-content-center flex-wrap gap-4">
+                    <span class="recognition-badge">NMC (MCI)</span>
+                    <span class="recognition-badge">WHO</span>
+                    <span class="recognition-badge">WFME</span>
+                    <span class="recognition-badge">ECFMG</span>
+                    <span class="recognition-badge">FAIMER</span>
+                </div> -->
+            </div>
+
+            <!-- Bottom Strip -->
+            <div class="footer-bottom-strip">
+                <div class="container">
+                    <div class="row align-items-center">
+                        
+                        <div class="col-md-6 text-center text-md-start">
+                            <div class="d-flex justify-content-center justify-content-md-start gap-4">
+                                <a href="#" class="footer-bottom-link">Privacy Policy</a>
+                                <a href="#" class="footer-bottom-link">Terms of Service</a>
+                                <a href="#" class="footer-bottom-link">Sitemap</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end mb-3 mb-md-0">
+                            <p class="mb-0 fw-light">&copy; 2026 WayFor Whitecoat. All Rights Reserved. Designed by <a href="#"
+                                    class="text-info text-decoration-none fw-medium">PRception</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- external js -->
+    <script src="assets/js/components.js"></script>
+
+    <!-- Custom Contact Page Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // 1. Initialize Lenis Smooth Scroll
+            const lenis = new Lenis({
+                duration: 1.2,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smooth: true,
+            });
+            window.lenis = lenis;
+
+            function raf(time) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+            }
+            requestAnimationFrame(raf);
+
+            // Sync with GSAP
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                lenis.on('scroll', ScrollTrigger.update);
+                gsap.ticker.add((time) => { lenis.raf(time * 1000); });
+                gsap.ticker.lagSmoothing(0);
+
+                // 2. Parallax Animation for Faded Background Text
+                gsap.to(".parallax-text-1", {
+                    xPercent: -30,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: 1
+                    }
+                });
+
+                gsap.to(".parallax-text-2", {
+                    xPercent: 30,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "body",
+                        start: "top top",
+                        end: "bottom top",
+                        scrub: 1
+                    }
+                });
+
+                // 3. Staggered Entrance Animations
+                const tl = gsap.timeline();
+                
+                tl.from(".reveal-up", {
+                    y: 50,
+                    opacity: 0,
+                    stagger: 0.1,
+                    duration: 1,
+                    ease: "power3.out",
+                    delay: 0.2
+                });
+
+                // Text word reveal for the main heading
+                const heading = document.querySelector('.text-animation');
+                if (heading) {
+                    const text = heading.innerHTML;
+                    // basic split since no SplitText plugin
+                    gsap.fromTo(heading, 
+                        { opacity: 0, y: 30 }, 
+                        { opacity: 1, y: 0, duration: 1.2, ease: "power4.out", delay: 0.1 }
+                    );
+                }
+            }
+
+            // Custom Scrollbar Logic (from your existing script)
+            const track = document.getElementById('custom-scrollbar-track');
+            const thumb = document.getElementById('custom-scrollbar-thumb');
+            if (track && thumb) {
+                function updateThumb() {
+                    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                    const docHeight = document.documentElement.scrollHeight;
+                    const viewHeight = window.innerHeight;
+                    const trackHeight = viewHeight;
+                    const thumbHeight = Math.max(30, (viewHeight / docHeight) * trackHeight);
+                    const maxScroll = docHeight - viewHeight;
+                    const scrollRatio = maxScroll > 0 ? scrollTop / maxScroll : 0;
+                    const thumbTop = scrollRatio * (trackHeight - thumbHeight);
+                    thumb.style.height = thumbHeight + 'px';
+                    thumb.style.transform = 'translateY(' + thumbTop + 'px)';
+                }
+                window.addEventListener('scroll', updateThumb, { passive: true });
+                lenis.on('scroll', updateThumb);
+                window.addEventListener('resize', updateThumb);
+                updateThumb();
+            }
+        });
+
+        
+    </script>
+</body>
+</html>

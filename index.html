@@ -22,26 +22,34 @@
     <!-- Three.js -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Flag Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+
     <!-- external css -->
     <link rel="stylesheet" href="assets/css/new.css">
     <link rel="stylesheet" href="assets/css/navfoot.css">
 </head>
 
 <body>
+    <!-- Custom Overlay Scrollbar -->
+    <div id="custom-scrollbar-track">
+        <div id="custom-scrollbar-thumb"></div>
+    </div>
     <!-- Premium Preloader -->
-    <div id="preloader" class="premium-preloader">
+    <!-- <div id="preloader" class="premium-preloader">
         <div class="preloader-inner">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="120" height="120"
                 class="medical-globe-svg">
-                <!-- Soft longitudes -->
                 <ellipse class="globe-lines" cx="50" cy="50" rx="18" ry="44" fill="none" stroke="#cbd5e1"
                     stroke-width="1.5" />
                 <line class="globe-lines" x1="50" y1="6" x2="50" y2="94" stroke="#cbd5e1" stroke-width="1.5" />
 
-                <!-- Outer circle -->
                 <circle class="globe-outline" cx="50" cy="50" r="44" fill="none" stroke="#041a3b" stroke-width="2.5" />
 
-                <!-- ECG / Heartbeat Equator -->
                 <path class="ecg-line" d="M -5,50 L 25,50 L 35,25 L 48,80 L 60,35 L 70,50 L 105,50" fill="none"
                     stroke="#2563eb" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
@@ -54,83 +62,27 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <main>
         <header id="nav-wrapper">
-            <nav class="liquid-navbar container mt-3">
-                <div class="nav-container">
-                    <a href="index.html" class="nav-brand">
-                        <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                        </svg>
-                        WayFor<span class="brand-highlight">Whitecoat</span>
-                    </a>
-                    
-                    <ul class="nav-links">
-                        <li><a href="#about" class="nav-item">About</a></li>
-                        <li><a href="#universities" class="nav-item">Universities</a></li>
-                        <li><a href="#services" class="nav-item">Services</a></li>
-                        <li><a href="#contact" class="nav-item">Contact</a></li>
-                    </ul>
-            
-                    <div class="nav-actions">
-                        <a href="#contact" class="btn-primary-glass">Get Started</a>
-                        <button class="mobile-toggle">
-                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
-                                <line x1="3" y1="12" x2="21" y2="12"></line>
-                                <line x1="3" y1="6" x2="21" y2="6"></line>
-                                <line x1="3" y1="18" x2="21" y2="18"></line>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </nav>
+            <div id="header-container" class="w-100"></div>
         </header>
-
-        <!-- ==============================================
-             HERO SECTION (Pure 2D, No WebGL)
-        =============================================== -->
-        <section id="hero-section" class="position-relative">
-            <!-- Consultation Image Scene -->
-            <div class="consultation-img-wrap">
-                <img src="assets/images/h-img.png" alt="Consultation 3D Render" class="consultation-img" />
-                <!-- Subtle vignette gradient overlay to blend into the background -->
-                <div class="img-vignette"></div>
-            </div>
-            
-            <div class="ui-layer">
-                <div class="container content-block left-aligned initial-text">
-                    <h1 class="image-hero-title fw-bold mb-4">The Door To Your <br class="d-none d-lg-block">New Medical Career.</h1>
-                    <p class="image-hero-subtitle mb-5 fs-5">We'll help you find the key to your dream university. Experience the joy of achieving your medical degree. Let us make your admission journey simple.</p>
-                    <div class="d-flex flex-wrap align-items-center gap-4 mt-2">
-                        <a href="#contact" class="liquid-glass-btn">GET STARTED</a>
-                        <a href="#video" class="liquid-glass-btn ms-lg-3">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px;">
-                                <polygon points="5 3 19 12 5 21 5 3" />
-                            </svg>
-                            Watch Video
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- ==============================================
-             TRANSITION SECTION (Blend to dark mode)
-        =============================================== -->
-        <section id="transition-section">
-            <div class="container text-center h-100 d-flex flex-column justify-content-center align-items-center">
-                <h2 class="transition-title display-4 fw-bold text-white mb-4">A World of Opportunities Awaits.</h2>
-                <p class="transition-subtitle fs-4 text-white-50">Embark on a seamless journey to your dream medical university.</p>
-            </div>
-        </section>
 
         <!-- Master pinned container -->
         <section id="pinned-container">
 
             <!-- Background element to animate colors -->
-            <div class="dynamic-bg"></div>
+            <div class="hero-bg-layer hero-bg-img-1" style="background-image: url('assets/images/hero-bg2.png');"></div>
+            <div class="hero-bg-layer hero-bg-img-2" style="background-image: url('assets/images/hero-bg2.png');"></div>
+            <div class="hero-bg-layer hero-dark-overlay"></div>
+
+            <!-- Subtle Medical Background Elements (Phase 2) -->
+            <div class="medical-bg-elements" id="medical-bg-elements">
+                <div class="med-el med-el-large">
+                    <img src="assets/images/sscope.png" alt="Scope">
+                </div>
+            </div>
 
             <!-- WebGL Canvas -->
             <div class="webgl-container">
@@ -140,61 +92,113 @@
             <!-- Pin Overlays (Moved outside to be above UI blocks for better interactivity) -->
             <div id="html-pins-container">
                 <div class="country-pin" id="pin-russia"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg"
-                        width="18" height="18" viewBox="0 0 24 24" fill="white">
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
+                        <circle cx="20" cy="10" r="2" />
                     </svg><span>Russia</span></div>
-                <div class="country-pin" id="pin-kazakhstan"><svg class="pin-icon"
-                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <div class="country-pin" id="pin-kazakhstan"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
+                        <circle cx="20" cy="10" r="2" />
                     </svg><span>Kazakhstan</span></div>
-                <div class="country-pin" id="pin-uzbekistan"><svg class="pin-icon"
-                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <div class="country-pin" id="pin-uzbekistan"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
+                        <circle cx="20" cy="10" r="2" />
                     </svg><span>Uzbekistan</span></div>
-                <div class="country-pin" id="pin-kyrgyzstan"><svg class="pin-icon"
-                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <div class="country-pin" id="pin-kyrgyzstan"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
+                        <circle cx="20" cy="10" r="2" />
                     </svg><span>Kyrgyzstan</span></div>
                 <div class="country-pin" id="pin-georgia"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg"
-                        width="18" height="18" viewBox="0 0 24 24" fill="white">
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
+                        <circle cx="20" cy="10" r="2" />
                     </svg><span>Georgia</span></div>
                 <div class="country-pin" id="pin-egypt"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg"
-                        width="18" height="18" viewBox="0 0 24 24" fill="white">
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
+                        <circle cx="20" cy="10" r="2" />
                     </svg><span>EGYPT</span></div>
-                <div class="country-pin" id="pin-tajikistan"><svg class="pin-icon"
-                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <div class="country-pin" id="pin-tajikistan"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
+                        <circle cx="20" cy="10" r="2" />
                     </svg><span>TAJIKISTAN</span></div>
-                <div class="country-pin" id="pin-bangladesh"><svg class="pin-icon"
-                        xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <div class="country-pin" id="pin-bangladesh"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
+                        <circle cx="20" cy="10" r="2" />
                     </svg><span>Bangladesh</span></div>
                 <div class="country-pin" id="pin-nepal"><svg class="pin-icon" xmlns="http://www.w3.org/2000/svg"
-                        width="18" height="18" viewBox="0 0 24 24" fill="white">
+                        viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <path
-                            d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z" />
+                            d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3" />
+                        <path d="M8 15v1a6 6 0 0 0 6 6v0a6 6 0 0 0 6-6v-4" />
+                        <circle cx="20" cy="10" r="2" />
                     </svg><span>Nepal</span></div>
             </div>
 
             <!-- UI Layers -->
-            <div class="ui-layer">
-        <!-- Phase 2 Content -->
+            <div class="ui-layer position-relative">
+                <div class="img-vignette"></div>
+                <!-- Phase 1 Content -->
+                <div class="container content-block left-aligned initial-text position-relative" style="z-index: 1;">
+                    <h1 class="image-hero-title fw-bold mb-4">The Door To Your <br class="d-none d-lg-block">New Medical
+                        Career.</h1>
+                    <p class="image-hero-subtitle mb-5 fs-6">We'll help you find the key to your dream university.
+                        Experience the joy of achieving your medical degree. Let us make your admission journey simple.
+                    </p>
+
+                    <div class="d-flex flex-wrap align-items-center gap-4 mt-2">
+                        <a href="#contact" class="liquid-glass-btn">
+                            GET STARTED
+                        </a>
+
+                        <a href="#video" class="liquid-glass-btn ms-lg-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" style="margin-right:4px;">
+                                <polygon points="5 3 19 12 5 21 5 3" />
+                            </svg>
+                            Watch Video
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Phase 2 Content -->
                 <div
                     class="content-block final-text w-100 h-100 d-flex align-items-center justify-content-between px-4 px-lg-5">
 
                     <!-- Subheading at completely top of section -->
                     <div class="final-text-header">
-                        <h2 class="glass-text">Top Destinations</h2>
+                        <h2 class="glass-text display-5">Top Destinations</h2>
                         <p class="light-para">Explore globally recognized universities waiting for you.</p>
                     </div>
 
@@ -202,7 +206,7 @@
                     <div class="country-info ps-lg-5">
                         <div class="globe-detail-badge mb-3 d-inline-block px-3 py-1 rounded-pill">Featured Destination
                         </div>
-                        <h3 id="country-title" class="fw-bold mb-3 display-5">Russia</h3>
+                        <h3 id="country-title" class="fw-bold mb-3 display-6">Russia</h3>
                         <p id="country-desc" class="mb-4 text-white p-0 m-0">Experience world-class medical education
                             with advanced facilities and highly affordable tuition fees.</p>
                         <div class="mt-4">
@@ -230,139 +234,1596 @@
 
         </section>
 
-        <!-- ==============================================
-             NEW MODERN ABOUT SECTION
-        =============================================== -->
-        <section class="about-modern" id="about">
-            <!-- Part 1: Dark Header Area -->
-            <div class="about-dark-area">
-                <div class="container">
-                    <!-- <p class="about-breadcrumb text-uppercase fw-bold mb-4">Home <span class="mx-2">&bull;</span> About Us</p> -->
-                    <h1 class="about-page-title text-white fw-bold mb-5 pb-4">About Us</h1>
+        <!-- Reality Check Section -->
+        <section class="reality-section min-vh-100 d-flex align-items-center position-relative" id="reality-check">
+            <div class="reality-glow reality-glow-red" id="glow-red"></div>
+            <div class="reality-glow reality-glow-blue" id="glow-blue"></div>
 
-                    <div class="row g-5 align-items-center">
-                        <div class="col-lg-5">
-                            <h2 class="about-manifesto">We believe that every aspiring doctor deserves universal access
-                                to world class medical education.</h2>
-                        </div>
-                        <div class="col-lg-7">
-                            <p class="about-manifesto-para">That's why we're committed to delivering transparent,
-                                reliable, and premium medical admission services. Our team of experienced professionals
-                                is dedicated to helping you achieve your goals and thrive in a rapidly evolving global
-                                medical landscape.</p>
-                            <p class="about-manifesto-para mt-3">We are a premier consultancy offering an end-to-end
-                                ecosystem. Our expertise includes university selection, complex visa processing, secure
-                                accommodation, and continuous mentorship until you graduate as a practicing doctor.</p>
+            <div class="container position-relative z-1 py-5">
+
+                <div class="text-center mb-5 pb-4">
+                    <div class="urgency-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-danger border-opacity-25 mb-3"
+                        style="background: rgba(220, 38, 38, 0.1);">
+                        <span class="pulse-dot bg-danger"></span>
+                        <span class="text-danger fw-semibold small text-uppercase tracking-wider">The Reality
+                            Check</span>
+                    </div>
+                    <h2 class="display-5 fw-bold text-white mb-3 reality-title">
+                        The Odds Are Stacked Against You. <br>
+                        <span class="text-secondary fs-4 fw-medium">But your dream doesn't have to end here.</span>
+                    </h2>
+                </div>
+
+                <div class="row g-4 align-items-stretch justify-content-center reality-pipeline">
+
+                    <div class="col-lg-4 col-md-6 reality-col">
+                        <div
+                            class="reality-card glass-card-danger p-5 h-100 d-flex flex-column position-relative overflow-hidden">
+                            <div class="card-spotlight"></div>
+                            <div class="card-watermark text-danger">01</div>
+                            <div
+                                class="icon-circle bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                    <circle cx="9" cy="7" r="4" />
+                                    <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                </svg>
+                            </div>
+                            <h4 class="text-white fw-bold mb-1">The Bottleneck</h4>
+                            <p class="text-secondary small mb-4 text-uppercase tracking-wider">Govt. Seats in India</p>
+                            <div class="mt-auto">
+                                <div class="display-3 fw-bold text-danger mb-2">~2.5%</div>
+                                <p class="text-light mb-0 fs-6">Only 2.5% of the 24 Lakh+ NEET aspirants secure a
+                                    government medical seat. The competition is brutal.</p>
+                            </div>
                         </div>
                     </div>
+
+                    <div class="col-lg-4 col-md-6 reality-col">
+                        <div
+                            class="reality-card glass-card-warning p-5 h-100 d-flex flex-column position-relative overflow-hidden">
+                            <div class="card-spotlight"></div>
+                            <div class="card-watermark text-warning">02</div>
+                            <div
+                                class="icon-circle bg-warning bg-opacity-10 text-warning border border-warning border-opacity-25 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <line x1="12" x2="12" y1="2" y2="22" />
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                </svg>
+                            </div>
+                            <h4 class="text-white fw-bold mb-1">The Financial Trap</h4>
+                            <p class="text-secondary small mb-4 text-uppercase tracking-wider">Private Medical Colleges
+                            </p>
+                            <div class="mt-auto">
+                                <div class="display-3 fw-bold text-warning mb-2">₹60L+</div>
+                                <p class="text-light mb-0 fs-6">If you miss a govt. seat, private colleges demand
+                                    massive donations and tuition fees starting from ₹60 Lakhs to over ₹1 Crore.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-12 reality-col solution-col">
+                        <div
+                            class="reality-card glass-card-success p-5 h-100 d-flex flex-column position-relative overflow-hidden solution-card">
+                            <div class="card-spotlight"></div>
+                            <div class="solution-shine"></div>
+
+                            <div class="card-watermark text-info">03</div>
+                            <div
+                                class="icon-circle bg-info bg-opacity-10 text-info border border-info border-opacity-50 mb-4 shadow-info">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+                                </svg>
+                            </div>
+                            <h4 class="text-white fw-bold mb-1">The Smart Choice</h4>
+                            <p class="text-info small mb-4 text-uppercase tracking-wider fw-bold">MBBS Abroad via
+                                WayForWhitecoat</p>
+                            <div class="mt-auto position-relative z-1">
+                                <div class="display-3 fw-bold text-white mb-2 text-shadow-glow">₹20L <span
+                                        class="fs-4 text-info fw-normal">- ₹40L</span></div>
+                                <p class="text-light mb-4 fs-6">Global NMC-approved universities, world-class clinical
+                                    exposure, and zero hidden fees. Become a doctor without the financial ruin.</p>
+
+                                <a href="#contact"
+                                    class="btn-primary-glass d-inline-flex w-100 justify-content-center text-decoration-none">
+                                    Check Eligibility
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
+        </section>
 
-            <!-- Part 2: 4 Wireframe Features -->
-            <div class="about-features-area">
-                <div class="container">
-                    <div class="row g-5 text-start">
-                        <!-- Card 1 -->
-                        <div class="col-lg-3 col-md-6 feature-card">
-                            <div class="wireframe-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path
-                                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                                    <path d="M2 12h20" />
-                                </svg>
-                            </div>
-                            <h4>Expertise</h4>
-                            <p>Our team of seasoned experts possess the deep knowledge required to deliver customized
-                                university placements that meet your unique needs.</p>
+        <!-- Anatomy Section -->
+        <section class="viewfinder-section min-vh-100 d-flex align-items-center py-5 position-relative" id="why-abroad">
+            <!-- Decorative Background Elements -->
+            <div class="vf-bg-glow top-0 end-0"></div>
+            <div class="vf-bg-glow bottom-0 start-0"
+                style="background: radial-gradient(circle, rgba(14, 165, 233, 0.05), transparent 70%);"></div>
+
+            <!-- Particle Canvas -->
+            <canvas class="vf-particles" id="vf-particles"></canvas>
+
+            <!-- Tech Connection Lines -->
+            <svg class="vf-connections d-none d-lg-block" viewBox="0 0 1200 600" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:0" />
+                        <stop offset="50%" style="stop-color:#0ea5e9;stop-opacity:0.5" />
+                        <stop offset="100%" style="stop-color:#0ea5e9;stop-opacity:0" />
+                    </linearGradient>
+                </defs>
+                <path class="conn-line conn-line-1" d="M 200,150 Q 400,100 600,200 T 1000,150" fill="none"
+                    stroke="url(#lineGrad)" stroke-width="1" />
+                <path class="conn-line conn-line-2" d="M 250,300 Q 450,250 650,350 T 1050,300" fill="none"
+                    stroke="url(#lineGrad)" stroke-width="1" />
+                <path class="conn-line conn-line-3" d="M 200,450 Q 400,400 600,500 T 1000,450" fill="none"
+                    stroke="url(#lineGrad)" stroke-width="1" />
+            </svg>
+
+            <div class="container position-relative z-1 py-5">
+                <div class="text-center mb-5 pb-3 position-relative">
+                    <!-- Floating Data Readout -->
+                    <!-- <div class="vf-data-readout">
+                        <span class="data-readout-label">ANALYZING</span>
+                        <span class="data-readout-value" id="vf-data-counter">4</span>
+                        <span class="data-readout-sep"></span>
+                        <span class="data-readout-label">ADVANTAGES</span>
+                    </div> -->
+                    <h2 class="display-5 fw-bold text-white mb-3">
+                        The Anatomy of a <span class="highlight-text">Smart Decision.</span>
+                    </h2>
+                    <p class="text-white-50 fs-5 text-center mx-auto" style="max-width: 600px;">
+                        Why thousands of Indian students are choosing to study medicine overseas. Explore your
+                        advantages.
+                    </p>
+                    <!-- Progress Indicator -->
+                    <!-- <div class="vf-progress-container">
+                        <div class="vf-progress-track">
+                            <div class="vf-progress-fill" id="vf-progress-fill"></div>
+                            <div class="vf-progress-glow"></div>
                         </div>
-                        <!-- Card 2 -->
-                        <div class="col-lg-3 col-md-6 feature-card">
-                            <div class="wireframe-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <line x1="2" y1="12" x2="22" y2="12" />
-                                    <path
-                                        d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                                </svg>
-                            </div>
-                            <h4>Technology</h4>
-                            <p>We stay synchronized with international medical councils to ensure you access the most
-                                recognized and advanced curriculum available globally.</p>
-                        </div>
-                        <!-- Card 3 -->
-                        <div class="col-lg-3 col-md-6 feature-card">
-                            <div class="wireframe-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16c0 1.1.9 2 2 2h12a2 2 0 0 0 2-2V8l-6-6z" />
-                                    <path d="M14 3v5h5M16 13H8M16 17H8M10 9H8" />
-                                </svg>
-                            </div>
-                            <h4>Solutions</h4>
-                            <p>We take a personalized approach to every application, meticulously tracking your
-                                admission to secure an unhindered enrollment process.</p>
-                        </div>
-                        <!-- Card 4 -->
-                        <div class="col-lg-3 col-md-6 feature-card">
-                            <div class="wireframe-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M4 22h14a2 2 0 0 0 2-2V7.5L14.5 2H6a2 2 0 0 0-2 2v4" />
-                                    <polyline points="14 2 14 8 20 8" />
-                                    <path d="m3 15 2 2 4-4" />
-                                </svg>
-                            </div>
-                            <h4>Results</h4>
-                            <p>Our track record speaks for itself — we've guided over 5,000 aspiring candidates into
-                                becoming fully qualified and practicing doctors worldwide.</p>
-                        </div>
-                    </div>
+                        <span class="vf-progress-text"><span id="vf-current-step">01</span>/04</span>
+                    </div> -->
                 </div>
-            </div>
 
-            <!-- Part 3: Overlapping Stat Banner & Video -->
-            <div class="about-media-area">
-                <div class="container position-relative">
+                <div class="row g-5 align-items-center">
+                    <!-- Left Side: Interactive Menu with ECG Tracker -->
+                    <div class="col-lg-5 position-relative">
 
-                    <!-- Stat Banner Overlapping the sections -->
-                    <div class="stat-banner">
-                        <div class="stat-item">
-                            <h3>5000+</h3>
-                            <span>Successful Placements</span>
+                        <!-- The Moving ECG Tracker Line -->
+                        <div class="ecg-tracker-container d-none d-lg-block">
+                            <div class="ecg-line-base"></div>
+                            <div class="ecg-tracker" id="ecg-tracker">
+                                <svg viewBox="0 0 100 100" class="ecg-pulse-svg" preserveAspectRatio="none">
+                                    <!-- Dim base track — always visible -->
+                                    <path class="ecg-track-path"
+                                        d="M 0,50 L 20,50 L 30,20 L 45,90 L 60,30 L 70,50 L 100,50" fill="none"
+                                        stroke="#0ea5e9" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                    <!-- Progress fill — drawn by GSAP over card display time -->
+                                    <path id="ecg-progress-path"
+                                        d="M 0,50 L 20,50 L 30,20 L 45,90 L 60,30 L 70,50 L 100,50" fill="none"
+                                        stroke="#38bdf8" stroke-width="3.5" stroke-linecap="round"
+                                        stroke-linejoin="round" />
+                                </svg>
+                                <div class="tracker-glow"></div>
+                            </div>
                         </div>
-                        <div class="stat-dot"></div>
-                        <div class="stat-item">
-                            <h3>98%</h3>
-                            <span>Visa Approval Rate</span>
-                        </div>
-                        <div class="stat-dot"></div>
-                        <div class="stat-item">
-                            <h3>10+</h3>
-                            <span>Years Experience</span>
+
+                        <div class="vf-menu">
+                            <!-- Option 1 -->
+                            <div class="vf-item active" data-target="vf-affordable" data-index="1">
+                                <div class="vf-item-glow"></div>
+
+                                <div class="vf-item-content">
+                                    <h4 class="text-white fw-bold mb-2 d-flex align-items-center gap-3">
+                                        <span class="vf-icon-sm text-info"><svg width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <rect x="2" y="6" width="20" height="12" rx="2" />
+                                                <path d="M12 12h.01" />
+                                                <path d="M17 12h.01" />
+                                                <path d="M7 12h.01" />
+                                            </svg></span>
+                                        Cost-Effective Brilliance
+                                    </h4>
+                                    <p class="mb-0">Save up to 70% compared to private Indian colleges. Premium
+                                        education at a fraction of the cost.</p>
+                                </div>
+                            </div>
+
+                            <!-- Option 2 -->
+                            <div class="vf-item" data-target="vf-nmc" data-index="2">
+                                <div class="vf-item-glow"></div>
+
+                                <div class="vf-item-content">
+                                    <h4 class="text-white fw-bold mb-2 d-flex align-items-center gap-3">
+                                        <span class="vf-icon-sm text-info"><svg width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                <path d="m9 12 2 2 4-4" />
+                                            </svg></span>
+                                        NMC & WHO Approved
+                                    </h4>
+                                    <p class="mb-0">Fully compliant with the latest National Medical Commission
+                                        guidelines for practicing safely in India.</p>
+                                </div>
+                            </div>
+
+                            <!-- Option 3 -->
+                            <div class="vf-item" data-target="vf-global" data-index="3">
+                                <div class="vf-item-glow"></div>
+
+                                <div class="vf-item-content">
+                                    <h4 class="text-white fw-bold mb-2 d-flex align-items-center gap-3">
+                                        <span class="vf-icon-sm text-info"><svg width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <path
+                                                    d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                                <path d="M2 12h20" />
+                                            </svg></span>
+                                        Global Clinical Exposure
+                                    </h4>
+                                    <p class="mb-0">Access advanced international medical technology and highly diverse
+                                        patient demographics.</p>
+                                </div>
+                            </div>
+
+                            <!-- Option 4 -->
+                            <div class="vf-item" data-target="vf-english" data-index="4">
+                                <div class="vf-item-glow"></div>
+
+                                <div class="vf-item-content">
+                                    <h4 class="text-white fw-bold mb-2 d-flex align-items-center gap-3">
+                                        <span class="vf-icon-sm text-info"><svg width="24" height="24"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="m5 8 6 6" />
+                                                <path d="m4 14 6-6 2-3" />
+                                                <path d="M2 5h12" />
+                                                <path d="M7 2h1" />
+                                                <path d="m22 22-5-10-5 10" />
+                                                <path d="M14 18h6" />
+                                            </svg></span>
+                                        100% English Medium
+                                    </h4>
+                                    <p class="mb-0">Zero language barriers. The entire MBBS curriculum is taught
+                                        exclusively in English.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Large Video Image -->
-                    <div class="video-preview-box shadow-lg">
-                        <img src="https://images.unsplash.com/photo-1576091160550-2173ff9e5eb3?auto=format&fit=crop&w=2000&q=80"
-                            alt="Medical doctors in conference">
-                        <div class="play-btn-circle">
-                            <svg viewBox="0 0 24 24" fill="currentColor">
-                                <polygon points="8 5 19 12 8 19 8 5" />
-                            </svg>
+                    <!-- Right Side: The Glass Viewfinder Display -->
+                    <div class="col-lg-7">
+                        <div class="vf-display glass-card rounded-4 overflow-hidden position-relative"
+                            style="height: 550px;">
+
+                            <!-- HUD Elements -->
+                            <div class="vf-hud-overlay">
+                                <div class="vf-hud-corner vf-hud-tl"></div>
+                                <div class="vf-hud-corner vf-hud-tr"></div>
+                                <div class="vf-hud-corner vf-hud-bl"></div>
+                                <div class="vf-hud-corner vf-hud-br"></div>
+                                <div class="vf-hud-scanner"></div>
+                                <!-- <div class="vf-hud-data">
+                                    <span class="hud-label">MODE</span>
+                                    <span class="hud-value" id="vf-mode-display">ANALYSIS</span>
+                                </div> -->
+                                <!-- <div class="vf-hud-time">
+                                    <span class="hud-label">SCAN</span>
+                                    <span class="hud-value" id="vf-time-display">00:00</span>
+                                </div> -->
+                            </div>
+
+                            <!-- Display 1: Affordable -->
+                            <div class="vf-screen active" id="vf-affordable">
+                                <div class="vf-bg-img"
+                                    style="background-image: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=1000&q=80');">
+                                </div>
+                                <div class="vf-overlay"></div>
+                                <div
+                                    class="vf-content-box p-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                    <div
+                                        class="badge bg-info text-dark align-self-start px-3 py-2 rounded-pill fw-bold mb-3">
+                                        ROI Focused</div>
+                                    <h3 class="text-white display-6 fw-bold mb-2">Graduate Debt-Free</h3>
+                                    <p class="text-light fs-5 opacity-75 mb-0" style="max-width: 80%;">Secure your
+                                        entire 6-year education and premium accommodation for the price of just a single
+                                        year in an Indian private college.</p>
+                                    <div class="vf-stat-bar mt-3">
+                                        <div class="stat-bar-fill" style="--stat-width: 70%;"></div>
+                                        <span class="stat-bar-label">70% Savings</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Display 2: NMC -->
+                            <div class="vf-screen" id="vf-nmc">
+                                <div class="vf-bg-img"
+                                    style="background-image: url('https://images.unsplash.com/photo-1532053229672-00507300c14c?auto=format&fit=crop&w=1000&q=80');">
+                                </div>
+                                <div class="vf-overlay"></div>
+                                <div
+                                    class="vf-content-box p-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                    <div
+                                        class="badge bg-success text-white align-self-start px-3 py-2 rounded-pill fw-bold mb-3">
+                                        100% Valid</div>
+                                    <h3 class="text-white display-6 fw-bold mb-2">Practice in India</h3>
+                                    <p class="text-light fs-5 opacity-75 mb-0" style="max-width: 80%;">We meticulously
+                                        filter universities to guarantee they align perfectly with FMGE/NExT licensing
+                                        requirements.</p>
+                                    <div class="vf-stat-bar mt-3 success">
+                                        <div class="stat-bar-fill" style="--stat-width: 100%;"></div>
+                                        <span class="stat-bar-label">NMC Approved</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Display 3: Global -->
+                            <div class="vf-screen" id="vf-global">
+                                <div class="vf-bg-img"
+                                    style="background-image: url('https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1000&q=80');">
+                                </div>
+                                <div class="vf-overlay"></div>
+                                <div
+                                    class="vf-content-box p-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                    <div
+                                        class="badge bg-warning text-dark align-self-start px-3 py-2 rounded-pill fw-bold mb-3">
+                                        World Class</div>
+                                    <h3 class="text-white display-6 fw-bold mb-2">Beyond Textbooks</h3>
+                                    <p class="text-light fs-5 opacity-75 mb-0" style="max-width: 80%;">Get hands-on
+                                        experience with advanced robotics, international protocols, and diverse
+                                        healthcare systems.</p>
+                                    <div class="vf-stat-bar mt-3 warning">
+                                        <div class="stat-bar-fill" style="--stat-width: 85%;"></div>
+                                        <span class="stat-bar-label">Global Standards</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Display 4: English -->
+                            <div class="vf-screen" id="vf-english">
+                                <div class="vf-bg-img"
+                                    style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1000&q=80');">
+                                </div>
+                                <div class="vf-overlay"></div>
+                                <div
+                                    class="vf-content-box p-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                    <div
+                                        class="badge bg-primary text-white align-self-start px-3 py-2 rounded-pill fw-bold mb-3">
+                                        Seamless Learning</div>
+                                    <h3 class="text-white display-6 fw-bold mb-2">Focus on Medicine</h3>
+                                    <p class="text-light fs-5 opacity-75 mb-0" style="max-width: 80%;">Don't waste time
+                                        struggling with a foreign language. All lectures, exams, and primary clinicals
+                                        are conducted in English.</p>
+                                    <div class="vf-stat-bar mt-3 primary">
+                                        <div class="stat-bar-fill" style="--stat-width: 100%;"></div>
+                                        <span class="stat-bar-label">100% English</span>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- White transition trigger -->
+        <div class="theme-transition-trigger"></div>
+
+        <div class="light-theme-wrapper with-global-light-bg">
+
+            <!-- Why Us Section -->
+            <section class="usp-premium-stack position-relative z-2" id="why-us">
+
+                <!-- Subtle Medical Background Elements for Light Section -->
+                <div class="medical-bg-elements light-bg-med-elements">
+                    <div class="med-el med-el-large">
+                        <img src="assets/images/sscope.png" alt="Scope">
+                    </div>
+                    <!-- Stethoscope -->
+                    <div class="med-el med-el-1"><i class="fa-solid fa-stethoscope"></i></div>
+                    <!-- DNA -->
+                    <div class="med-el med-el-2"><i class="fa-solid fa-dna"></i></div>
+                    <!-- Medical Cross / Plus -->
+                    <div class="med-el med-el-3"><i class="fa-solid fa-plus"></i></div>
+                    <!-- Pills -->
+                    <div class="med-el med-el-4"><i class="fa-solid fa-pills"></i></div>
+                    <!-- Heartbeat / Heart Pulse -->
+                    <div class="med-el med-el-5"><i class="fa-solid fa-heart-pulse"></i></div>
+                    <!-- Microscope -->
+                    <div class="med-el med-el-6"><i class="fa-solid fa-microscope"></i></div>
+                    <!-- Syringe -->
+                    <div class="med-el med-el-7"><i class="fa-solid fa-syringe"></i></div>
+                    <!-- Hospital / Medical Shield -->
+                    <div class="med-el med-el-8"><i class="fa-solid fa-shield-halved"></i></div>
+                    <!-- Capsule -->
+                    <div class="med-el med-el-9"><i class="fa-solid fa-capsules"></i></div>
+                    <!-- Hospital Building -->
+                    <div class="med-el med-el-10"><i class="fa-solid fa-hospital"></i></div>
+
+                    <!-- Floating glowing dots (decorative) -->
+                    <div class="med-dot med-dot-1"></div>
+                    <div class="med-dot med-dot-2"></div>
+                    <div class="med-dot med-dot-3"></div>
+                    <div class="med-dot med-dot-4"></div>
+                    <div class="med-dot med-dot-5"></div>
+                    <div class="med-dot med-dot-6"></div>
+                    <div class="med-dot med-dot-7"></div>
+                    <div class="med-dot med-dot-8"></div>
+                </div>
+
+                <div class="container position-relative z-1 py-5">
+                    <div class="row align-items-start g-5">
+
+                        <!-- LEFT COLUMN: Sticky Anchor & Mega Badge -->
+                        <div class="col-lg-5 sticky-left-col">
+                            <div class="sticky-content-wrapper">
+                                <div
+                                    class="urgency-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-dark border-opacity-10 mb-4 bg-white shadow-sm">
+                                    <span class="pulse-dot bg-primary"></span>
+                                    <span class="text-primary fw-bold small text-uppercase tracking-wider">Our
+                                        Standards</span>
+                                </div>
+
+                                <h2 class="display-5 fw-bold text-dark mb-4">
+                                    We Don't Just Send You Abroad. <br>
+                                    <span class="highlight-text-blue">We Build Your Career.</span>
+                                </h2>
+
+                                <p class="text-secondary mb-4" style="max-width: 90%;">
+                                    Don't risk your medical future with general agencies. Experience a process
+                                    engineered exclusively for doctors, by experts.
+                                </p>
+
+                                <!-- Trust Stats Row -->
+                                <div class="usp-trust-stats d-flex gap-4 mb-5 flex-wrap">
+                                    <div class="trust-stat-item">
+                                        <div class="trust-stat-top">
+                                            <span class="trust-stat-number" data-target="5000">0</span><span
+                                                class="trust-stat-plus">+</span>
+                                        </div>
+                                        <span class="trust-stat-label">Students Placed</span>
+                                    </div>
+                                    <div class="trust-stat-divider"></div>
+                                    <div class="trust-stat-item">
+                                        <div class="trust-stat-top">
+                                            <span class="trust-stat-number" data-target="98">0</span><span
+                                                class="trust-stat-plus">%</span>
+                                        </div>
+                                        <span class="trust-stat-label">Visa Success</span>
+                                    </div>
+                                    <div class="trust-stat-divider"></div>
+                                    <div class="trust-stat-item">
+                                        <div class="trust-stat-top">
+                                            <span class="trust-stat-number" data-target="10">0</span><span
+                                                class="trust-stat-plus">+</span>
+                                        </div>
+                                        <span class="trust-stat-label">Years of Trust</span>
+                                    </div>
+                                </div>
+
+                                <!-- The Breakout "Zero Donation" Badge - Enhanced -->
+                                <div class="zero-donation-badge-wrap mt-4">
+                                    <div
+                                        class="zero-donation-badge p-4 rounded-4 position-relative overflow-hidden shadow-lg">
+                                        <div class="badge-shine"></div>
+                                        <div class="badge-pulse-ring"></div>
+                                        <div class="d-flex align-items-center gap-3 mb-2">
+                                            <div class="zero-icon-wrap">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                                    <circle cx="12" cy="12" r="10" />
+                                                    <line x1="4.93" y1="4.93" x2="19.07" y2="19.07" />
+                                                </svg>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-white fw-bold mb-0 m-0 p-0 fs-3">Zero Donation</h3>
+                                                <span class="zero-sub-tag">Guaranteed Transparent Pricing</span>
+                                            </div>
+                                        </div>
+                                        <p class="text-white text-opacity-75 mb-0 mt-3">
+                                            100% transparent pricing. No hidden fees, no last-minute charges, and
+                                            absolutely no donation traps. What you see is exactly what you pay.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN: The Sticky Stacking Cards -->
+                        <div class="col-lg-7 stack-right-col">
+                            <div class="cards-stack-wrapper">
+
+                                <!-- Card 1 -->
+                                <div class="stack-card" id="stack-card-1">
+                                    <div class="glass-dossier p-4 p-md-5 rounded-4">
+                                        <div class="card-spotlight-usp"></div>
+                                        <div class="d-flex justify-content-between align-items-start mb-4">
+                                            <div class="icon-box-premium"
+                                                style="background: linear-gradient(135deg, #2E3FBF, #6366f1);">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                    viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path
+                                                        d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" />
+                                                    <path d="M8 7h6" />
+                                                    <path d="M8 11h8" />
+                                                </svg>
+                                            </div>
+                                            <span class="card-step-number">01</span>
+                                        </div>
+                                        <h3 class="fw-bold text-dark mb-3">100% MBBS Focused</h3>
+                                        <p class="text-secondary mb-4">While others juggle engineering, IT, and business
+                                            courses, our entire consultancy is hyper-focused on Medical Education. We
+                                            breathe NMC guidelines and medical curricula.</p>
+                                        <div class="card-micro-stats">
+                                            <span class="micro-chip"><svg width="14" height="14" viewBox="0 0 24 24"
+                                                    fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                                    <path d="m9 11 3 3L22 4" />
+                                                </svg> Medical Only</span>
+                                            <span class="micro-chip"><svg width="14" height="14" viewBox="0 0 24 24"
+                                                    fill="none" stroke="currentColor" stroke-width="2">
+                                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                </svg> NMC Compliant</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 2 -->
+                                <div class="stack-card" id="stack-card-2">
+                                    <div class="glass-dossier p-4 p-md-5 rounded-4">
+                                        <div class="card-spotlight-usp"></div>
+                                        <div class="d-flex justify-content-between align-items-start mb-4">
+                                            <div class="icon-box-premium"
+                                                style="background: linear-gradient(135deg, #059669, #10b981);">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                    viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                                    <path d="m9 12 2 2 4-4" />
+                                                </svg>
+                                            </div>
+                                            <span class="card-step-number">02</span>
+                                        </div>
+                                        <h3 class="fw-bold text-dark mb-3">Verified Universities Only</h3>
+                                        <p class="text-secondary mb-4">We refuse to partner with unverified or
+                                            blacklisted colleges. Every institution we recommend is strictly approved by
+                                            the WHO, ECFMG, and the National Medical Commission (NMC).</p>
+                                        <div class="card-micro-stats">
+                                            <span class="micro-chip chip-green"><svg width="14" height="14"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                                    <path d="m9 11 3 3L22 4" />
+                                                </svg> WHO Approved</span>
+                                            <span class="micro-chip chip-green"><svg width="14" height="14"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                                    <path d="m9 11 3 3L22 4" />
+                                                </svg> ECFMG Listed</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 3 -->
+                                <div class="stack-card" id="stack-card-3">
+                                    <div class="glass-dossier p-4 p-md-5 rounded-4">
+                                        <div class="card-spotlight-usp"></div>
+                                        <div class="d-flex justify-content-between align-items-start mb-4">
+                                            <div class="icon-box-premium"
+                                                style="background: linear-gradient(135deg, #0284c7, #38bdf8);">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                    viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                                                    <path d="M7 15h0M2 9.5h20" />
+                                                </svg>
+                                            </div>
+                                            <span class="card-step-number">03</span>
+                                        </div>
+                                        <h3 class="fw-bold text-dark mb-3">Transparent Processing</h3>
+                                        <p class="text-secondary mb-4">No keeping you in the dark. From application
+                                            submission to receiving your invitation letter and visa stamping, you and
+                                            your parents track every single step of the journey.</p>
+                                        <div class="card-micro-stats">
+                                            <span class="micro-chip chip-blue"><svg width="14" height="14"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                                    <circle cx="12" cy="12" r="3" />
+                                                </svg> Live Tracking</span>
+                                            <span class="micro-chip chip-blue"><svg width="14" height="14"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                                    <circle cx="9" cy="7" r="4" />
+                                                </svg> Parent Portal</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Card 4 -->
+                                <div class="stack-card" id="stack-card-4">
+                                    <div class="glass-dossier p-4 p-md-5 rounded-4">
+                                        <div class="card-spotlight-usp"></div>
+                                        <div class="d-flex justify-content-between align-items-start mb-4">
+                                            <div class="icon-box-premium"
+                                                style="background: linear-gradient(135deg, #d97706, #f59e0b);">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                    viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                                                    stroke-linecap="round" stroke-linejoin="round">
+                                                    <path
+                                                        d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                                    <polyline points="14 2 14 8 20 8" />
+                                                    <line x1="16" y1="13" x2="8" y2="13" />
+                                                    <line x1="16" y1="17" x2="8" y2="17" />
+                                                    <polyline points="10 9 9 9 8 9" />
+                                                </svg>
+                                            </div>
+                                            <span class="card-step-number">04</span>
+                                        </div>
+                                        <h3 class="fw-bold text-dark mb-3">End-to-End Handholding</h3>
+                                        <p class="text-secondary mb-4">Our job doesn't end when you get admission. We
+                                            provide pre-departure briefings, airport pickups, hostel settling
+                                            assistance, and continuous on-ground support until graduation.</p>
+                                        <div class="card-micro-stats">
+                                            <span class="micro-chip chip-amber"><svg width="14" height="14"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                                </svg> Airport Pickup</span>
+                                            <span class="micro-chip chip-amber"><svg width="14" height="14"
+                                                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                    stroke-width="2">
+                                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                                    <path d="m9 11 3 3L22 4" />
+                                                </svg> Until Graduation</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- CINEMATIC HORIZONTAL ACCORDION (DESTINATIONS) -->
+            <section class="universities-accordion-section py-5 position-relative z-1" id="universities">
+                <div class="container py-4">
+
+                    <!-- Section Header -->
+                    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end mb-4">
+                        <div class="univ-header-text">
+                            <div
+                                class="urgency-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-dark border-opacity-10 mb-3 bg-white shadow-sm">
+                                <span class="pulse-dot bg-primary"></span>
+                                <span class="text-primary fw-bold small text-uppercase tracking-wider">Global
+                                    Network</span>
+                            </div>
+                            <h2 class="display-5 fw-bold text-dark mb-0">
+                                Your Dream Destination.
+                                <span class="highlight-text-blue fs-3 fw-medium">NMC Approved.</span>
+                            </h2>
+                        </div>
+                        <p class="text-secondary fs-5 mt-3 mt-md-0 mb-0" style="max-width: 400px;">
+                            Select a country below to explore its top-ranked medical university.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- The Accordion Container -->
+                <div class="container-fluid px-md-5">
+                    <div class="cinematic-accordion">
+
+                        <!-- 1. Russia -->
+                        <div class="accordion-slice active group" data-name="Kazan Federal University"
+                            data-country="Russia" data-fees="₹28 Lakhs - ₹32 Lakhs"
+                            data-img="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80"
+                            data-desc="One of the oldest and most prestigious medical universities in Russia, offering world-class infrastructure.">
+                            <div class="slice-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1200&q=80');">
+                            </div>
+                            <div class="slice-overlay"></div>
+
+                            <!-- Collapsed State Text -->
+                            <div class="slice-collapsed-text">
+                                <span
+                                    class="fs-5 fw-bold text-white tracking-wider text-uppercase d-flex align-items-center gap-2">
+                                    <img src="https://flagcdn.com/ru.svg" width="24" alt="Russia"
+                                        class="rounded-1 shadow-sm">
+                                    Russia
+                                </span>
+                            </div>
+
+                            <!-- Expanded State Content -->
+                            <div
+                                class="slice-expanded-content p-4 p-md-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                <div class="content-fade-in">
+                                    <span
+                                        class="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold shadow-sm mb-3 d-inline-flex align-items-center gap-2">
+                                        <img src="https://flagcdn.com/ru.svg" width="16" alt="Russia" class="rounded-1">
+                                        Russia
+                                    </span>
+                                    <h3 class="text-white display-6 fw-normal mb-2">Kazan Federal University</h3>
+                                    <p class="text-light opacity-75 mb-4 d-none d-md-block" style="max-width: 500px;">
+                                        Experience world-class medical education with advanced facilities and highly
+                                        affordable tuition fees.</p>
+                                    <button class="btn-view-univ liquid-glass-btn fs-6 shadow-lg">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Kazakhstan -->
+                        <div class="accordion-slice group" data-name="Al-Farabi Kazakh National Univ."
+                            data-country="Kazakhstan" data-fees="₹24 Lakhs - ₹28 Lakhs"
+                            data-img="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80"
+                            data-desc="Ranked among the top universities globally, offering excellent English-medium medical programs.">
+                            <div class="slice-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80');">
+                            </div>
+                            <div class="slice-overlay"></div>
+                            <div class="slice-collapsed-text">
+                                <span
+                                    class="fs-5 fw-bold text-white tracking-wider text-uppercase d-flex align-items-center gap-2">
+                                    <img src="https://flagcdn.com/kz.svg" width="24" alt="Kazakhstan"
+                                        class="rounded-1 shadow-sm">
+                                    Kazakhstan
+                                </span>
+                            </div>
+                            <div
+                                class="slice-expanded-content p-4 p-md-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                <div class="content-fade-in">
+                                    <span
+                                        class="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold shadow-sm mb-3 d-inline-flex align-items-center gap-2">
+                                        <img src="https://flagcdn.com/kz.svg" width="16" alt="Kazakhstan"
+                                            class="rounded-1">
+                                        Kazakhstan
+                                    </span>
+                                    <h3 class="text-white display-6 fw-normal mb-2">Al-Farabi Kazakh National</h3>
+                                    <button class="btn-view-univ liquid-glass-btn fs-6 shadow-lg">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 3. Uzbekistan -->
+                        <div class="accordion-slice group" data-name="Tashkent Medical Academy"
+                            data-country="Uzbekistan" data-fees="₹22 Lakhs - ₹26 Lakhs"
+                            data-img="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80"
+                            data-desc="The premier medical institution in Uzbekistan, known for its affordable fees and modern teaching hospitals.">
+                            <div class="slice-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80');">
+                            </div>
+                            <div class="slice-overlay"></div>
+                            <div class="slice-collapsed-text">
+                                <span
+                                    class="fs-5 fw-bold text-white tracking-wider text-uppercase d-flex align-items-center gap-2">
+                                    <img src="https://flagcdn.com/uz.svg" width="24" alt="Uzbekistan"
+                                        class="rounded-1 shadow-sm">
+                                    Uzbekistan
+                                </span>
+                            </div>
+                            <div
+                                class="slice-expanded-content p-4 p-md-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                <div class="content-fade-in">
+                                    <span
+                                        class="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold shadow-sm mb-3 d-inline-flex align-items-center gap-2">
+                                        <img src="https://flagcdn.com/uz.svg" width="16" alt="Uzbekistan"
+                                            class="rounded-1">
+                                        Uzbekistan
+                                    </span>
+                                    <h3 class="text-white display-6 fw-normal mb-2">Tashkent Medical Academy</h3>
+                                    <button class="btn-view-univ liquid-glass-btn fs-6 shadow-lg">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 4. Kyrgyzstan -->
+                        <div class="accordion-slice group" data-name="Kyrgyz State Medical Academy"
+                            data-country="Kyrgyzstan" data-fees="₹20 Lakhs - ₹24 Lakhs"
+                            data-img="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80"
+                            data-desc="Highly affordable yet premium option with a massive international student body.">
+                            <div class="slice-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80');">
+                            </div>
+                            <div class="slice-overlay"></div>
+                            <div class="slice-collapsed-text">
+                                <span
+                                    class="fs-5 fw-bold text-white tracking-wider text-uppercase d-flex align-items-center gap-2">
+                                    <img src="https://flagcdn.com/kg.svg" width="24" alt="Kyrgyzstan"
+                                        class="rounded-1 shadow-sm">
+                                    Kyrgyzstan
+                                </span>
+                            </div>
+                            <div
+                                class="slice-expanded-content p-4 p-md-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                <div class="content-fade-in">
+                                    <span
+                                        class="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold shadow-sm mb-3 d-inline-flex align-items-center gap-2">
+                                        <img src="https://flagcdn.com/kg.svg" width="16" alt="Kyrgyzstan"
+                                            class="rounded-1">
+                                        Kyrgyzstan
+                                    </span>
+                                    <h3 class="text-white display-6 fw-normal mb-2">Kyrgyz State Med. Acad.</h3>
+                                    <button class="btn-view-univ liquid-glass-btn fs-6 shadow-lg">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 5. Georgia -->
+                        <div class="accordion-slice group" data-name="Tbilisi State Medical University"
+                            data-country="Georgia" data-fees="₹35 Lakhs - ₹40 Lakhs"
+                            data-img="https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&w=1200&q=80"
+                            data-desc="Rising star in European medical education offering high USMLE pass rates.">
+                            <div class="slice-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1581056771107-24ca5f033842?auto=format&fit=crop&w=1200&q=80');">
+                            </div>
+                            <div class="slice-overlay"></div>
+                            <div class="slice-collapsed-text">
+                                <span
+                                    class="fs-5 fw-bold text-white tracking-wider text-uppercase d-flex align-items-center gap-2">
+                                    <img src="https://flagcdn.com/ge.svg" width="24" alt="Georgia"
+                                        class="rounded-1 shadow-sm">
+                                    Georgia
+                                </span>
+                            </div>
+                            <div
+                                class="slice-expanded-content p-4 p-md-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                <div class="content-fade-in">
+                                    <span
+                                        class="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold shadow-sm mb-3 d-inline-flex align-items-center gap-2">
+                                        <img src="https://flagcdn.com/ge.svg" width="16" alt="Georgia"
+                                            class="rounded-1">
+                                        Georgia
+                                    </span>
+                                    <h3 class="text-white display-6 fw-normal mb-2">Tbilisi State Medical</h3>
+                                    <button class="btn-view-univ liquid-glass-btn fs-6 shadow-lg">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 6. Egypt -->
+                        <div class="accordion-slice group" data-name="Cairo University Faculty of Medicine"
+                            data-country="Egypt" data-fees="₹30 Lakhs - ₹35 Lakhs"
+                            data-img="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80"
+                            data-desc="Study medicine with a rich heritage and world-recognized universities.">
+                            <div class="slice-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80');">
+                            </div>
+                            <div class="slice-overlay"></div>
+                            <div class="slice-collapsed-text">
+                                <span
+                                    class="fs-5 fw-bold text-white tracking-wider text-uppercase d-flex align-items-center gap-2">
+                                    <img src="https://flagcdn.com/eg.svg" width="24" alt="Egypt"
+                                        class="rounded-1 shadow-sm">
+                                    Egypt
+                                </span>
+                            </div>
+                            <div
+                                class="slice-expanded-content p-4 p-md-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                <div class="content-fade-in">
+                                    <span
+                                        class="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold shadow-sm mb-3 d-inline-flex align-items-center gap-2">
+                                        <img src="https://flagcdn.com/eg.svg" width="16" alt="Egypt" class="rounded-1">
+                                        Egypt
+                                    </span>
+                                    <h3 class="text-white display-6 fw-normal mb-2">Cairo University</h3>
+                                    <button class="btn-view-univ liquid-glass-btn fs-6 shadow-lg">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 7. Tajikistan -->
+                        <div class="accordion-slice group" data-name="Avicenna Tajik State Med Univ."
+                            data-country="Tajikistan" data-fees="₹18 Lakhs - ₹22 Lakhs"
+                            data-img="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80"
+                            data-desc="Emerging destination for highly affordable medical education with hands-on practice.">
+                            <div class="slice-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80');">
+                            </div>
+                            <div class="slice-overlay"></div>
+                            <div class="slice-collapsed-text">
+                                <span
+                                    class="fs-5 fw-bold text-white tracking-wider text-uppercase d-flex align-items-center gap-2">
+                                    <img src="https://flagcdn.com/tj.svg" width="24" alt="Tajikistan"
+                                        class="rounded-1 shadow-sm">
+                                    Tajikistan
+                                </span>
+                            </div>
+                            <div
+                                class="slice-expanded-content p-4 p-md-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                <div class="content-fade-in">
+                                    <span
+                                        class="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold shadow-sm mb-3 d-inline-flex align-items-center gap-2">
+                                        <img src="https://flagcdn.com/tj.svg" width="16" alt="Tajikistan"
+                                            class="rounded-1">
+                                        Tajikistan
+                                    </span>
+                                    <h3 class="text-white display-6 fw-normal mb-2">Avicenna Tajik State</h3>
+                                    <button class="btn-view-univ liquid-glass-btn fs-6 shadow-lg">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 8. Bangladesh -->
+                        <div class="accordion-slice group" data-name="Dhaka National Medical College"
+                            data-country="Bangladesh" data-fees="₹32 Lakhs - ₹38 Lakhs"
+                            data-img="https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80"
+                            data-desc="FMGE-friendly curriculum with a similar clinical and disease pattern to India.">
+                            <div class="slice-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?auto=format&fit=crop&w=1200&q=80');">
+                            </div>
+                            <div class="slice-overlay"></div>
+                            <div class="slice-collapsed-text">
+                                <span
+                                    class="fs-5 fw-bold text-white tracking-wider text-uppercase d-flex align-items-center gap-2">
+                                    <img src="https://flagcdn.com/bd.svg" width="24" alt="Bangladesh"
+                                        class="rounded-1 shadow-sm">
+                                    Bangladesh
+                                </span>
+                            </div>
+                            <div
+                                class="slice-expanded-content p-4 p-md-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                <div class="content-fade-in">
+                                    <span
+                                        class="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold shadow-sm mb-3 d-inline-flex align-items-center gap-2">
+                                        <img src="https://flagcdn.com/bd.svg" width="16" alt="Bangladesh"
+                                            class="rounded-1">
+                                        Bangladesh
+                                    </span>
+                                    <h3 class="text-white display-6 fw-normal mb-2">Dhaka National Med.</h3>
+                                    <button class="btn-view-univ liquid-glass-btn fs-6 shadow-lg">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 9. Nepal -->
+                        <div class="accordion-slice group" data-name="Kathmandu University Medical" data-country="Nepal"
+                            data-fees="₹45 Lakhs - ₹55 Lakhs"
+                            data-img="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80"
+                            data-desc="Study close to home with top-ranking medical institutions recognized globally.">
+                            <div class="slice-bg"
+                                style="background-image: url('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80');">
+                            </div>
+                            <div class="slice-overlay"></div>
+                            <div class="slice-collapsed-text">
+                                <span
+                                    class="fs-5 fw-bold text-white tracking-wider text-uppercase d-flex align-items-center gap-2">
+                                    <img src="https://flagcdn.com/np.svg" width="24" alt="Nepal"
+                                        class="rounded-1 shadow-sm">
+                                    Nepal
+                                </span>
+                            </div>
+                            <div
+                                class="slice-expanded-content p-4 p-md-5 d-flex flex-column justify-content-end h-100 position-relative z-2">
+                                <div class="content-fade-in">
+                                    <span
+                                        class="badge bg-white text-dark px-3 py-2 rounded-pill fw-bold shadow-sm mb-3 d-inline-flex align-items-center gap-2">
+                                        <img src="https://flagcdn.com/np.svg" width="16" alt="Nepal" class="rounded-1">
+                                        Nepal
+                                    </span>
+                                    <h3 class="text-white display-6 fw-normal mb-2">Kathmandu Univ. Med.</h3>
+                                    <button class="btn-view-univ liquid-glass-btn fs-6 shadow-lg">View Details</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==============================================
+                THE PROCESS (HORIZONTAL CINEMATIC JOURNEY)
+            =============================================== -->
+            <section class="journey-section position-relative z-1 overflow-hidden" id="process">
+                <!-- Ambient Glow -->
+                <div class="position-absolute top-50 start-50 translate-middle w-100 h-100 bg-gradient-radial z-0 opacity-25"
+                    style="background: radial-gradient(circle, rgba(14, 165, 233, 0.05) 0%, transparent 70%); pointer-events: none;">
+                </div>
+
+                <div class="journey-pin-wrapper py-5">
+                    <div class="container position-relative z-2 mb-5">
+                        <div class="row align-items-end">
+                            <div class="col-lg-7">
+                                <div
+                                    class="urgency-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-dark border-opacity-10 mb-3 bg-opacity-5 backdrop-blur text-primary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                    </svg>
+                                    <span class="fw-bold small text-uppercase tracking-wider">Complete
+                                        Transparency</span>
+                                </div>
+                                <h2 class="display-5 fw-bold text-dark mb-0">
+                                    The 0 to Doctor <br>
+                                    <span class="highlight-text-blue">Pipeline.</span>
+                                </h2>
+                            </div>
+                            <div class="col-lg-5 text-lg-end mt-4 mt-lg-0">
+                                <p class="text-secondary fs-5 mb-0">
+                                    No guesswork. No hidden agencies. Track your exact progress from your first call to
+                                    your first day of class.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- The Horizontal Track -->
+                    <div class="journey-track-container position-relative z-2 pt-4">
+
+                        <div class="journey-track d-flex gap-4 px-4 px-md-5 position-relative pt-5 pb-5">
+                            <!-- The glowing line above the cards (Attached to track) -->
+                            <div class="journey-path-line d-none d-lg-block">
+                                <div class="journey-path-fill">
+                                    <div class="journey-path-glow"></div>
+                                </div>
+                            </div>
+
+                            <!-- Step 1: Counseling -->
+                            <div class="journey-card glass-card p-4 p-md-5 rounded-4 position-relative">
+
+                                <div class="journey-step-num">01</div>
+                                <div class="journey-icon-box bg-info bg-opacity-10 text-info mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-dark fw-bold mb-3 fs-3">Expert Counseling</h3>
+                                <p class="text-secondary fs-6 mb-0">We analyze your NEET score, budget, and career goals
+                                    to provide an unbiased roadmap. We answer every question your parents have with
+                                    total honesty.</p>
+                            </div>
+
+                            <!-- Step 2: Selection -->
+                            <div class="journey-card glass-card p-4 p-md-5 rounded-4 position-relative">
+
+                                <div class="journey-step-num">02</div>
+                                <div class="journey-icon-box bg-primary bg-opacity-10 text-primary mb-4"
+                                    style="color: #8b5cf6 !important; background: rgba(139, 92, 246, 0.1) !important;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="12" cy="12" r="10" />
+                                        <line x1="12" y1="8" x2="12" y2="16" />
+                                        <line x1="8" y1="12" x2="16" y2="12" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-dark fw-bold mb-3 fs-3">University Match</h3>
+                                <p class="text-secondary fs-6 mb-0">We don't push you where we get the highest cut. We
+                                    present 3-4 NMC-approved universities that perfectly match your profile, complete
+                                    with exact fee breakdowns.</p>
+                            </div>
+
+                            <!-- Step 3: Admission -->
+                            <div class="journey-card glass-card p-4 p-md-5 rounded-4 position-relative">
+
+                                <div class="journey-step-num">03</div>
+                                <div class="journey-icon-box bg-success bg-opacity-10 text-success mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                        <polyline points="14 2 14 8 20 8" />
+                                        <path d="M16 13H8" />
+                                        <path d="M16 17H8" />
+                                        <polyline points="10 9 9 9 8 9" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-dark fw-bold mb-3 fs-3">Admission Processing</h3>
+                                <p class="text-secondary fs-6 mb-0">You relax while we handle the heavy lifting:
+                                    document translation, notarization, apostille, and securing your official university
+                                    invitation letter.</p>
+                            </div>
+
+                            <!-- Step 4: Visa -->
+                            <div class="journey-card glass-card p-4 p-md-5 rounded-4 position-relative">
+
+                                <div class="journey-step-num">04</div>
+                                <div class="journey-icon-box bg-warning bg-opacity-10 text-warning mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-dark fw-bold mb-3 fs-3">Visa & Clearance</h3>
+                                <p class="text-secondary fs-6 mb-0">We have a 98%+ visa success rate. We organize your
+                                    medical checkups, prepare your embassy files, and conduct mock interviews to ensure
+                                    zero rejections.</p>
+                            </div>
+
+                            <!-- Step 5: Travel -->
+                            <div class="journey-card glass-card p-4 p-md-5 rounded-4 position-relative">
+
+                                <div class="journey-step-num">05</div>
+                                <div class="journey-icon-box bg-info bg-opacity-10 text-info mb-4">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path
+                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-dark fw-bold mb-3 fs-3">Travel & Briefing</h3>
+                                <p class="text-secondary fs-6 mb-0">We host a pre-departure orientation for you and your
+                                    parents, arrange forex/student bank accounts, and book you on a group flight with
+                                    other students.</p>
+                            </div>
+
+                            <!-- Step 6: Post-Arrival -->
+                            <div class="journey-card glass-card p-4 p-md-5 rounded-4 position-relative">
+
+                                <div class="journey-step-num">06</div>
+                                <div class="journey-icon-box bg-primary bg-opacity-10 text-primary mb-4"
+                                    style="color: #ec4899 !important; background: rgba(236, 72, 153, 0.1) !important;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                                        <polyline points="9 22 9 12 15 12 15 22" />
+                                    </svg>
+                                </div>
+                                <h3 class="text-dark fw-bold mb-3 fs-3">Post-Arrival Support</h3>
+                                <p class="text-secondary fs-6 mb-0">Our local coordinators pick you up at the airport,
+                                    assist with hostel allotment, arrange your local SIM card, and finalize your
+                                    university registration.</p>
+                            </div>
+
+                            <!-- Buffer Card (Allows the last card to reach the center of screen) -->
+                            <div class="journey-card buffer-card"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==============================================
+                PARENTS TRUST BLOCK (THE CONCIERGE DOSSIER)
+            =============================================== -->
+            <section class="trust-dossier-section position-relative z-1" id="parents-trust">
+                <!-- Premium Ivory Background -->
+                <div class="position-absolute inset-0 z-0" style="background-color: #f8fafc;"></div>
+
+                <!-- Subtle Golden/Warm Glow for reassurance -->
+                <div class="position-absolute top-0 end-0 w-50 h-100 z-0 opacity-50"
+                    style="background: radial-gradient(circle at 80% 20%, rgba(245, 158, 11, 0.08), transparent 60%); pointer-events: none;">
+                </div>
+
+                <div class="container position-relative z-2">
+
+                    <!-- Section Header -->
+                    <div class="text-center mb-3 pb-1">
+                        <div
+                            class="urgency-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-dark border-opacity-10 mb-3 bg-white shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" class="text-warning">
+                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                            </svg>
+                            <span class="text-dark fw-bold small text-uppercase tracking-wider">For The Parents</span>
+                        </div>
+                        <h2 class="display-5 fw-bold text-dark mb-1">
+                            Your Child’s Dream.
+                            <span class="text-primary">Your Peace of Mind.</span>
+                        </h2>
+                        <p class="text-secondary fs-5 mx-auto" style="max-width: 650px;">
+                            Sending your child abroad is a monumental decision. We eliminate the guesswork, the hidden
+                            fees, and the anxiety.
+                        </p>
+                    </div>
+
+                    <div
+                        class="row g-0 align-items-stretch bg-white rounded-5 shadow-lg overflow-hidden border border-dark border-opacity-10 trust-dossier-container">
+
+                        <!-- LEFT: The Interactive Accordion -->
+                        <div class="col-lg-5 p-0 z-2 position-relative"
+                            style="background-color: #f8fafc; border-right: 1px solid rgba(0,0,0,0.05);">
+                            <div class="dossier-accordion h-100 d-flex flex-column">
+
+                                <!-- Item 1: Safety -->
+                                <div class="dossier-item active" data-img="trust-img-1">
+                                    <div class="dossier-header d-flex align-items-center gap-4">
+                                        <div class="dossier-icon text-success">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                            </svg>
+                                        </div>
+                                        <h4 class="fw-bold mb-0 text-dark">Safety Assurance</h4>
+                                    </div>
+                                    <div class="dossier-body">
+                                        <p class="text-secondary mb-0 mt-3 fs-6 lh-base">
+                                            We prioritize countries and campuses with proven safety records. From 24/7
+                                            CCTV-monitored hostels to secure campus transport, we ensure a highly
+                                            protected environment for every student.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Item 2: Recognition -->
+                                <div class="dossier-item" data-img="trust-img-2">
+                                    <div class="dossier-header d-flex align-items-center gap-4">
+                                        <div class="dossier-icon text-primary">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                                <path d="m9 11 3 3L22 4" />
+                                            </svg>
+                                        </div>
+                                        <h4 class="fw-bold mb-0 text-dark">Verified Recognition</h4>
+                                    </div>
+                                    <div class="dossier-body">
+                                        <p class="text-secondary mb-0 mt-3 fs-6 lh-base">
+                                            No gambles with your child's future. Every university we recommend is
+                                            strictly approved by the National Medical Commission (NMC) and WHO, ensuring
+                                            their degree is 100% valid for practice in India.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Item 3: Cost Transparency -->
+                                <div class="dossier-item" data-img="trust-img-3">
+                                    <div class="dossier-header d-flex align-items-center gap-4">
+                                        <div class="dossier-icon text-warning">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <line x1="12" x2="12" y1="2" y2="22" />
+                                                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                                            </svg>
+                                        </div>
+                                        <h4 class="fw-bold mb-0 text-dark">Cost Transparency</h4>
+                                    </div>
+                                    <div class="dossier-body">
+                                        <p class="text-secondary mb-0 mt-3 fs-6 lh-base">
+                                            Say goodbye to hidden donation traps. Before initiating any process, parents
+                                            receive a legally binding, itemized ledger detailing exact tuition, hostel
+                                            fees, and visa costs down to the last rupee.
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <!-- Item 4: Support Abroad -->
+                                <div class="dossier-item border-bottom-0" data-img="trust-img-4">
+                                    <div class="dossier-header d-flex align-items-center gap-4">
+                                        <div class="dossier-icon text-info">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                                <circle cx="9" cy="7" r="4" />
+                                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                            </svg>
+                                        </div>
+                                        <h4 class="fw-bold mb-0 text-dark">On-Ground Support</h4>
+                                    </div>
+                                    <div class="dossier-body">
+                                        <p class="text-secondary mb-0 mt-3 fs-6 lh-base">
+                                            Our responsibility doesn't end at the airport. Our dedicated Indian
+                                            coordinators are present on-campus to receive students, arrange local SIM
+                                            cards, and provide continuous support throughout their degree.
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- RIGHT: Cinematic Image Crossfade & Promise Plaque -->
+                        <div class="col-lg-7 p-0 position-relative dossier-image-col bg-light">
+
+                            <!-- The Images -->
+                            <div class="dossier-images position-absolute top-0 start-0 w-100 h-100 overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=1000&q=80"
+                                    alt="Safety" class="dossier-img active" id="trust-img-1">
+                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1000&q=80"
+                                    alt="Recognition" class="dossier-img" id="trust-img-2">
+                                <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1000&q=80"
+                                    alt="Transparency" class="dossier-img" id="trust-img-3">
+                                <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?auto=format&fit=crop&w=1000&q=80"
+                                    alt="Support" class="dossier-img" id="trust-img-4">
+                                <div class="dossier-img-overlay"></div>
+                            </div>
+
+                            <!-- The Overlapping Promise Plaque -->
+                            <div class="promise-plaque position-absolute z-3 p-4 p-xl-5 rounded-4">
+                                <div class="d-flex align-items-center gap-4">
+                                    <div class="flex-shrink-0 bg-white bg-opacity-10 text-white rounded-circle d-flex align-items-center justify-content-center"
+                                        style="width: 56px; height: 56px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 10px 25px rgba(0,0,0,0.2);">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                                            <path d="m9 12 2 2 4-4" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="text-uppercase text-info fw-bold mb-1"
+                                            style="letter-spacing: 2px; font-size: 0.75rem;">Our Core Promise</p>
+                                        <h4 class="text-white fw-bold mb-0 fs-6 lh-base">We guide both student <br
+                                                class="d-none d-md-block">& parents at every step.</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==============================================
+                COMPARISON MATRIX (THE POWER SECTION)
+            =============================================== -->
+            <section class="comparison-section py-5 position-relative z-1" id="comparison">
+                <!-- Ambient Deep Glows -->
+                <div class="position-absolute top-50 start-50 translate-middle w-100 h-100 opacity-25 z-0 pointer-events-none"
+                    style="background: radial-gradient(circle at 75% 50%, rgba(14, 165, 233, 0.2), transparent 50%);">
+                </div>
+                <div class="position-absolute top-50 start-0 translate-middle-y w-50 h-100 opacity-20 z-0 pointer-events-none"
+                    style="background: radial-gradient(circle at 25% 50%, rgba(239, 68, 68, 0.15), transparent 50%);">
+                </div>
+
+                <div class="container py-5 position-relative z-2">
+
+                    <!-- Section Header -->
+                    <div class="text-center mb-3">
+                        <div
+                            class="urgency-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-dark border-opacity-10 mb-3 bg-white shadow-sm">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" class="text-info">
+                                <line x1="12" y1="20" x2="12" y2="10" />
+                                <line x1="18" y1="20" x2="18" y2="4" />
+                                <line x1="6" y1="20" x2="6" y2="16" />
+                            </svg>
+                            <span class="text-info fw-bold small text-uppercase tracking-wider">The Reality
+                                Matrix</span>
+                        </div>
+                        <h2 class="display-5 fw-bold text-dark mb-3">
+                            The Choice is <span class="text-primary">Clear.</span>
+                        </h2>
+                        <p class="text-secondary fs-6 mx-auto" style="max-width: 650px;">
+                            Compare your options side-by-side. See why thousands of smart aspirants are bypassing the
+                            local bottleneck for a global future.
+                        </p>
+                    </div>
+
+                    <!-- The Duality Dashboard -->
+                    <div class="row g-4 align-items-stretch justify-content-center mt-2 position-relative">
+
+                        <!-- VS Badge -->
+                        <div class="vs-badge position-absolute top-50 start-50 translate-middle z-3 rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-lg"
+                            style="width: 56px; height: 56px; background: linear-gradient(135deg, #0ea5e9, #0284c7); border: 4px solid #ffffff; font-size: 1.2rem;">
+                            VS
+                        </div>
+
+                        <!-- LEFT CARD: The Trap (Private India) -->
+                        <div class="col-lg-5 comp-col-trap z-1">
+                            <div
+                                class="glass-card-trap p-4 h-100 rounded-5 border border-dark border-opacity-10 position-relative overflow-hidden bg-white shadow-sm">
+
+                                <div
+                                    class="text-center border-bottom border-dark border-opacity-10 pb-3 mb-3 position-relative z-1">
+                                    <h3 class="text-dark fw-bold mb-1 fs-4">Private Indian MBBS</h3>
+                                    <p class="text-danger small fw-bold text-uppercase tracking-wider mb-0"
+                                        style="font-size: 0.75rem;">High Stress, High Cost</p>
+                                </div>
+
+                                <div class="d-flex flex-column gap-3">
+                                    <!-- Stat 1 -->
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="flex-shrink-0 text-danger mt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <line x1="15" y1="9" x2="9" y2="15" />
+                                                <line x1="9" y1="9" x2="15" y2="15" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h6 class="text-dark fw-bold mb-1">₹60L – ₹1 Crore+</h6>
+                                            <p class="text-secondary small mb-0" style="font-size: 0.8rem;">Exorbitant
+                                                tuition fees causing massive financial strain.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stat 2 -->
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="flex-shrink-0 text-danger mt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <line x1="15" y1="9" x2="9" y2="15" />
+                                                <line x1="9" y1="9" x2="15" y2="15" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h6 class="text-dark fw-bold mb-1">Hidden Donations</h6>
+                                            <p class="text-secondary small mb-0" style="font-size: 0.8rem;">Unregulated
+                                                capitation fees and surprise charges.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stat 3 -->
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="flex-shrink-0 text-danger mt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <line x1="15" y1="9" x2="9" y2="15" />
+                                                <line x1="9" y1="9" x2="15" y2="15" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h6 class="text-dark fw-bold mb-1">Cut-Throat Competition</h6>
+                                            <p class="text-secondary small mb-0" style="font-size: 0.8rem;">24+ Lakh
+                                                students fighting for limited seats.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stat 4 -->
+                                    <div class="d-flex align-items-start gap-3">
+                                        <div class="flex-shrink-0 text-danger mt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <line x1="15" y1="9" x2="9" y2="15" />
+                                                <line x1="9" y1="9" x2="15" y2="15" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h6 class="text-dark fw-bold mb-1">Varying Infrastructure</h6>
+                                            <p class="text-secondary small mb-0" style="font-size: 0.8rem;">Many
+                                                colleges lack advanced global clinical exposure.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RIGHT CARD: The Solution (WayForWhitecoat) -->
+                        <div class="col-lg-5 comp-col-solution z-2">
+                            <!-- Massive glow behind the winning card -->
+                            <div class="solution-card-glow"></div>
+
+                            <div
+                                class="glass-card-solution d-flex flex-column p-4 h-100 rounded-5 position-relative overflow-hidden shadow-2xl">
+
+                                <!-- Sweeping Shine -->
+                                <div class="solution-shine opacity-25"></div>
+
+                                <!-- Recommended Badge -->
+                                <div class="position-absolute top-0 end-0 bg-info text-dark px-3 py-1 rounded-bl-4 fw-bold shadow"
+                                    style="border-bottom-left-radius: 15px; font-size: 0.75rem; letter-spacing: 1px;">
+                                    SMART PATHWAY
+                                </div>
+
+                                <div class="text-center border-bottom border-info border-opacity-25 pb-3 mb-3 mt-2">
+                                    <div class="d-flex justify-content-center mb-2">
+                                        <div
+                                            class="bg-info bg-opacity-10 p-2 rounded-3 border border-info border-opacity-25">
+                                            <svg class="text-info" xmlns="http://www.w3.org/2000/svg" width="22"
+                                                height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2">
+                                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <h3 class="text-white fw-bold mb-1 fs-3">MBBS Abroad</h3>
+                                    <p class="text-info fw-bold text-uppercase tracking-wider mb-0"
+                                        style="font-size: 0.7rem;">via WayForWhitecoat</p>
+                                </div>
+
+                                <div class="d-flex flex-column gap-3 mb-4">
+                                    <!-- Stat 1 -->
+                                    <div class="d-flex align-items-start gap-3 comp-win-row">
+                                        <div class="flex-shrink-0 text-success mt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2.5">
+                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                                <path d="m9 11 3 3L22 4" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h6 class="text-white fw-bold mb-1 fs-6">₹20L – ₹40L Total</h6>
+                                            <p class="text-light opacity-75 mb-0" style="font-size: 0.8rem;">Complete
+                                                high-end education at a fraction of the cost, saving families massive
+                                                debt.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stat 2 -->
+                                    <div class="d-flex align-items-start gap-3 comp-win-row">
+                                        <div class="flex-shrink-0 text-success mt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2.5">
+                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                                <path d="m9 11 3 3L22 4" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h6 class="text-white fw-bold mb-1 fs-6">100% Transparent</h6>
+                                            <p class="text-light opacity-75 mb-0" style="font-size: 0.8rem;">Zero
+                                                donations. Zero hidden charges. Guaranteed itemized fee structures
+                                                upfront.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stat 3 -->
+                                    <div class="d-flex align-items-start gap-3 comp-win-row">
+                                        <div class="flex-shrink-0 text-success mt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2.5">
+                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                                <path d="m9 11 3 3L22 4" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h6 class="text-white fw-bold mb-1 fs-6">Accessible Admissions</h6>
+                                            <p class="text-light opacity-75 mb-0" style="font-size: 0.8rem;">Direct
+                                                admission based on standard NEET qualification criteria.</p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Stat 4 -->
+                                    <div class="d-flex align-items-start gap-3 comp-win-row">
+                                        <div class="flex-shrink-0 text-success mt-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                stroke-width="2.5">
+                                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                                                <path d="m9 11 3 3L22 4" />
+                                            </svg>
+                                        </div>
+                                        <div>
+                                            <h6 class="text-white fw-bold mb-1 fs-6">World-Class Exposure</h6>
+                                            <p class="text-light opacity-75 mb-0" style="font-size: 0.8rem;">Global
+                                                universities funded by governments with massive international hospitals.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Direct Call to Action -->
+                                <div class="mt-auto text-center pt-2 position-relative z-2">
+                                    <a href="#contact"
+                                        class="btn btn-info w-100 py-2 rounded-pill fw-bold fs-6 shadow-lg d-flex align-items-center justify-content-center gap-2 btn-conversion hover-scale">
+                                        Claim Your Seat Now
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <line x1="5" y1="12" x2="19" y2="12" />
+                                            <polyline points="12 5 19 12 12 19" />
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+
+
         <!-- ==============================================
              CONTACT SECTION
         =============================================== -->
-        <section class="contact-section position-relative py-5 min-vh-100 d-flex align-items-center" id="contact">
+        <section class="contact-section position-relative py-5 d-flex align-items-center" id="contact">
             <!-- Liquid Glass Background -->
             <div class="contact-bg-shapes">
                 <div class="contact-shape contact-shape-1"></div>
@@ -386,19 +1847,17 @@
                             <span class="highlight-text d-inline-block">MBBS Seat?</span>
                         </h2>
 
-                        <p class="contact-subtitle text-secondary fs-5 mb-5 pe-lg-4">
+                        <p class="contact-subtitle text-secondary fs-5 mb-3 pe-lg-4">
                             Get free expert counseling today. Let us handle the admission complexities while you focus
                             on becoming a great doctor.
                         </p>
 
-                        <div class="mb-5">
+                        <div class="mb-3">
                             <div class="button-wrap dark-theme-btn">
-                                <button class="premium-glass-btn">
-                                    <span>
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round" class="me-2">
-                                            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z" />
+                                <button class="premium-glass-btn whatsapp-gradient-btn">
+                                    <span class="d-flex align-items-center">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none" class="me-2">
+                                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
                                         </svg>
                                         WhatsApp Us Instead
                                     </span>
@@ -407,7 +1866,7 @@
                             </div>
                         </div>
 
-                        <div class="row g-4 mb-5 trust-indicators fw-medium">
+                        <div class="row g-4 trust-indicators fw-medium">
                             <div class="col-sm-6 d-flex align-items-center gap-2 text-light">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"
@@ -449,18 +1908,18 @@
                         <div class="destination-options">
                             <span class="text-secondary fw-semibold d-block mb-3">Popular Destinations</span>
                             <div class="d-flex flex-wrap gap-2">
-                                <span
-                                    class="badge border border-secondary text-light rounded-pill px-3 py-2 fw-medium tag">🇷🇺
-                                    Russia</span>
-                                <span
-                                    class="badge border border-secondary text-light rounded-pill px-3 py-2 fw-medium tag">🇰🇿
-                                    Kazakhstan</span>
-                                <span
-                                    class="badge border border-secondary text-light rounded-pill px-3 py-2 fw-medium tag">🇺🇿
-                                    Uzbekistan</span>
-                                <span
-                                    class="badge border border-secondary text-light rounded-pill px-3 py-2 fw-medium tag">🇬🇪
-                                    Georgia</span>
+                                <span class="destination-badge destination-badge--russia">
+                                    <span class="fi fi-ru country-flag"></span> Russia
+                                </span>
+                                <span class="destination-badge destination-badge--kazakhstan">
+                                    <span class="fi fi-kz country-flag"></span> Kazakhstan
+                                </span>
+                                <span class="destination-badge destination-badge--uzbekistan">
+                                    <span class="fi fi-uz country-flag"></span> Uzbekistan
+                                </span>
+                                <span class="destination-badge destination-badge--georgia">
+                                    <span class="fi fi-ge country-flag"></span> Georgia
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -531,42 +1990,72 @@
             </div>
         </section>
 
-        <footer class="premium-footer">
+    </main>
+
+    <footer class="premium-footer">
             <!-- Ambient Glows -->
             <div class="footer-glow footer-glow-top"></div>
             <div class="footer-glow footer-glow-bottom"></div>
-        
+
             <div class="container position-relative z-1">
                 <div class="row gx-4 gy-5">
                     <!-- Brand Column -->
                     <div class="col-lg-4 col-md-12">
-                        <a href="index.html" class="nav-brand footer-brand-title text-white fw-bold d-inline-flex align-items-center gap-2 mb-4 text-decoration-none">
+                        <a href="index.html"
+                            class="nav-brand footer-brand-title text-white fw-bold d-inline-flex align-items-center gap-2 mb-4 text-decoration-none">
                             <div class="bg-info bg-opacity-10 p-2 rounded-3 border border-info border-opacity-25">
-                                <svg class="brand-icon text-info" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg class="brand-icon text-info" xmlns="http://www.w3.org/2000/svg" width="28"
+                                    height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
                                     <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
                                 </svg>
                             </div>
                             <span>WayFor<span class="text-info fw-normal">Whitecoat</span></span>
                         </a>
                         <p class="footer-desc-text mb-4">
-                            Empowering the next generation of global medical professionals with ethical guidance and end-to-end support for MBBS abroad.
+                            Empowering the next generation of global medical professionals with ethical guidance and
+                            end-to-end support for MBBS abroad.
                         </p>
                         <div class="social-links mt-4">
                             <a href="#" class="footer-social-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                                </svg>
                             </a>
                             <a href="#" class="footer-social-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
                             </a>
                             <a href="#" class="footer-social-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z">
+                                    </path>
+                                </svg>
                             </a>
                             <a href="#" class="footer-social-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                    </path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
                             </a>
                         </div>
                     </div>
-        
+
                     <!-- Links Columns -->
                     <div class="col-lg-2 col-md-6 col-6">
                         <h6 class="text-white fw-bold mb-4">Destinations</h6>
@@ -578,7 +2067,7 @@
                             <li><a href="#" class="footer-link">MBBS in Philippines</a></li>
                         </ul>
                     </div>
-        
+
                     <div class="col-lg-2 col-md-6 col-6">
                         <h6 class="text-white fw-bold mb-4">Resources</h6>
                         <ul class="footer-link-list">
@@ -589,31 +2078,52 @@
                             <li><a href="#" class="footer-link">Loan Support</a></li>
                         </ul>
                     </div>
-        
+
                     <!-- Newsletter & contact -->
                     <div class="col-lg-4 col-md-12">
                         <div class="footer-newsletter-box">
                             <h6 class="text-white fw-bold mb-3">Join our community</h6>
-                            <p class="small text-secondary mb-4">Get the latest updates on admissions and scholarships directly in your inbox.</p>
+                            <p class="small text-secondary mb-4">Get the latest updates on admissions and scholarships
+                                directly in your inbox.</p>
                             <form>
                                 <div class="newsletter-input-group">
                                     <input type="email" class="form-control" placeholder="Email address" required>
                                     <button class="btn btn-info newsletter-submit" type="submit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                        </svg>
                                     </button>
                                 </div>
                             </form>
-        
+
                             <div class="mt-4 pt-2">
-                                <div class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all mb-2">
+                                <div
+                                    class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all mb-2">
                                     <div class="footer-contact-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                            </path>
+                                        </svg>
                                     </div>
                                     <span class="small text-white">+1 (800) 123-4567</span>
                                 </div>
-                                <div class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all">
+                                <div
+                                    class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all">
                                     <div class="footer-contact-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                            </path>
+                                            <polyline points="22,6 12,13 2,6"></polyline>
+                                        </svg>
                                     </div>
                                     <span class="small text-white">contact@wayforwhitecoat.com</span>
                                 </div>
@@ -621,7 +2131,7 @@
                         </div>
                     </div>
                 </div>
-        
+
                 <!-- Recognition Badges -->
                 <!-- <div class="footer-recognition d-flex justify-content-center flex-wrap gap-4">
                     <span class="recognition-badge">NMC (MCI)</span>
@@ -631,33 +2141,46 @@
                     <span class="recognition-badge">FAIMER</span>
                 </div> -->
             </div>
-        
+
             <!-- Bottom Strip -->
             <div class="footer-bottom-strip">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                            <p class="mb-0">&copy; 2026 WayFor Whitecoat. All Rights Reserved. Designed by <a href="#" class="text-info text-decoration-none fw-medium">PRception</a></p>
-                        </div>
-                        <div class="col-md-6 text-center text-md-end">
-                            <div class="d-flex justify-content-center justify-content-md-end gap-4">
+                        
+                        <div class="col-md-6 text-center text-md-start">
+                            <div class="d-flex justify-content-center justify-content-md-start gap-4">
                                 <a href="#" class="footer-bottom-link">Privacy Policy</a>
                                 <a href="#" class="footer-bottom-link">Terms of Service</a>
                                 <a href="#" class="footer-bottom-link">Sitemap</a>
                             </div>
                         </div>
+                        <div class="col-md-6 text-center text-md-end mb-3 mb-md-0">
+                            <p class="mb-0 fw-light">&copy; 2026 WayFor Whitecoat. All Rights Reserved. Designed by <a href="#"
+                                    class="text-info text-decoration-none fw-medium">PRception</a></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </footer>
-    </main>
+
+    <!-- Scroll to Top Button -->
+    <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6" />
+        </svg>
+    </button>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+
     <!-- external js -->
+    <script src="assets/js/components.js"></script>
     <script src="assets/js/script.js"></script>
-    <script src="assets/js/navfoot.js"></script>
+    
 </body>
 
 </html>

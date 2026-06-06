@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MBBS Destinations | WayForWhitecoat</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Outfit:wght@400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- GSAP & Lenis -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/new.css">
+    <link rel="stylesheet" href="assets/css/navfoot.css">
+</head>
+<body style="background-color: #f4f6fb;">
+
+    <div id="custom-scrollbar-track">
+        <div id="custom-scrollbar-thumb"></div>
+    </div>
+
+       <header id="nav-wrapper">
+        <div id="header-container" class="w-100"></div>
+    </header>
+
+    <main>
+        <!-- ==============================================
+             HERO: THE GLOBAL ATLAS
+        =============================================== -->
+        <section class="atlas-hero position-relative vh-100 d-flex align-items-center justify-content-center overflow-hidden">
+            
+            <!-- Soft Pastel Glowing Core (Aura) -->
+            <div class="position-absolute top-50 start-50 translate-middle w-100 h-100 pointer-events-none z-0" style="background: radial-gradient(circle at center, rgba(14, 165, 233, 0.1), transparent 60%);"></div>
+            
+            <!-- Blueprint Topo Grid -->
+            <div class="position-absolute inset-0 z-0 pointer-events-none opacity-50" style="background-image: repeating-linear-gradient(rgba(0,0,0,0.03) 0 1px, transparent 1px 100%), repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0 1px, transparent 1px 100%); background-size: 40px 40px;"></div>
+
+            <div class="container position-relative z-2 text-center pt-5 mt-5">
+                
+                <div class="urgency-badge d-inline-flex align-items-center gap-2 px-4 py-2 rounded-pill border border-primary border-opacity-10 bg-white shadow-sm mb-4 reveal-up">
+                    <span class="pulse-dot bg-primary"></span>
+                    <span class="text-primary fw-bold small text-uppercase tracking-wider">The Medical Atlas</span>
+                </div>
+
+                <h1 class="display-1 fw-bold text-dark mb-4 reveal-text" id="atlas-hero-title">
+                    Choose Your <br>
+                    <span class="text-primary">Global Pathway.</span>
+                </h1>
+
+                <p class="fs-4 text-secondary mx-auto reveal-up" style="max-width: 700px;">
+                    Compare the world's most trusted, NMC-approved medical destinations. 100% transparent fee structures. Zero hidden costs.
+                </p>
+
+            </div>
+        </section>
+
+        <!-- ==============================================
+             CONVERSION GRID: BENTO-STYLE CARDS
+        =============================================== -->
+        <section class="conversion-grid-section position-relative z-3 pb-5" style="min-height: 100vh;">
+            <div class="container pb-5 mt-n5"> <!-- Negative margin pulls it up into the hero slightly -->
+                
+                <div class="row g-4 justify-content-center">
+                    
+                    <!-- COUNTRY 1: RUSSIA -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            
+                            <!-- Image Header -->
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1513326738677-b964603b136d?auto=format&fit=crop&w=800&q=80" alt="Study in Russia" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-ru me-2"></span>Russia</span>
+                                    <span class="badge bg-danger text-white shadow-sm px-3 py-2 rounded-pill fw-bold">Popular</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content & Conversion -->
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Russian Federation</h3>
+                                <p class="text-secondary small mb-4">A global superpower in medical science offering highly subsidized, fully English-taught programs.</p>
+                                
+                                <!-- Scannable Bento Stats -->
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹15L - ₹30L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Climate</span>
+                                        <strong class="text-dark d-block">Cold</strong>
+                                    </div>
+                                </div>
+                                
+                                <!-- High-Visibility CTA -->
+                                <a href="countries/MBBS-in-Russia.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 2: PHILIPPINES -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            
+                            <!-- Image Header -->
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1518509562904-e7ef99cdcc86?auto=format&fit=crop&w=800&q=80" alt="Study in Philippines" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-ph me-2"></span>Philippines</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content & Conversion -->
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Philippines</h3>
+                                <p class="text-secondary small mb-4">The ultimate destination for USMLE aspirants with an American-based medical curriculum.</p>
+                                
+                                <!-- Scannable Bento Stats -->
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹22L - ₹35L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">5.5 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Curriculum</span>
+                                        <strong class="text-dark d-block">US-MD</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Climate</span>
+                                        <strong class="text-dark d-block">Tropical</strong>
+                                    </div>
+                                </div>
+                                
+                                <!-- High-Visibility CTA -->
+                                <a href="countries/MBBS-Philippines.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 3: NETHERLANDS -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            
+                            <!-- Image Header -->
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1512470876302-972faa2aa9a4?auto=format&fit=crop&w=800&q=80" alt="Study in Netherlands" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-nl me-2"></span>Netherlands</span>
+                                    <span class="badge bg-info text-white shadow-sm px-3 py-2 rounded-pill fw-bold">Premium</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content & Conversion -->
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Netherlands</h3>
+                                <p class="text-secondary small mb-4">A premium European pathway focusing heavily on research-based learning and advanced clinical exposure.</p>
+                                
+                                <!-- Scannable Bento Stats -->
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">€10K - €30K/Yr</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">NEET</span>
+                                        <strong class="text-dark d-block">Not Required</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Standard</span>
+                                        <strong class="text-dark d-block">EU (ECTS)</strong>
+                                    </div>
+                                </div>
+                                
+                                
+                                
+                                <!-- High-Visibility CTA -->
+                                <a href="countries/MBBS-in-Netherland.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>    
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 4: GEORGIA -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            
+                            <!-- Image Header -->
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" alt="Study in Georgia" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-ge me-2"></span>Georgia</span>
+                                    <span class="badge bg-success text-white shadow-sm px-3 py-2 rounded-pill fw-bold border border-white border-opacity-25">100% English</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content & Conversion -->
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Georgia</h3>
+                                <p class="text-secondary small mb-4">The safest European destination offering a 100% English medium curriculum aligned strictly with EU standards.</p>
+                                
+                                <!-- Scannable Bento Stats -->
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹25L - ₹35L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Safety</span>
+                                        <strong class="text-dark d-block">Highest Ranking</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Success</span>
+                                        <strong class="text-dark d-block">High FMGE Rate</strong>
+                                    </div>
+                                </div>
+                                
+                                
+                                <!-- High-Visibility CTA -->
+                                <a href="countries/MBBS-in-Georgio.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 5: UZBEKISTAN -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            
+                            <!-- Image Header -->
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" alt="Study in Uzbekistan" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-uz me-2"></span>Uzbekistan</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Content & Conversion -->
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Uzbekistan</h3>
+                                <p class="text-secondary small mb-4">A rapidly emerging, highly affordable destination providing safe campuses and strong Indian community support.</p>
+                                
+                                <!-- Scannable Bento Stats -->
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹12L - ₹20L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Community</span>
+                                        <strong class="text-dark d-block">Large Indian Base</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Distance</span>
+                                        <strong class="text-dark d-block">3 Hrs from India</strong>
+                                    </div>
+                                </div>
+                                
+                                <!-- High-Visibility CTA -->
+                                <a href="countries/MBBS-in-Uzbekistan.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 6: KAZAKHSTAN -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" alt="Study in Kazakhstan" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-kz me-2"></span>Kazakhstan</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Kazakhstan</h3>
+                                <p class="text-secondary small mb-4">Modern education system with strong international standards and affordable tuition fees.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹10L - ₹18L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Climate</span>
+                                        <strong class="text-dark d-block">Moderate</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-In-Kazakhstan.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 7: CHINA -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80" alt="Study in China" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-cn me-2"></span>China</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">China</h3>
+                                <p class="text-secondary small mb-4">Globally recognized universities with modern infrastructure and affordable fee structures.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹14L - ₹25L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Recognition</span>
+                                        <strong class="text-dark d-block">WHO Approved</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-China.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 8: MALAYSIA -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Malaysia" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-my me-2"></span>Malaysia</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Malaysia</h3>
+                                <p class="text-secondary small mb-4">Quality medical education with modern facilities and multicultural environment in Southeast Asia.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹18L - ₹30L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">5.5 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Climate</span>
+                                        <strong class="text-dark d-block">Tropical</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Malaysia.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 9: SINGAPORE -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" alt="Study in Singapore" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-sg me-2"></span>Singapore</span>
+                                    <span class="badge bg-info text-white shadow-sm px-3 py-2 rounded-pill fw-bold">Premium</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Singapore</h3>
+                                <p class="text-secondary small mb-4">World-class medical education with exceptional clinical training and research opportunities.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹40L - ₹50L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">5 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Quality</span>
+                                        <strong class="text-dark d-block">World Class</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Recognition</span>
+                                        <strong class="text-dark d-block">Global Rank</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Singapore.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 10: KYRGYZSTAN -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Kyrgyzstan" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-kg me-2"></span>Kyrgyzstan</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Kyrgyzstan</h3>
+                                <p class="text-secondary small mb-4">Emerging medical hub with affordable education and growing international recognition.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹10L - ₹16L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Community</span>
+                                        <strong class="text-dark d-block">Indian Base</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Kyrgyzstan.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 11: TAJIKISTAN -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Tajikistan" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-tj me-2"></span>Tajikistan</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Tajikistan</h3>
+                                <p class="text-secondary small mb-4">Affordable medical education with historical medical heritage and growing infrastructure.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹10L - ₹16L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Cost</span>
+                                        <strong class="text-dark d-block">Very Affordable</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Tajikistan.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 12: GERMANY -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Germany" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-de me-2"></span>Germany</span>
+                                    <span class="badge bg-info text-white shadow-sm px-3 py-2 rounded-pill fw-bold">Premium</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Germany</h3>
+                                <p class="text-secondary small mb-4">Excellence in medical research with affordable tuition and world-class clinical training.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">€5K - €15K/Yr</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Quality</span>
+                                        <strong class="text-dark d-block">World Class</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English/German</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-In-Germany.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 13: UK -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in UK" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-gb me-2"></span>UK</span>
+                                    <span class="badge bg-info text-white shadow-sm px-3 py-2 rounded-pill fw-bold">Premium</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">United Kingdom</h3>
+                                <p class="text-secondary small mb-4">Iconic universities offering unparalleled clinical exposure and global medical recognition.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹40L - ₹65L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">4-6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Recognition</span>
+                                        <strong class="text-dark d-block">Global Rank</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-In-UK.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 14: IRELAND -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Ireland" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-ie me-2"></span>Ireland</span>
+                                    <span class="badge bg-info text-white shadow-sm px-3 py-2 rounded-pill fw-bold">Premium</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Ireland</h3>
+                                <p class="text-secondary small mb-4">High-quality medical education with excellent clinical training and international recognition.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹35L - ₹50L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Quality</span>
+                                        <strong class="text-dark d-block">EU Standard</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Ireland.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 15: FRANCE -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in France" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-fr me-2"></span>France</span>
+                                    <span class="badge bg-info text-white shadow-sm px-3 py-2 rounded-pill fw-bold">Premium</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">France</h3>
+                                <p class="text-secondary small mb-4">World-renowned medical education with comprehensive clinical training and cultural experience.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">€2K - €10K/Yr</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">French/English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Quality</span>
+                                        <strong class="text-dark d-block">World Class</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-France.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 16: ITALY -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Italy" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-it me-2"></span>Italy</span>
+                                    <span class="badge bg-info text-white shadow-sm px-3 py-2 rounded-pill fw-bold">Premium</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Italy</h3>
+                                <p class="text-secondary small mb-4">Historic medical education institutions with modern techniques and European recognition.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">€3K - €12K/Yr</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">Italian/English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Heritage</span>
+                                        <strong class="text-dark d-block">Historic Uni</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-In-Italy.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 17: ROMANIA -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Romania" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-ro me-2"></span>Romania</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Romania</h3>
+                                <p class="text-secondary small mb-4">Affordable European education with excellent clinical facilities and international standards.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹20L - ₹32L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Quality</span>
+                                        <strong class="text-dark d-block">EU Standard</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-In-Romania.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 18: BULGARIA -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Bulgaria" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-bg me-2"></span>Bulgaria</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Bulgaria</h3>
+                                <p class="text-secondary small mb-4">Affordable education combining European standards with comprehensive medical training.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹18L - ₹28L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Cost</span>
+                                        <strong class="text-dark d-block">Affordable</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-In-Bulgaria.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 19: LITHUANIA -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Lithuania" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-lt me-2"></span>Lithuania</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Lithuania</h3>
+                                <p class="text-secondary small mb-4">Quality education meeting EU standards with affordable tuition and modern facilities.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹18L - ₹28L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Standard</span>
+                                        <strong class="text-dark d-block">EU (ECTS)</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-In-Lithuania.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 20: UAE -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1565008447742-97f6f38c985c?auto=format&fit=crop&w=800&q=80" alt="Study in UAE" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-ae me-2"></span>UAE</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">United Arab Emirates</h3>
+                                <p class="text-secondary small mb-4">Modern infrastructure with international standards and thriving expat community.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹30L - ₹45L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">5-6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Quality</span>
+                                        <strong class="text-dark d-block">World Class</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-In-UAE.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 21: SAUDI ARABIA -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=800&q=80" alt="Study in Saudi Arabia" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-sa me-2"></span>Saudi Arabia</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Saudi Arabia</h3>
+                                <p class="text-secondary small mb-4">Modern medical education infrastructure with growing international recognition and support.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹25L - ₹40L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Growth</span>
+                                        <strong class="text-dark d-block">Emerging Hub</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Saudi-Arabia.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 22: NEPAL -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Nepal" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-np me-2"></span>Nepal</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Nepal</h3>
+                                <p class="text-secondary small mb-4">Affordable education with growing international standards and excellent clinical exposure nearby India.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹8L - ₹15L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">5.5 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Distance</span>
+                                        <strong class="text-dark d-block">Very Close</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Cost</span>
+                                        <strong class="text-dark d-block">Most Affordable</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-In-Nepal.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 23: BANGLADESH -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Bangladesh" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-bd me-2"></span>Bangladesh</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Bangladesh</h3>
+                                <p class="text-secondary small mb-4">Most affordable option with established medical institutions and proximity to home.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹6L - ₹12L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">5 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Distance</span>
+                                        <strong class="text-dark d-block">Nearby</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Community</span>
+                                        <strong class="text-dark d-block">Large Indian Base</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Bangladesh.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 24: EGYPT -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Egypt" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-eg me-2"></span>Egypt</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Egypt</h3>
+                                <p class="text-secondary small mb-4">Historic medical education with growing modern facilities and affordable tuition.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹8L - ₹16L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Heritage</span>
+                                        <strong class="text-dark d-block">Historic Uni</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Egypt.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 25: BELARUS -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Belarus" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-by me-2"></span>Belarus</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Belarus</h3>
+                                <p class="text-secondary small mb-4">Affordable education with strong international standards and excellent clinical training.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹12L - ₹20L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Climate</span>
+                                        <strong class="text-dark d-block">Cold</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Belarus.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COUNTRY 26: ARMENIA -->
+                    <div class="col-lg-4 col-md-6 pathway-item">
+                        <div class="pathway-card rounded-5 overflow-hidden position-relative h-100 d-flex flex-column bg-white">
+                            <div class="pathway-img-wrap position-relative w-100" style="height: 220px;">
+                                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" alt="Study in Armenia" class="pathway-img">
+                                <div class="pathway-img-overlay"></div>
+                                <div class="position-absolute top-0 start-0 w-100 p-4 d-flex justify-content-between align-items-start z-2">
+                                    <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill fw-bold border border-dark border-opacity-10"><span class="fi fi-am me-2"></span>Armenia</span>
+                                </div>
+                            </div>
+                            <div class="pathway-data-panel p-4 flex-grow-1 d-flex flex-column z-2">
+                                <h3 class="fs-3 fw-bold text-dark mb-2">Armenia</h3>
+                                <p class="text-secondary small mb-4">Emerging medical destination with affordable fees and welcoming environment for international students.</p>
+                                <div class="bento-stats-grid mb-4 mt-auto">
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Budget</span>
+                                        <strong class="text-dark d-block">₹8L - ₹14L</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Duration</span>
+                                        <strong class="text-dark d-block">6 Years</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Medium</span>
+                                        <strong class="text-dark d-block">English</strong>
+                                    </div>
+                                    <div class="bento-stat">
+                                        <span class="text-secondary small fw-bold text-uppercase tracking-wider">Community</span>
+                                        <strong class="text-dark d-block">Growing Base</strong>
+                                    </div>
+                                </div>
+                                <a href="countries/MBBS-in-Armania.html" class="btn btn-primary w-100 rounded-pill py-3 fw-bold shadow-sm cta-button position-relative overflow-hidden">
+                                    <span class="position-relative z-1">View Detailed Pathway</span>
+                                    <div class="btn-shine"></div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+        <footer class="premium-footer">
+            <!-- Ambient Glows -->
+            <div class="footer-glow footer-glow-top"></div>
+            <div class="footer-glow footer-glow-bottom"></div>
+
+            <div class="container position-relative z-1">
+                <div class="row gx-4 gy-5">
+                    <!-- Brand Column -->
+                    <div class="col-lg-4 col-md-12">
+                        <a href="index.html"
+                            class="nav-brand footer-brand-title text-white fw-bold d-inline-flex align-items-center gap-2 mb-4 text-decoration-none">
+                            <div class="bg-info bg-opacity-10 p-2 rounded-3 border border-info border-opacity-25">
+                                <svg class="brand-icon text-info" xmlns="http://www.w3.org/2000/svg" width="28"
+                                    height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                                </svg>
+                            </div>
+                            <span>WayFor<span class="text-info fw-normal">Whitecoat</span></span>
+                        </a>
+                        <p class="footer-desc-text mb-4">
+                            Empowering the next generation of global medical professionals with ethical guidance and
+                            end-to-end support for MBBS abroad.
+                        </p>
+                        <div class="social-links mt-4">
+                            <a href="#" class="footer-social-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                                </svg>
+                            </a>
+                            <a href="#" class="footer-social-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                                </svg>
+                            </a>
+                            <a href="#" class="footer-social-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z">
+                                    </path>
+                                </svg>
+                            </a>
+                            <a href="#" class="footer-social-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round">
+                                    <path
+                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                                    </path>
+                                    <rect x="2" y="9" width="4" height="12"></rect>
+                                    <circle cx="4" cy="4" r="2"></circle>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Links Columns -->
+                    <div class="col-lg-2 col-md-6 col-6">
+                        <h6 class="text-white fw-bold mb-4">Destinations</h6>
+                        <ul class="footer-link-list">
+                            <li><a href="#" class="footer-link">MBBS in Russia</a></li>
+                            <li><a href="#" class="footer-link">MBBS in Uzbekistan</a></li>
+                            <li><a href="#" class="footer-link">MBBS in Kazakhstan</a></li>
+                            <li><a href="#" class="footer-link">MBBS in Georgia</a></li>
+                            <li><a href="#" class="footer-link">MBBS in Philippines</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="col-lg-2 col-md-6 col-6">
+                        <h6 class="text-white fw-bold mb-4">Resources</h6>
+                        <ul class="footer-link-list">
+                            <li><a href="#" class="footer-link">University Selection</a></li>
+                            <li><a href="#" class="footer-link">Visa Assistance</a></li>
+                            <li><a href="#" class="footer-link">Experience Center</a></li>
+                            <li><a href="#" class="footer-link">FMGE / NEXT Info</a></li>
+                            <li><a href="#" class="footer-link">Loan Support</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Newsletter & contact -->
+                    <div class="col-lg-4 col-md-12">
+                        <div class="footer-newsletter-box">
+                            <h6 class="text-white fw-bold mb-3">Join our community</h6>
+                            <p class="small text-secondary mb-4">Get the latest updates on admissions and scholarships
+                                directly in your inbox.</p>
+                            <form>
+                                <div class="newsletter-input-group">
+                                    <input type="email" class="form-control" placeholder="Email address" required>
+                                    <button class="btn btn-info newsletter-submit" type="submit">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="mt-4 pt-2">
+                                <div
+                                    class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all mb-2">
+                                    <div class="footer-contact-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <span class="small text-white">+1 (800) 123-4567</span>
+                                </div>
+                                <div
+                                    class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all">
+                                    <div class="footer-contact-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                            stroke-linecap="round" stroke-linejoin="round">
+                                            <path
+                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                            </path>
+                                            <polyline points="22,6 12,13 2,6"></polyline>
+                                        </svg>
+                                    </div>
+                                    <span class="small text-white">contact@wayforwhitecoat.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recognition Badges -->
+                <!-- <div class="footer-recognition d-flex justify-content-center flex-wrap gap-4">
+                    <span class="recognition-badge">NMC (MCI)</span>
+                    <span class="recognition-badge">WHO</span>
+                    <span class="recognition-badge">WFME</span>
+                    <span class="recognition-badge">ECFMG</span>
+                    <span class="recognition-badge">FAIMER</span>
+                </div> -->
+            </div>
+
+            <!-- Bottom Strip -->
+            <div class="footer-bottom-strip">
+                <div class="container">
+                    <div class="row align-items-center">
+                        
+                        <div class="col-md-6 text-center text-md-start">
+                            <div class="d-flex justify-content-center justify-content-md-start gap-4">
+                                <a href="#" class="footer-bottom-link">Privacy Policy</a>
+                                <a href="#" class="footer-bottom-link">Terms of Service</a>
+                                <a href="#" class="footer-bottom-link">Sitemap</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end mb-3 mb-md-0">
+                            <p class="mb-0 fw-light">&copy; 2026 WayFor Whitecoat. All Rights Reserved. Designed by <a href="#"
+                                    class="text-info text-decoration-none fw-medium">PRception</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Scroll to top">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 15l-6-6-6 6"></path>
+        </svg>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/components.js"></script>
+    
+    <script src="assets/js/country.js"></script>
+
+</body>
+</html>
