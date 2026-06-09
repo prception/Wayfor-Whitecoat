@@ -204,26 +204,18 @@ if (hasWebGL) {
     // 4. Animation loop
     const clock = new THREE.Clock();
     function tick() {
-        renderer.render(scene, camera);
-
         // Smoothly rotate the earth texture (globeMesh)
         if (scrollProgress < 0.01) {
-            // Spin freely on the desk
             globeMesh.rotation.y += 0.015;
         } else {
-            // Smoothly snap to the nearest multiple of 2PI so the map and pins align correctly
             const target = Math.round(globeMesh.rotation.y / (Math.PI * 2)) * Math.PI * 2;
-            globeMesh.rotation.y += (target - globeMesh.rotation.y) * 0.05; // ease towards target
+            globeMesh.rotation.y += (target - globeMesh.rotation.y) * 0.05;
         }
 
-        // Tiny idle animation once pins are visible
+        // Render first so matrixWorld is fully up to date, then project pins once per frame
+        renderer.render(scene, camera);
         if (pinsVisible) {
-            globeGroup.rotation.y += 0.00025;
-            updateHTMLPins();
-        }
-
-        // Keep pins aligned with the earth texture rotation if they are visible
-        if (pinsVisible && Math.abs(globeMesh.rotation.y % (Math.PI * 2)) > 0.01) {
+            globeGroup.updateMatrixWorld(true);
             updateHTMLPins();
         }
 
@@ -375,9 +367,6 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
             x: Math.PI * 0.15,
             duration: 1.2,
             ease: "power2.inOut",
-            onUpdate: () => {
-                if (pinsVisible) updateHTMLPins();
-            },
             onReverseComplete: () => {
                 // Reset rotation when scrolling back
                 globeGroup.rotation.y = -Math.PI / 2;
