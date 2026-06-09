@@ -3207,11 +3207,25 @@ select.form-control option {
 .anatomy-card[data-card="4"] { z-index: 4; }
 
 
+/* Reversed card: image left, text right */
+.anatomy-card-inner.reversed {
+    direction: rtl;
+}
+
+.anatomy-card-inner.reversed .anatomy-card-left,
+.anatomy-card-inner.reversed .anatomy-card-right {
+    direction: ltr;
+}
+
 /* Responsive */
 @media (max-width: 991px) {
     .anatomy-card-inner {
         grid-template-columns: 1fr;
         min-height: auto;
+    }
+
+    .anatomy-card-inner.reversed {
+        direction: ltr;
     }
 
     .anatomy-card-right {
@@ -3257,8 +3271,6 @@ select.form-control option {
 /* Light Theme Base Wrapper */
 .light-theme-wrapper {
     background: linear-gradient(180deg, #f0f4ff 0%, #f8fafc 20%, #ffffff 50%, #ffffff 100%);
-    border-top-left-radius: 40px;
-    border-top-right-radius: 40px;
     box-shadow: 0 -20px 60px rgba(13, 27, 140, 0.08);
     position: relative;
     z-index: 2;
