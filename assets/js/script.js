@@ -1,4 +1,4 @@
-// new.js
+﻿// new.js
 
 let lenis;
 if (typeof Lenis !== 'undefined') {
@@ -249,27 +249,12 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
         scrollTrigger: {
             trigger: "#pinned-container",
             start: "top top",
-            end: "+=900",
+            end: "+=1600",
             pin: true,
             pinSpacing: true,
-            scrub: 0.3,
-            snap: {
-                snapTo: [0, 1],
-                duration: { min: 0.3, max: 0.5 },
-                delay: 0.05,
-                ease: "power2.inOut",
-                inertia: false
-            },
+            scrub: 1.2,
             onUpdate: (self) => {
                 scrollProgress = self.progress;
-                // The moment progress hits 0 while scrolling back, jump to true top
-                if (self.progress === 0 && self.direction === -1) {
-                    if (window.lenis) {
-                        window.lenis.scrollTo(0, { immediate: true });
-                    } else {
-                        window.scrollTo({ top: 0, behavior: 'instant' });
-                    }
-                }
             }
         }
     });
@@ -372,14 +357,16 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
             duration: 1.2,
             ease: "power2.inOut",
             onReverseComplete: () => {
-                // Reset position when scrolling back
+                pinsVisible = false;
+                const pinsContainer = document.getElementById('html-pins-container');
+                if (pinsContainer) pinsContainer.style.opacity = '0';
                 globeGroup.position.set(initialX, initialY, -3.5);
             }
         }, step2Start);
-        
+
         tl.fromTo(globeGroup.scale,
             { x: 0.18, y: 0.18, z: 0.18 },
-            { x: 0.55, y: 0.55, z: 0.55, duration: 1.2, ease: "power2.inOut" },
+            { x: 0.68, y: 0.68, z: 0.68, duration: 1.2, ease: "power2.inOut" },
         step2Start);
 
         // Rotate the globe so Central Asia/Eurasia faces the camera perfectly
@@ -428,9 +415,13 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
     tl.to("#html-pins-container", {
         opacity: 1,
         duration: 0.4,
-        onStart: () => { pinsVisible = true; },
+        onStart: () => {
+            pinsVisible = true;
+            startCarousel();
+        },
         onReverseComplete: () => {
             pinsVisible = false;
+            stopCarousel();
             const pinsContainer = document.getElementById('html-pins-container');
             if (pinsContainer) pinsContainer.style.opacity = '0';
             const medicalElements = document.getElementById('medical-bg-elements');
@@ -510,12 +501,31 @@ const titleEl = document.getElementById('country-title');
 const descEl = document.getElementById('country-desc');
 
 let activeIndex = -1;
+// Exposed so the timeline can start/stop the carousel at the exact right moment
+let carouselAutoScrollTimer = null;
+let carouselIsPaused = false;
+let carouselIsScrolling;
+
+function startCarousel() {
+    if (!countryListEl || !scrollContainer) return;
+    detectCenterItem();
+    updateActiveCountry(0, true);
+    resetCarouselAutoScroll();
+}
+
+function stopCarousel() {
+    clearInterval(carouselAutoScrollTimer);
+    carouselAutoScrollTimer = null;
+    activeIndex = -1;
+    if (countryListEl) {
+        Array.from(countryListEl.children).forEach(child => child.classList.remove('active'));
+    }
+    document.querySelectorAll('.country-pin').forEach(pin => {
+        pin.classList.remove('active-pin', 'active-layer');
+    });
+}
 
 if (countryListEl && scrollContainer) {
-    let autoScrollTimer = null;
-    let isPaused = false; // Track manual interaction status
-    let isScrolling;
-
     // Render List Items
     locations.forEach((loc, index) => {
         const li = document.createElement('li');
@@ -539,12 +549,12 @@ if (countryListEl && scrollContainer) {
         });
 
         // Pause auto-scroll on hover
-        li.addEventListener('mouseenter', () => { isPaused = true; });
-        li.addEventListener('mouseleave', () => { isPaused = false; resetAutoScroll(); });
+        li.addEventListener('mouseenter', () => { carouselIsPaused = true; });
+        li.addEventListener('mouseleave', () => { carouselIsPaused = false; resetCarouselAutoScroll(); });
 
         countryListEl.appendChild(li);
 
-        // Add Click listener to the corresponding pin on the globe
+        // Add hover listener to the corresponding pin on the globe
         const pinEl = document.getElementById(loc.id);
         if (pinEl) {
             pinEl.addEventListener('mouseenter', () => {
@@ -563,9 +573,8 @@ if (countryListEl && scrollContainer) {
                 updateActiveCountry(index);
             });
 
-            // Pause auto-scroll on hover
-            pinEl.addEventListener('mouseenter', () => { isPaused = true; });
-            pinEl.addEventListener('mouseleave', () => { isPaused = false; resetAutoScroll(); });
+            pinEl.addEventListener('mouseenter', () => { carouselIsPaused = true; });
+            pinEl.addEventListener('mouseleave', () => { carouselIsPaused = false; resetCarouselAutoScroll(); });
         }
     });
 
@@ -575,20 +584,16 @@ if (countryListEl && scrollContainer) {
         activeIndex = index;
         const loc = locations[index];
 
-        // Update Text on Left
         if (titleEl) titleEl.textContent = loc.name;
         if (descEl) descEl.textContent = loc.desc;
 
-        // Update List UI
         Array.from(countryListEl.children).forEach(child => child.classList.remove('active'));
         if (countryListEl.children[index]) {
             countryListEl.children[index].classList.add('active');
         }
 
-        // Update Pins on Globe
         document.querySelectorAll('.country-pin').forEach(pin => {
-            pin.classList.remove('active-pin');
-            pin.classList.remove('active-layer');
+            pin.classList.remove('active-pin', 'active-layer');
         });
 
         setTimeout(() => {
@@ -600,14 +605,12 @@ if (countryListEl && scrollContainer) {
         }, 50);
     }
 
-    // Intersect / Scroll logic to determine active item in center
     function detectCenterItem() {
         const containerCenterY = scrollContainer.scrollTop + scrollContainer.clientHeight / 2;
         let closestIndex = 0;
         let minDistance = Infinity;
 
         Array.from(countryListEl.children).forEach((li, index) => {
-            // Find center of this li relative to the scroll container's scrollable height
             const liTop = li.offsetTop - scrollContainer.offsetTop;
             const liCenter = liTop + li.clientHeight / 2;
             const dist = Math.abs(containerCenterY - liCenter);
@@ -621,11 +624,9 @@ if (countryListEl && scrollContainer) {
     }
 
     function moveToNextCountry() {
-        if (!pinsVisible || isPaused) return; // Stop auto-move if user is hovering or section hidden
+        if (!pinsVisible || carouselIsPaused) return;
         let nextIndex = activeIndex + 1;
-        if (nextIndex >= locations.length) {
-            nextIndex = 0; // Loop back to start
-        }
+        if (nextIndex >= locations.length) nextIndex = 0;
         const li = countryListEl.children[nextIndex];
         if (li) {
             const topOfItem = li.offsetTop - scrollContainer.offsetTop;
@@ -634,7 +635,7 @@ if (countryListEl && scrollContainer) {
             if (typeof gsap !== 'undefined') {
                 gsap.to(scrollContainer, {
                     scrollTo: { y: middlePos },
-                    duration: 1.2, // Slower, more majestic auto-scroll
+                    duration: 1.2,
                     ease: "power2.inOut"
                 });
             } else {
@@ -643,26 +644,19 @@ if (countryListEl && scrollContainer) {
         }
     }
 
-    function resetAutoScroll() {
-        clearInterval(autoScrollTimer);
-        autoScrollTimer = setInterval(moveToNextCountry, 5000); // Increased to 5s for better readability
+    function resetCarouselAutoScroll() {
+        clearInterval(carouselAutoScrollTimer);
+        carouselAutoScrollTimer = setInterval(moveToNextCountry, 5000);
     }
 
     scrollContainer.addEventListener('scroll', () => {
-        window.clearTimeout(isScrolling);
-        resetAutoScroll(); // Reset auto-scroll timer whenever user interacts manually
-        isScrolling = setTimeout(() => {
+        window.clearTimeout(carouselIsScrolling);
+        resetCarouselAutoScroll();
+        carouselIsScrolling = setTimeout(() => {
             detectCenterItem();
         }, 50);
     });
-
-    // Initialize first active item after a short delay and start auto play
-    setTimeout(() => {
-        detectCenterItem();
-        // Force Russia (index 0) to be technically active and showing details initially
-        updateActiveCountry(0, true);
-        resetAutoScroll();
-    }, 1000);
+    // Carousel is started/stopped exclusively by the timeline tween callbacks below
 }
 
 // ==============================================
@@ -742,615 +736,155 @@ if (typeof gsap !== 'undefined') {
     });
 }
 
-// Reality Check (Pain to Relief) Animation Sequence
+// Reality Check — Liquid Glass Redesign Animations
 if (document.querySelector('.reality-section') && typeof gsap !== 'undefined') {
 
-    // 1. Ambient Glow Breathing Animation
-    gsap.to(".reality-glow", {
-        scale: 1.1,
-        opacity: 0.6,
-        duration: 4,
-        yoyo: true,
-        repeat: -1,
-        ease: "sine.inOut",
-        stagger: 2 // offset the blue and red
-    });
+    // Soft blob drift
+    gsap.to(".rc-blob-1", { x: 30, y: 20, duration: 8, yoyo: true, repeat: -1, ease: "sine.inOut" });
+    gsap.to(".rc-blob-2", { x: -20, y: -30, duration: 10, yoyo: true, repeat: -1, ease: "sine.inOut" });
+    gsap.to(".rc-blob-3", { x: 15, y: 15, duration: 7, yoyo: true, repeat: -1, ease: "sine.inOut" });
 
-    // 2. Sequential Stagger Entrance for the Cards (Now with 3D)
     if (typeof ScrollTrigger !== 'undefined') {
-        const realityTl = gsap.timeline({
+        const rcTl = gsap.timeline({
             scrollTrigger: {
                 trigger: ".reality-pipeline",
-                start: "top 80%",
+                start: "top 78%",
             }
         });
 
-        // Bring in text first
-        realityTl.from(".reality-title", {
-            y: 30, opacity: 0, duration: 0.8, ease: "power3.out"
-        })
-            // Pain 1: Govt Seats 
-            .from(".glass-card-danger", {
-                y: 50, opacity: 0, duration: 1, ease: "power3.out"
-            }, "-=0.4")
-            .from(".glass-card-danger > *:not(.card-spotlight)", {
-                y: 20, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out"
-            }, "-=0.8")
-            // Pain 2: Private Fees 
-            .from(".glass-card-warning", {
-                y: 50, opacity: 0, duration: 1, ease: "power3.out"
-            }, "-=0.8")
-            .from(".glass-card-warning > *:not(.card-spotlight)", {
-                y: 20, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out"
-            }, "-=0.8")
-            // Relief: Abroad 
-            .from(".solution-card", {
-                y: 50, scale: 0.95, opacity: 0, duration: 1.2, ease: "power3.out"
-            }, "-=0.8")
-            .from(".solution-card > *:not(.card-spotlight, .solution-shine)", {
-                y: 20, opacity: 0, duration: 0.8, stagger: 0.1, ease: "power2.out"
-            }, "-=1");
+        rcTl
+            .from(".rc-title", { y: 28, opacity: 0, duration: 0.75, ease: "power3.out" })
+            .from(".rc-subtitle", { y: 16, opacity: 0, duration: 0.6, ease: "power2.out" }, "-=0.5")
+            .from(".rc-card-1", { y: 60, opacity: 0, duration: 0.9, ease: "power3.out" }, "-=0.3")
+            .from(".rc-card-2", { y: 60, opacity: 0, duration: 0.9, ease: "power3.out" }, "-=0.7")
+            .from(".rc-card-3", { y: 60, scale: 0.96, opacity: 0, duration: 1.1, ease: "power3.out" }, "-=0.7")
+            .from(".lq-perk", { y: 12, opacity: 0, duration: 0.5, stagger: 0.1, ease: "back.out(2)" }, "-=0.5");
+
+        // Animate progress bars after cards enter
+        ScrollTrigger.create({
+            trigger: ".reality-pipeline",
+            start: "top 70%",
+            onEnter: () => {
+                document.querySelectorAll('.lq-bar').forEach(bar => {
+                    const targetWidth = bar.dataset.width + '%';
+                    bar.style.width = targetWidth;
+                });
+            }
+        });
     }
 
-    // 3. Interactive 3D Tilt & Spotlight Tracker
-    const realityCards = document.querySelectorAll('.reality-card');
-
-    realityCards.forEach(card => {
-        const spotlight = card.querySelector('.card-spotlight');
-
+    // 3D tilt on hover
+    document.querySelectorAll('.lq-card').forEach(card => {
         card.addEventListener('mousemove', (e) => {
             const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left; // x position within the element.
-            const y = e.clientY - rect.top;  // y position within the element.
-
-            // Calculate rotation (max 8 degrees for subtle effect)
-            const centerX = rect.width / 2;
-            const centerY = rect.height / 2;
-
-            const rotateX = ((y - centerY) / centerY) * -8;
-            const rotateY = ((x - centerX) / centerX) * 8;
-
-            // Apply 3D tilt directly with CSS variables for browser handling
-            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px) scale(1.02)`;
-            card.style.transition = 'transform 0.15s ease-out';
-
-            // Apply Spotlight
-            if (spotlight) {
-                // Update spotlight color based on card type
-                let lightColor = 'rgba(255,255,255,0.1)';
-                if (card.classList.contains('glass-card-danger')) lightColor = 'rgba(220, 38, 38, 0.15)';
-                if (card.classList.contains('glass-card-warning')) lightColor = 'rgba(245, 158, 11, 0.15)';
-                if (card.classList.contains('glass-card-success')) lightColor = 'rgba(14, 165, 233, 0.2)';
-
-                spotlight.style.background = `radial-gradient(circle 200px at ${x}px ${y}px, ${lightColor}, transparent)`;
-            }
+            const cx = rect.width / 2;
+            const cy = rect.height / 2;
+            const rx = ((e.clientY - rect.top - cy) / cy) * -6;
+            const ry = ((e.clientX - rect.left - cx) / cx) * 6;
+            card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px) scale(1.015)`;
+            card.style.transition = 'transform 0.12s ease-out';
         });
-
         card.addEventListener('mouseleave', () => {
-            // Reset to default state
-            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0) scale(1)';
-            card.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-
-            if (spotlight) {
-                spotlight.style.background = 'transparent';
-            }
+            card.style.transform = '';
+            card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
         });
     });
 }
 
-// Medical Viewfinder Logic - Enhanced
-const vfItems = document.querySelectorAll('.vf-item');
-const vfScreens = document.querySelectorAll('.vf-screen');
-const ecgTracker = document.getElementById('ecg-tracker');
-const vfParticles = document.getElementById('vf-particles');
-const vfProgressFill = document.getElementById('vf-progress-fill');
-const vfCurrentStep = document.getElementById('vf-current-step');
-const vfModeDisplay = document.getElementById('vf-mode-display');
-const vfTimeDisplay = document.getElementById('vf-time-display');
+// Anatomy Stack Section - Scroll Card Stack
+(function () {
+    const pinWrap = document.getElementById('anatomy-pin-wrap');
+    const cards = gsap.utils.toArray('.anatomy-card');
+    if (!pinWrap || !cards.length) return;
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-// Timer for HUD display
-let scanTime = 0;
-let timerInterval;
+    // Mobile: skip pinning, show cards in normal flow
+    if (window.innerWidth <= 991) return;
 
-// Particle System
-const initParticles = () => {
-    if (!vfParticles) return;
+    const cardCount = cards.length;
 
-    const ctx = vfParticles.getContext('2d');
-    const section = document.querySelector('.viewfinder-section');
-    if (!section) return;
-
-    const resize = () => {
-        vfParticles.width = section.offsetWidth;
-        vfParticles.height = section.offsetHeight;
-    };
-    resize();
-    window.addEventListener('resize', resize);
-
-    const particles = [];
-    const particleCount = 50;
-
-    class Particle {
-        constructor() {
-            this.reset();
-        }
-
-        reset() {
-            this.x = Math.random() * vfParticles.width;
-            this.y = Math.random() * vfParticles.height;
-            this.size = Math.random() * 2 + 1;
-            this.speedX = (Math.random() - 0.5) * 0.5;
-            this.speedY = (Math.random() - 0.5) * 0.5;
-            this.opacity = Math.random() * 0.5 + 0.2;
-            this.pulse = Math.random() * Math.PI * 2;
-        }
-
-        update() {
-            this.x += this.speedX;
-            this.y += this.speedY;
-            this.pulse += 0.02;
-
-            if (this.x < 0 || this.x > vfParticles.width ||
-                this.y < 0 || this.y > vfParticles.height) {
-                this.reset();
-            }
-        }
-
-        draw() {
-            const currentOpacity = this.opacity * (0.5 + 0.5 * Math.sin(this.pulse));
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(14, 165, 233, ${currentOpacity})`;
-            ctx.fill();
-        }
-    }
-
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-    }
-
-    const animate = () => {
-        ctx.clearRect(0, 0, vfParticles.width, vfParticles.height);
-
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-
-        // Draw connections
-        particles.forEach((p1, i) => {
-            particles.slice(i + 1).forEach(p2 => {
-                const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
-                if (dist < 150) {
-                    ctx.beginPath();
-                    ctx.moveTo(p1.x, p1.y);
-                    ctx.lineTo(p2.x, p2.y);
-                    ctx.strokeStyle = `rgba(14, 165, 233, ${0.15 * (1 - dist / 150)})`;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            });
-        });
-
-        requestAnimationFrame(animate);
-    };
-
-    animate();
-};
-
-// Update progress bar
-const updateProgress = (index) => {
-    const progress = (index / 4) * 100;
-    if (vfProgressFill) {
-        if (typeof gsap !== 'undefined') {
-            gsap.to(vfProgressFill, {
-                width: `${progress}%`,
-                duration: 0.5,
-                ease: "power2.out"
-            });
+    // Card 1 is always visible (translateY 0). Cards 2-4 start below (translateY 100%)
+    cards.forEach((card, i) => {
+        if (i === 0) {
+            gsap.set(card, { yPercent: 0 });
         } else {
-            vfProgressFill.style.width = `${progress}%`;
-        }
-    }
-    if (vfCurrentStep) {
-        vfCurrentStep.textContent = `0${index}`;
-    }
-};
-
-// Update progress rings on items
-const updateProgressRings = (activeIndex) => {
-    document.querySelectorAll('.vf-item').forEach((item, idx) => {
-        const ring = item.querySelector('.progress-ring-fill');
-        if (ring) {
-            if (idx < activeIndex) {
-                if (typeof gsap !== 'undefined') {
-                    gsap.to(ring, { strokeDashoffset: 0, duration: 0.5 });
-                } else {
-                    ring.style.strokeDashoffset = '0';
-                }
-            } else if (idx === activeIndex) {
-                // Animate the active ring
-                if (typeof gsap !== 'undefined') {
-                    gsap.fromTo(ring,
-                        { strokeDashoffset: 100 },
-                        { strokeDashoffset: 50, duration: 0.5 }
-                    );
-                } else {
-                    ring.style.strokeDashoffset = '50';
-                }
-            } else {
-                if (typeof gsap !== 'undefined') {
-                    gsap.to(ring, { strokeDashoffset: 100, duration: 0.3 });
-                } else {
-                    ring.style.strokeDashoffset = '100';
-                }
-            }
+            gsap.set(card, { yPercent: 100 });
         }
     });
-};
 
-// Start timer
-const startTimer = () => {
-    if (timerInterval) clearInterval(timerInterval);
-    scanTime = 0;
-    timerInterval = setInterval(() => {
-        scanTime++;
-        const mins = Math.floor(scanTime / 60).toString().padStart(2, '0');
-        const secs = (scanTime % 60).toString().padStart(2, '0');
-        if (vfTimeDisplay) vfTimeDisplay.textContent = `${mins}:${secs}`;
-    }, 1000);
-};
-
-if (vfItems.length > 0 && ecgTracker) {
-
-    const updateTracker = (activeItem) => {
-        if (window.innerWidth > 991) {
-            const itemTop = activeItem.offsetTop;
-            const itemHeight = activeItem.offsetHeight;
-            const targetTop = itemTop + (itemHeight / 2) - 44;
-
-            if (typeof gsap !== 'undefined') {
-                gsap.to(ecgTracker, {
-                    top: targetTop,
-                    duration: 0.6,
-                    ease: "power3.inOut"
-                });
-            } else {
-                ecgTracker.style.top = `${targetTop}px`;
-            }
-        }
+    // Animate stat bar for the card that just became active
+    const animateStatBar = (card) => {
+        const fill = card.querySelector('.anatomy-stat-fill');
+        if (!fill) return;
+        const target = fill.style.getPropertyValue('--fill') || '100%';
+        gsap.fromTo(fill, { width: '0%' }, { width: target, duration: 1.1, ease: 'power2.out' });
     };
 
-    let currentIndex = 0;
-    let autoPlayInterval;
-    const WAIT_MS = 3500; // card display time in ms
+    // Pin the wrap and scrub each card sliding up
+    // Each card transition gets equal scroll distance (600px per card)
+    const scrollPerCard = 700;
+    const totalScroll = scrollPerCard * (cardCount - 1);
 
-    // ---- ECG Progress Animation ----
-    const ecgProgressPath = document.getElementById('ecg-progress-path');
-    const ECG_LENGTH = 250; // stroke-dasharray value (path length)
-
-    const resetEcgProgress = () => {
-        if (!ecgProgressPath) return;
-        if (typeof gsap !== 'undefined') {
-            gsap.killTweensOf(ecgProgressPath);
-            gsap.set(ecgProgressPath, { strokeDashoffset: ECG_LENGTH });
-        } else {
-            ecgProgressPath.style.strokeDashoffset = ECG_LENGTH;
-        }
-    };
-
-    const animateEcgProgress = (durationMs) => {
-        if (!ecgProgressPath) return;
-        if (typeof gsap !== 'undefined') {
-            gsap.fromTo(ecgProgressPath,
-                { strokeDashoffset: ECG_LENGTH },
-                {
-                    strokeDashoffset: 0,
-                    duration: durationMs / 1000,
-                    ease: 'linear'
-                }
-            );
-        } else {
-            ecgProgressPath.style.strokeDashoffset = '0';
-        }
-    };
-
-    const modeNames = ['ANALYSIS', 'SCANNING', 'PROCESSING', 'COMPLETE'];
-    const modeColors = ['#0ea5e9', '#06b6d4', '#22d3ee', '#10b981'];
-
-    let isAnimating = false;  // prevents overlapping transitions
-
-    const switchScreen = (index, isAuto = false) => {
-        // Autoplay: skip if a manual transition is in progress
-        if (isAnimating && isAuto) return;
-        // Same card: skip (unless autoplay explicitly re-triggers)
-        if (index === currentIndex && !isAuto) return;
-
-        const currentItem = vfItems[index];
-        const targetId = currentItem.getAttribute('data-target');
-        const targetScreen = document.getElementById(targetId);
-        if (!targetScreen) return;
-
-        // Find the real current screen (may differ from .active during transition)
-        const fromScreen = document.querySelector('.vf-screen.active')
-            || document.querySelector('.vf-screen[style*="opacity: 1"]');
-
-        if (targetScreen === fromScreen) return;
-
-        // For manual hover: kill any in-progress tracker/screen animation immediately
-        if (!isAuto) {
-            if (typeof gsap !== 'undefined') {
-                gsap.killTweensOf(ecgTracker);
-                if (fromScreen) {
-                    gsap.killTweensOf(fromScreen);
-                    const fromContent = fromScreen.querySelector('.vf-content-box');
-                    if (fromContent) gsap.killTweensOf(fromContent);
-                }
-            }
-            isAnimating = false;
-        }
-
-        isAnimating = true;
-        currentIndex = index;
-
-        resetEcgProgress();
-
-        // Update mode label
-        if (vfModeDisplay) {
-            if (typeof gsap !== 'undefined') {
-                gsap.to(vfModeDisplay, {
-                    opacity: 0, y: -8, duration: 0.12,
-                    onComplete: () => {
-                        vfModeDisplay.textContent = modeNames[index];
-                        vfModeDisplay.style.color = modeColors[index];
-                        gsap.to(vfModeDisplay, { opacity: 1, y: 0, duration: 0.18 });
-                    }
-                });
-            } else {
-                vfModeDisplay.textContent = modeNames[index];
-                vfModeDisplay.style.color = modeColors[index];
-            }
-        }
-
-        updateProgress(index + 1);
-        updateProgressRings(index);
-
-        // Switch active menu item
-        vfItems.forEach(i => i.classList.remove('active'));
-        currentItem.classList.add('active');
-
-        // Slide ECG tracker to new item, then swap screens
-        if (window.innerWidth > 991) {
-            const targetTop = currentItem.offsetTop + (currentItem.offsetHeight / 2) - 44;
-            if (typeof gsap !== 'undefined') {
-                gsap.to(ecgTracker, {
-                    top: targetTop,
-                    duration: isAuto ? 0.45 : 0.3, // faster for manual hover
-                    ease: 'power2.inOut',
-                    overwrite: 'auto',
-                    onComplete: () => performScreenSwap(fromScreen, targetScreen)
-                });
-            } else {
-                ecgTracker.style.top = `${targetTop}px`;
-                performScreenSwap(fromScreen, targetScreen);
-            }
-        } else {
-            performScreenSwap(fromScreen, targetScreen);
-        }
-    };
-
-
-    const performScreenSwap = (fromScreen, toScreen) => {
-        if (!toScreen) return;
-
-        if (typeof gsap !== 'undefined') {
-            // Kill any running tweens on both screens to prevent ghost overlaps
-            if (fromScreen) {
-                gsap.killTweensOf(fromScreen);
-                const fromContent = fromScreen.querySelector('.vf-content-box');
-                if (fromContent) gsap.killTweensOf(fromContent);
-                const fromStat = fromScreen.querySelector('.vf-stat-bar');
-                if (fromStat) gsap.killTweensOf(fromStat);
-            }
-            gsap.killTweensOf(toScreen);
-            const toContent = toScreen.querySelector('.vf-content-box');
-            if (toContent) gsap.killTweensOf(toContent);
-            const toStat = toScreen.querySelector('.vf-stat-bar');
-            if (toStat) gsap.killTweensOf(toStat);
-
-            // Force toScreen invisible before making it "active"
-            // (prevents CSS .active from flashing it at opacity:1)
-            gsap.set(toScreen, { opacity: 0 });
-        }
-        toScreen.classList.add('active');
-
-        // Start ECG progress for this card's display window
-        animateEcgProgress(WAIT_MS);
-
-        // Flicker effect on the display frame
-        const display = document.querySelector('.vf-display');
-        if (display) {
-            display.classList.remove('flicker');
-            void display.offsetWidth;
-            display.classList.add('flicker');
-            setTimeout(() => display.classList.remove('flicker'), 400);
-        }
-
-        if (typeof gsap !== 'undefined') {
-            // Build an atomic timeline so nothing overlaps
-            const tl = gsap.timeline({
-                onComplete: () => { isAnimating = false; }
-            });
-
-            // --- Phase 1: fade out the old screen ---
-            if (fromScreen) {
-                const fromContent = fromScreen.querySelector('.vf-content-box');
-                if (fromContent) {
-                    tl.to(fromContent,
-                        { y: -18, opacity: 0, duration: 0.22, ease: 'power2.in' }, 0);
-                }
-                tl.to(fromScreen,
-                    {
-                        opacity: 0, duration: 0.3, ease: 'power1.in',
-                        onComplete: () => {
-                            fromScreen.classList.remove('active');
-                            gsap.set(fromScreen, { clearProps: 'opacity' }); // restore CSS default
-                        }
-                    }, 0);
-            }
-
-            // --- Phase 2: fade in the new screen (starts slightly after fade-out begins) ---
-            const inStart = fromScreen ? 0.15 : 0;
-            tl.to(toScreen, { opacity: 1, duration: 0.5, ease: 'power2.out' }, inStart);
-
-            // Ken Burns on background image
-            const bgImg = toScreen.querySelector('.vf-bg-img');
-            if (bgImg) {
-                tl.fromTo(bgImg,
-                    { scale: 1.12, x: -8 },
-                    { scale: 1, x: 0, duration: 6, ease: 'power1.out' }, inStart);
-            }
-
-            // Content box slides up
-            const toContent = toScreen.querySelector('.vf-content-box');
-            if (toContent) {
-                tl.fromTo(toContent,
-                    { y: 28, opacity: 0 },
-                    { y: 0, opacity: 1, duration: 0.55, ease: 'power3.out' }, inStart + 0.18);
-            }
-
-            // Stat bar triggers CSS fill animation
-            const toStat = toScreen.querySelector('.vf-stat-bar');
-            if (toStat) {
-                tl.fromTo(toStat,
-                    { opacity: 0, y: 8 },
-                    {
-                        opacity: 1, y: 0, duration: 0.4, ease: 'power2.out',
-                        onComplete: () => {
-                            toStat.classList.remove('animated');
-                            void toStat.offsetWidth;
-                            toStat.classList.add('animated');
-                        }
-                    }, inStart + 0.35);
-            }
-        } else {
-            if (fromScreen) fromScreen.classList.remove('active');
-            isAnimating = false;
-        }
-    };
-
-
-    const startAutoPlay = () => {
-        stopAutoPlay();
-        autoPlayInterval = setInterval(() => {
-            let nextIndex = (currentIndex + 1) % vfItems.length;
-            switchScreen(nextIndex, true);
-        }, 4000);
-    };
-
-    const stopAutoPlay = () => {
-        if (autoPlayInterval) clearInterval(autoPlayInterval);
-    };
-
-    vfItems.forEach((item, index) => {
-        item.addEventListener('mouseenter', () => {
-            stopAutoPlay();
-            switchScreen(index);
-        });
-        item.addEventListener('mouseleave', () => {
-            startAutoPlay();
-        });
-        item.addEventListener('click', () => {
-            stopAutoPlay();
-            switchScreen(index);
-        });
-    });
-
-    // Init first screen
-    const firstItem = vfItems[0];
-    const firstTarget = document.getElementById(firstItem.getAttribute('data-target'));
-    if (firstTarget) {
-        firstItem.classList.add('active');
-        firstTarget.classList.add('active');
-        performScreenSwap(null, firstTarget);
-    }
-    updateProgress(1);
-    updateProgressRings(0);
-
-    // Align tracker to first item
-    const initialTop = firstItem.offsetTop + (firstItem.offsetHeight / 2) - 44;
-    ecgTracker.style.top = `${initialTop}px`;
-
-    // Start Auto Cycle
-    startAutoPlay();
-    startTimer();
-
-    // Initialize particles
-    initParticles();
-
-    window.addEventListener('resize', () => {
-        const activeItem = document.querySelector('.vf-item.active');
-        if (activeItem) {
-            const itemTop = activeItem.offsetTop;
-            const itemHeight = activeItem.offsetHeight;
-            ecgTracker.style.top = `${itemTop + (itemHeight / 2) - 44}px`;
-        }
-    });
-}
-
-// Viewfinder Section Entrance
-if (document.querySelector('.viewfinder-section')) {
-    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-        const vfTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".viewfinder-section",
-                start: "top 60%",
-            }
-        });
-
-        vfTl.from(".viewfinder-section .vf-data-readout", {
-            x: 50, opacity: 0, duration: 0.8, ease: "power3.out",
-            immediateRender: false
-        })
-            .from(".viewfinder-section .text-start", {
-                y: 50, opacity: 0, duration: 1, ease: "power3.out",
-                immediateRender: false
-            }, "-=0.4")
-            .from(".vf-progress-container", {
-                scaleX: 0, transformOrigin: "left", opacity: 0, duration: 0.8,
-                immediateRender: false
-            }, "-=0.5")
-            .fromTo(".vf-menu .vf-item",
-                { x: -40, opacity: 0 },
-                {
-                    x: 0, opacity: 1, stagger: 0.12, duration: 0.7, ease: "power3.out",
-                    immediateRender: false
-                }
-                , "-=0.4")
-            .from(".vf-display", {
-                x: 80, scale: 0.95, opacity: 0, duration: 1.1, ease: "power2.out",
-                immediateRender: false
-            }, "-=0.6");
-    }
-}
-
-if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-
-    // 1. The "Cinematic Sink" Transition (Dark to Light)
-    // As the new Light section scrolls up, the Dark section sinks back and dims.
-    if (document.querySelector('.viewfinder-section') && document.querySelector('.usp-premium-stack')) {
-        gsap.to('.viewfinder-section', {
-            scrollTrigger: {
-                trigger: '.usp-premium-stack',
-                start: 'top bottom', // When light section touches bottom of screen
-                end: 'top top',      // When light section hits top of screen
-                scrub: true
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: pinWrap,
+            start: 'top top',
+            end: '+=' + totalScroll,
+            pin: true,
+            pinSpacing: true,
+            scrub: 0.8,
+            snap: {
+                snapTo: 1 / (cardCount - 1),
+                duration: { min: 0.3, max: 0.6 },
+                ease: 'power2.inOut'
             },
-            scale: 0.9,           // Sinks into the background
-            opacity: 0.3,         // Dims out
-            y: 50                 // Pushes down slightly
+            onUpdate: (self) => {
+                // Determine which card is active and fire stat bar once
+                const activeIndex = Math.round(self.progress * (cardCount - 1));
+                if (activeIndex !== tl._lastActive) {
+                    tl._lastActive = activeIndex;
+                    animateStatBar(cards[activeIndex]);
+                }
+            }
+        }
+    });
+
+    tl._lastActive = 0;
+    animateStatBar(cards[0]);
+
+    // For each subsequent card, slide it up from 100% to 0%
+    cards.forEach((card, i) => {
+        if (i === 0) return;
+        tl.to(card, {
+            yPercent: 0,
+            ease: 'none',
+            duration: 1
+        }, (i - 1));
+    });
+})();
+
+// Hide logo + CTA once user scrolls past the hero section
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    const heroCornerEls = ['.nav-brand-corner', '.nav-cta-corner'];
+
+    // The first section after the hero is #reality-check.
+    // When it enters the top of the viewport, hide the fixed logo/CTA.
+    // When the user scrolls back up into the hero, restore them.
+    const postHeroSection = document.querySelector('#reality-check') || document.querySelector('.reality-section');
+    if (postHeroSection) {
+        ScrollTrigger.create({
+            trigger: postHeroSection,
+            start: 'top bottom',   // fires as soon as post-hero section enters viewport bottom
+            onEnter: () => {
+                gsap.to(heroCornerEls, { opacity: 0, pointerEvents: 'none', duration: 0.2, overwrite: true });
+            },
+            onLeaveBack: () => {
+                // user scrolled back up — hero is visible again
+                gsap.to(heroCornerEls, { opacity: 1, pointerEvents: 'auto', duration: 0.3, overwrite: true });
+            }
         });
     }
+}
 
     // 2. The Sticky Card Stack Depth Effect
     // On desktop, as cards stack over each other, the ones underneath scale down slightly
@@ -1516,7 +1050,6 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             ease: "none"
         });
     }
-}
 
 // Global Light Background Injection for Light Sections
 const injectGlobalLightBg = () => {
@@ -2276,3 +1809,74 @@ runOnReady(() => {
             }, "-=1"); // Start almost simultaneously
         }
 });
+// Animate gc-bar progress bars on scroll into view
+(function () {
+    const bars = document.querySelectorAll('.gc-bar[data-width]');
+    if (!bars.length) return;
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.width = entry.target.dataset.width + '%';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    bars.forEach(bar => observer.observe(bar));
+})();
+
+// Reality Check cards — expand from center on scroll in, collapse on scroll out
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    const rcCards = gsap.utils.toArray('#reality-check .gc-card');
+
+    gsap.set(rcCards, { scale: 0, opacity: 0, transformOrigin: '50% 50%' });
+
+    ScrollTrigger.create({
+        trigger: '#reality-check',
+        start: 'top 75%',
+        end: 'bottom 25%',
+        scrub: 1,
+        onUpdate(self) {
+            const p = self.progress;
+            // First 40% of scroll range: grow in. Last 60%: stay full.
+            // On leave (progress back to 0): shrink back.
+            const inScale  = Math.min(p / 0.4, 1);
+            rcCards.forEach((card, i) => {
+                // Stagger: each card starts slightly later
+                const staggerOffset = i * 0.06;
+                const cardP = Math.max(0, Math.min((p - staggerOffset) / 0.4, 1));
+                gsap.set(card, {
+                    scale:   cardP,
+                    opacity: cardP,
+                });
+            });
+        }
+    });
+}
+
+// Reality Check — left text column scroll-in animation
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    const rcTextEls = gsap.utils.toArray(
+        '#reality-check .rc-text-col .rc-badge, ' +
+        '#reality-check .rc-text-col .rc-title, ' +
+        '#reality-check .rc-text-col .rc-subtitle, ' +
+        '#reality-check .rc-text-col .rc-body-text, ' +
+        '#reality-check .rc-text-col .lq-cta'
+    );
+
+    gsap.set(rcTextEls, { y: 40, opacity: 0 });
+
+    ScrollTrigger.create({
+        trigger: '#reality-check .rc-text-col',
+        start: 'top 80%',
+        once: true,
+        onEnter() {
+            gsap.to(rcTextEls, {
+                y: 0,
+                opacity: 1,
+                duration: 0.7,
+                ease: 'power3.out',
+                stagger: 0.12
+            });
+        }
+    });
+}
