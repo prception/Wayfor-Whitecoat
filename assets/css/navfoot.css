@@ -1,112 +1,116 @@
 /* ==================================================
-   LIQUID GLASS NAVBAR
+   NAVBAR — centered, starts at image top, concave outer top corners
 ================================================== */
 #nav-wrapper {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     pointer-events: none;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Prevent w-100 on #header-container from breaking centered flex layout */
+#header-container {
+    display: contents;
 }
 
 .liquid-navbar {
-    width: 100%;
-    border-radius: 999vw;
-    background: linear-gradient(
-      -75deg,
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.8),
-      rgba(255, 255, 255, 0.5)
-    );
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border: none;
-    box-shadow:
-      inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
-      inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
-      0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
-      0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
-      0 0 0 0 rgba(255, 255, 255, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: fit-content;
+    background: var(--white-bg);
+    border-radius: 0;
+    padding: 28px 160px 36px;
+    box-shadow: none;
     pointer-events: auto;
-    transition: all 0.4s ease;
     position: relative;
     z-index: 10;
+    margin: 0;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 400 100'%3E%3Cpath d='M0,0 C100,0 20,100 105,100 L295,100 C380,100 300,0 400,0 Z' fill='white'/%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='none' viewBox='0 0 400 100'%3E%3Cpath d='M0,0 C100,0 20,100 105,100 L295,100 C380,100 300,0 400,0 Z' fill='white'/%3E%3C/svg%3E");
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
 }
 
-.liquid-navbar::before {
-    --border-width: clamp(1px, 0.0625em, 4px);
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: 999vw;
-    width: calc(100% + var(--border-width));
-    height: calc(100% + var(--border-width));
-    top: calc(0% - var(--border-width) / 2);
-    left: calc(0% - var(--border-width) / 2);
-    padding: var(--border-width);
-    box-sizing: border-box;
-    background: conic-gradient(
-        from var(--angle-1, -75deg) at 50% 50%,
-        rgba(255, 255, 255, 0.5),
-        rgba(255, 255, 255, 0) 5% 40%,
-        rgba(255, 255, 255, 0.8) 50%,
-        rgba(255, 255, 255, 0) 60% 95%,
-        rgba(255, 255, 255, 0.5)
-      ),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.3));
-    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    mask-composite: exclude;
-    -webkit-mask-composite: xor;
-    transition: all 0.4s ease, --angle-1 500ms ease;
-    box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255, 255, 255, 0.5);
-    z-index: -1;
-    pointer-events: none;
+
+/* Logo — top-left corner, aligned to Bootstrap container left edge */
+.nav-brand-corner {
+    position: fixed;
+    top: 32px;
+    left: max(24px, calc((100vw - 1320px) / 2 + 24px));
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: #1a1a2e;
+    font-weight: 700;
+    font-size: 1rem;
+    pointer-events: auto;
+    white-space: nowrap;
+    z-index: 20;
+}
+
+.nav-brand-corner .brand-icon {
+    width: 22px;
+    height: 22px;
+    color: var(--primary-mid, #2563eb);
+}
+
+.nav-brand-corner .brand-highlight {
+    color: var(--primary-mid, #2563eb);
+}
+
+/* "Get Started" button — top-right corner, mirrored from logo left edge */
+.nav-cta-corner {
+    position: fixed;
+    top: 26px;
+    right: max(24px, calc((100vw - 1320px) / 2 + 24px));
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 24px;
+    background: #1a1a2e;
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    pointer-events: auto;
+    white-space: nowrap;
+    z-index: 20;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.nav-cta-corner:hover {
+    background: var(--primary-mid, #2563eb);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+/* Top corners handled directly by navbar border-radius — no pseudo-elements needed */
+.liquid-navbar::before,
+.liquid-navbar::after {
+    display: none;
 }
 
 .liquid-navbar:hover {
-    transform: scale(0.99); /* Softer scale than 0.975 for the wide navbar */
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    box-shadow:
-      inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
-      inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
-      0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
-      0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5),
-      0 0 0 0 rgba(255, 255, 255, 1);
+    transform: none;
 }
 
-.liquid-navbar:hover::before {
-    --angle-1: -125deg;
-}
-
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 24px;
-}
-
-.nav-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: var(--primary-deep);
-    text-decoration: none;
-    letter-spacing: -0.5px;
-    transition: color 0.3s;
-}
-.brand-highlight { color: var(--primary-mid); font-weight: 500; transition: color 0.3s; }
-.brand-icon { width: 28px; height: 28px; color: var(--primary-mid); transition: color 0.3s; }
-
+/* Nav links inside the pill */
 .nav-links {
     display: flex;
-    gap: 32px;
+    gap: 44px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -114,60 +118,46 @@
 
 .nav-item {
     text-decoration: none;
-    color: var(--primary-deep);
+    color: #1a1a2e;
     font-weight: 600;
-    font-size: 0.95rem;
-    transition: all 0.3s;
+    font-size: 0.92rem;
+    transition: color 0.2s;
+    white-space: nowrap;
     position: relative;
-    padding: 5px 0;
+    padding-bottom: 4px;
 }
 
 .nav-item::after {
     content: '';
     position: absolute;
-    width: 0;
-    height: 2px;
     bottom: 0;
-    left: 0;
-    background: var(--primary-mid);
-    transition: width 0.3s ease;
+    left: 50%;
+    transform: translateX(-50%) scaleX(0);
+    width: 100%;
+    height: 2px;
+    background: var(--primary-mid, #2563eb);
+    border-radius: 2px;
+    transition: transform 0.25s ease;
 }
 
 .nav-item:hover::after,
 .nav-item.active::after {
-    width: 100%;
+    transform: translateX(-50%) scaleX(1);
 }
 
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 20px;
+.nav-item:hover,
+.nav-item.active {
+    color: var(--primary-mid);
 }
 
-.btn-primary-glass {
-    background: linear-gradient(135deg, #0D1B8C, #2E3FBF);
-    color: white;
-    padding: 12px 28px;
-    border-radius: 30px;
-    font-weight: 600;
-    text-decoration: none;
-    font-size: 0.95rem;
-    box-shadow: 0 4px 15px rgba(13, 27, 140, 0.2);
-    transition: all 0.3s;
-    border: 1px solid rgba(255,255,255,0.2);
-}
-.btn-primary-glass:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(13, 27, 140, 0.4);
-}
-
+/* Mobile hamburger — hidden on desktop */
 .mobile-toggle {
     display: none;
     background: transparent;
     border: none;
-    color: var(--primary-deep);
+    color: #1a1a2e;
     cursor: pointer;
-    transition: color 0.3s;
+    padding: 4px;
 }
 
 /* ==================================================
@@ -220,95 +210,40 @@
 } */
 
 @media (max-width: 768px) {
+    .liquid-navbar {
+        min-width: unset;
+        width: auto;
+        padding: 12px 24px 16px;
+        gap: 0;
+        justify-content: space-between;
+        border-radius: 0 0 28px 28px;
+    }
+
     .nav-links {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: rgba(255, 255, 255, 0.96);
-        backdrop-filter: blur(25px);
-        -webkit-backdrop-filter: blur(25px);
-        border-radius: 24px;
-        padding: 24px;
-        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        margin-top: 12px;
-        gap: 16px;
+        top: calc(100% + 6px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: max-content;
+        min-width: 200px;
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 16px 24px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        gap: 14px;
         z-index: 100;
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease, display 0.3s ease allow-discrete;
     }
 
     .nav-links.active {
         display: flex;
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .nav-container {
-        padding: 12px 20px;
-    }
-
-    .nav-brand {
-        font-size: 1.25rem;
-        gap: 8px;
-    }
-
-    .brand-icon {
-        width: 24px;
-        height: 24px;
-    }
-
-    .nav-actions .btn-primary-glass {
-        display: none; /* Hide desktop CTA button on mobile */
     }
 
     .mobile-toggle {
-        display: flex; /* Show hamburger button */
+        display: flex;
         align-items: center;
         justify-content: center;
-        background: transparent;
-        border: none;
-        color: var(--primary-deep);
-        cursor: pointer;
-        outline: none;
-    }
-
-    .mobile-only-item {
-        display: block;
-        width: 100%;
-    }
-
-    .mobile-cta-btn {
-        display: block;
-        text-align: center;
-        background: linear-gradient(135deg, #0D1B8C, #2E3FBF);
-        color: white !important;
-        padding: 12px 24px;
-        border-radius: 30px;
-        font-weight: 600;
-        box-shadow: 0 4px 15px rgba(13, 27, 140, 0.2);
-        margin-top: 8px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-
-    .mobile-cta-btn::after {
-        display: none !important;
-    }
-
-    .mobile-cta-btn:hover {
-        background: linear-gradient(135deg, #0a146e, #24329d);
-        transform: translateY(-2px);
-    }
-}
-
-@media (min-width: 769px) {
-    .mobile-only-item {
-        display: none; /* Hide mobile-specific items on desktop */
     }
 }
 
@@ -594,4 +529,41 @@ html, body {
     margin: 0 !important;
     padding: 0 !important;
     height: auto !important;
+}
+
+/* ==================================================
+   DARK-HERO PAGE NAV OVERRIDES
+   Pages with dark hero backgrounds (about, contact, all country pages)
+   need white logo + CTA text so they're visible, matching the home
+   page's navbar appearance when floating over a dark hero image.
+================================================== */
+body.country-page .nav-brand-corner,
+body.contact .nav-brand-corner {
+    color: #ffffff;
+}
+
+body.country-page .nav-brand-corner .brand-icon,
+body.contact .nav-brand-corner .brand-icon {
+    color: #60a5fa;
+}
+
+body.country-page .nav-brand-corner .brand-highlight,
+body.contact .nav-brand-corner .brand-highlight {
+    color: #60a5fa;
+}
+
+body.country-page .nav-cta-corner,
+body.contact .nav-cta-corner {
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    border: 1.5px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+body.country-page .nav-cta-corner:hover,
+body.contact .nav-cta-corner:hover {
+    background: var(--primary-mid, #2563eb);
+    border-color: var(--primary-mid, #2563eb);
+    color: #ffffff;
 }

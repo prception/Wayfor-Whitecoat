@@ -208,12 +208,29 @@ html.lenis body {
     }
 }
 
-/* Master Pin Container */
+/* Master Pin Container — white mat, flush at top so navbar merges seamlessly */
 #pinned-container {
     position: relative;
     width: 100vw;
     height: 100vh;
+    overflow: visible;
+    background: var(--white-bg);
+    box-sizing: border-box;
+    /* no top padding — navbar top is flush with white bg edge */
+    padding: 0 10px 10px 10px;
+}
+
+/* Image frame — sits below the navbar droopdown, white visible on sides/bottom */
+.hero-image-frame {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 40px;
     overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
+    z-index: 0;
 }
 
 /* ==================================================
@@ -223,8 +240,8 @@ html.lenis body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    width: 100%;
+    height: 100%;
     background-size: cover;
     background-position: center;
     z-index: 0;
@@ -638,7 +655,7 @@ html.lenis body {
 
 .initial-text {
     text-align: left;
-    /* top: 35%; */
+    top: -5%;
     padding: 0 10px;
 }
 
@@ -661,14 +678,21 @@ html.lenis body {
 
 /* Phase 1 & 2 Restored Inline Styles */
 .image-hero-title {
-    color: var(--accent-blue);
+    color: #ffffff;
+    font-size: 4.2rem;
+    line-height: 1.05;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.45);
     pointer-events: auto;
 }
 
 .image-hero-subtitle {
-    color: var(--text-gray-dark);
+    color: #ffffff;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.4);
     pointer-events: none;
-    width: 600px;
+    max-width: 400px;
+    width: auto;
+    font-size: 0.95rem;
+    line-height: 1.65;
 }
 
 .btn-primary-pill {
@@ -1768,29 +1792,9 @@ select.form-control option {
     box-shadow: 0 12px 40px rgba(37, 211, 102, 0.4) !important;
 }
 
-/* ==================================================
-   SWEEPING SHINE HOVER EFFECT (Navbar only)
-================================================== */
-.liquid-navbar::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(110deg,
-            rgba(255, 255, 255, 0) 0%,
-            rgba(255, 255, 255, 0) 40%,
-            rgba(255, 255, 255, 0.6) 50%,
-            rgba(255, 255, 255, 0) 60%,
-            rgba(255, 255, 255, 0) 100%);
-    background-size: 250% 100%;
-    background-position: 150% 0;
-    transition: background-position 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-    pointer-events: none;
-    z-index: 0;
-}
 
-.liquid-navbar:hover::after {
-    background-position: -50% 0;
+.page-home .liquid-navbar::after {
+    display: none;
 }
 
 /* ==================================================
@@ -2055,13 +2059,217 @@ select.form-control option {
 
 /* Vignette to blend edges and protect text legibility on the left */
 .img-vignette {
+    display: none;
+}
+
+/* ==================================================
+   HERO PHASE 1 — CTA BUTTON & FLOATING CARDS
+================================================== */
+
+/* Dark navy CTA button matching reference image */
+.hero-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #1a1f6e;
+    color: #ffffff;
+    border: none;
+    border-radius: 40px;
+    padding: 16px 32px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none !important;
+    letter-spacing: 0.3px;
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    pointer-events: auto;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 28px rgba(26, 31, 110, 0.4);
+}
+
+.hero-cta-btn::before {
+    content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(to right, #f1f5f9 0%, rgba(241, 245, 249, 0.9) 35%, transparent 70%),
-        radial-gradient(circle at center, transparent 50%, rgba(241, 245, 249, 0.5) 100%);
-    z-index: 0;
-    pointer-events: none;
-    transition: background 1s ease-in-out;
+    background: linear-gradient(135deg, rgba(255,255,255,0.08), transparent);
+    border-radius: inherit;
+}
+
+.hero-cta-btn:hover {
+    background: #252c8a;
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 36px rgba(26, 31, 110, 0.5);
+}
+
+.hero-cta-btn svg {
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+}
+
+.hero-cta-btn:hover svg {
+    transform: translate(2px, -2px);
+}
+
+/* Cards hidden during phase 2 */
+.initial-text-cards {
+    pointer-events: auto;
+}
+
+/* Bottom-left card */
+.hero-card-bl {
+    position: absolute;
+    bottom: 8px;
+    left: 52px;
+    width: 300px;
+    z-index: 3;
+    overflow: visible;
+}
+
+.hero-bl-card-inner {
+    background: rgba(255, 255, 255, 0.88);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 20px 18px 28px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+    overflow: visible;
+    clip-path: path('M 24,0 L 276,0 C 288,0 300,12 300,24 L 300,136 C 300,155 340,175 360,185 C 340,175 300,160 276,160 L 24,160 C 12,160 0,148 0,136 L 0,24 C 0,12 12,0 24,0 Z');
+    filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.14));
+}
+
+.hero-bl-card-icon {
+    width: 40px;
+    height: 40px;
+    background: #1a1f6e;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+}
+
+.hero-bl-card-text {
+    flex: 1;
+}
+
+.hero-bl-card-text h5 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 5px 0;
+    line-height: 1.3;
+}
+
+.hero-bl-card-text p {
+    font-size: 0.78rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.hero-bl-card-arrow {
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    width: 28px;
+    height: 28px;
+    background: rgba(26, 31, 110, 0.08);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #1a1f6e;
+}
+
+/* Bottom-right stats card — liquid glass style */
+.hero-card-br {
+    position: absolute;
+    bottom: 8px;
+    right: 52px;
+    width: 340px;
+    z-index: 3;
+    background: rgba(240, 235, 255, 0.55);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 24px;
+    padding: 20px 22px 18px;
+    box-shadow: 0 8px 40px rgba(80, 60, 180, 0.15), inset 0 1px 0 rgba(255,255,255,0.8);
+}
+
+.hero-br-stats {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.hero-br-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    flex: 1;
+}
+
+.hero-br-stat-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1;
+}
+
+.hero-br-stat-label {
+    font-size: 0.68rem;
+    color: #64748b;
+    line-height: 1.3;
+    margin-top: 3px;
+}
+
+.hero-br-logo {
+    width: 44px;
+    height: 44px;
+    background: #1a1f6e;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px rgba(26, 31, 110, 0.35);
+}
+
+.hero-br-quote {
+    font-size: 0.78rem;
+    color: #334155;
+    line-height: 1.5;
+    margin: 0;
+    font-style: italic;
+}
+
+.hero-br-quote span {
+    font-style: normal;
+    font-weight: 600;
+    color: #1a1f6e;
+}
+
+@media (max-width: 1024px) {
+    .hero-card-bl,
+    .hero-card-br {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-cta-btn {
+        padding: 14px 26px;
+        font-size: 0.88rem;
+    }
 }
 
 /* ==================================================
