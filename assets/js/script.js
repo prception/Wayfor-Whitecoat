@@ -98,10 +98,11 @@ if (hasWebGL) {
     scene.add(globeGroup);
 
     // Place globe ON the desk initially
-    globeGroup.scale.set(0.1, 0.1, 0.1); // Small globe
+    globeGroup.scale.set(0.18, 0.18, 0.18); // Small globe
     // Place over the glowing spot in the image (right-side of center, on the table)
-    const initialX = sizes.width > 768 ? 1.3 : -0.2;
-    globeGroup.position.set(initialX, -0.4, -3.5);
+    const initialX = sizes.width > 768 ? -1.8 : -0.2;
+    const initialY = -1.6;
+    globeGroup.position.set(initialX, initialY, -3.5);
     globeGroup.rotation.y = -Math.PI / 2;
     globeGroup.rotation.x = 0.2;
 
@@ -135,8 +136,8 @@ if (hasWebGL) {
     standGroup.add(ringMesh);
 
     // Place stand at same height as globe
-    standGroup.scale.set(0.1, 0.1, 0.1);
-    standGroup.position.set(initialX, -0.4, -3.5);
+    standGroup.scale.set(0.18, 0.18, 0.18);
+    standGroup.position.set(initialX, initialY, -3.5);
     // Angle slightly for 3D perspective
     standGroup.rotation.y = -Math.PI / 6;
     scene.add(standGroup);
@@ -248,11 +249,27 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
         scrollTrigger: {
             trigger: "#pinned-container",
             start: "top top",
-            end: "+=3500",
+            end: "+=900",
             pin: true,
-            scrub: 1,
+            pinSpacing: true,
+            scrub: 0.3,
+            snap: {
+                snapTo: [0, 1],
+                duration: { min: 0.3, max: 0.5 },
+                delay: 0.05,
+                ease: "power2.inOut",
+                inertia: false
+            },
             onUpdate: (self) => {
                 scrollProgress = self.progress;
+                // The moment progress hits 0 while scrolling back, jump to true top
+                if (self.progress === 0 && self.direction === -1) {
+                    if (window.lenis) {
+                        window.lenis.scrollTo(0, { immediate: true });
+                    } else {
+                        window.scrollTo({ top: 0, behavior: 'instant' });
+                    }
+                }
             }
         }
     });
@@ -274,6 +291,36 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
     // STEP 2: Cinematic Zoom & Dark Transition
     // ==========================================
 
+    // Hide navbar and corner elements as dark phase begins
+    tl.to(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
+        opacity: 0,
+        pointerEvents: "none",
+        duration: 0.4,
+        ease: "power2.inOut",
+        onReverseComplete: () => {
+            gsap.set(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], { opacity: 1, pointerEvents: "auto" });
+        }
+    }, step2Start);
+
+    // Remove white mat around the frame as the dark phase begins
+    tl.to("#pinned-container", {
+        backgroundColor: "#020617",
+        padding: 0,
+        duration: 0.8,
+        ease: "power2.inOut",
+        onReverseComplete: () => {
+            gsap.set("#pinned-container", { backgroundColor: "#FFFFFF", padding: "0 10px 10px 10px" });
+        }
+    }, step2Start);
+    tl.to(".hero-image-frame", {
+        borderRadius: 0,
+        duration: 0.8,
+        ease: "power2.inOut",
+        onReverseComplete: () => {
+            gsap.set(".hero-image-frame", { borderRadius: 20 });
+        }
+    }, step2Start);
+
     // Fade in the dark blue deep space overlay
     tl.to(".hero-dark-overlay", {
         opacity: 1,
@@ -291,7 +338,20 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
     tl.to(".initial-text", {
         opacity: 0,
         y: -50,
-        duration: 0.6
+        duration: 0.6,
+        onReverseComplete: () => {
+            gsap.set(".initial-text", { opacity: 1, y: 0 });
+        }
+    }, step2Start);
+
+    // Fade out floating hero cards
+    tl.to(".initial-text-cards", {
+        opacity: 0,
+        y: 30,
+        duration: 0.5,
+        onReverseComplete: () => {
+            gsap.set(".initial-text-cards", { opacity: 1, y: 0 });
+        }
     }, step2Start);
 
     if (hasWebGL) {
@@ -307,25 +367,20 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
         }, step2Start);
 
         // Move globe to center and scale up massively
-        tl.to(globeGroup.position, { 
-            x: 0, y: -0.2, z: 0, 
-            duration: 1.2, 
+        tl.to(globeGroup.position, {
+            x: 0, y: -0.2, z: 0,
+            duration: 1.2,
             ease: "power2.inOut",
             onReverseComplete: () => {
                 // Reset position when scrolling back
-                globeGroup.position.set(initialX, -0.5, -3.5);
+                globeGroup.position.set(initialX, initialY, -3.5);
             }
         }, step2Start);
         
-        tl.to(globeGroup.scale, { 
-            x: 0.55, y: 0.55, z: 0.55, 
-            duration: 1.2, 
-            ease: "power2.inOut",
-            onReverseComplete: () => {
-                // Reset scale when scrolling back
-                globeGroup.scale.set(0.1, 0.1, 0.1);
-            }
-        }, step2Start);
+        tl.fromTo(globeGroup.scale,
+            { x: 0.18, y: 0.18, z: 0.18 },
+            { x: 0.55, y: 0.55, z: 0.55, duration: 1.2, ease: "power2.inOut" },
+        step2Start);
 
         // Rotate the globe so Central Asia/Eurasia faces the camera perfectly
         tl.to(globeGroup.rotation, {
@@ -614,6 +669,13 @@ if (countryListEl && scrollContainer) {
 // 7. Preloader Logic & GSAP Entrance Animations
 // ==============================================
 if (typeof gsap !== 'undefined') {
+    // Hide hero elements immediately to prevent flash before animation
+    gsap.set("#nav-wrapper", { y: -30, opacity: 0 });
+    gsap.set(".image-hero-subtitle", { y: 30, opacity: 0 });
+    gsap.set(".hero-cta-btn", { y: 20, opacity: 0 });
+    gsap.set(".hero-card-bl", { y: 30, opacity: 0 });
+    gsap.set(".hero-card-br", { y: 30, opacity: 0 });
+
     // Set up the entrance timeline
     const introTl = gsap.timeline({ paused: true });
 
@@ -629,12 +691,14 @@ if (typeof gsap !== 'undefined') {
     }
 
     if (hasWebGL) {
-        introTl.from([globeGroup.scale, standGroup.scale], { x: 0.001, y: 0.001, z: 0.001, duration: 2.5, ease: "power4.out" }, 0.2);
+        introTl.fromTo([globeGroup.scale, standGroup.scale], { x: 0.001, y: 0.001, z: 0.001 }, { x: 0.18, y: 0.18, z: 0.18, duration: 2.5, ease: "power4.out" }, 0.2);
     }
-    introTl.from("#nav-wrapper", { y: -30, opacity: 0, duration: 1.2, ease: "power3.out" }, 0.5)
+    introTl.to("#nav-wrapper", { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, 0.5)
         .to(".hero-word", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out" }, 0.7)
-        .from(".image-hero-subtitle", { y: 30, opacity: 0, duration: 1.2, ease: "power3.out" }, 1.1)
-        .from(".initial-text .button-wrap", { y: 20, opacity: 0, stagger: 0.2, duration: 1, ease: "power2.out" }, 1.3);
+        .to(".image-hero-subtitle", { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, 1.1)
+        .to(".hero-cta-btn", { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, 1.3)
+        .to(".hero-card-bl", { y: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, 1.5)
+        .to(".hero-card-br", { y: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, 1.65);
 
     window.addEventListener('load', () => {
         const preloader = document.getElementById('preloader');
