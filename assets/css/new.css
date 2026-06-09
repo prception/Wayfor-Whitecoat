@@ -227,7 +227,7 @@ html.lenis body {
     left: 10px;
     right: 10px;
     bottom: 10px;
-    border-radius: 20px;
+    border-radius: 40px;
     overflow: hidden;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
     z-index: 0;
@@ -655,7 +655,7 @@ html.lenis body {
 
 .initial-text {
     text-align: left;
-    /* top: 35%; */
+    top: -5%;
     padding: 0 10px;
 }
 
@@ -681,13 +681,13 @@ html.lenis body {
     color: #ffffff;
     font-size: 4.2rem;
     line-height: 1.05;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.25);
+    text-shadow: 0 2px 20px rgba(0,0,0,0.45);
     pointer-events: auto;
 }
 
 .image-hero-subtitle {
-    color: rgba(255, 255, 255, 0.85);
-    text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+    color: #ffffff;
+    text-shadow: 0 1px 10px rgba(0,0,0,0.4);
     pointer-events: none;
     max-width: 400px;
     width: auto;
@@ -2119,24 +2119,25 @@ select.form-control option {
 /* Bottom-left card */
 .hero-card-bl {
     position: absolute;
-    bottom: 52px;
+    bottom: 8px;
     left: 52px;
     width: 300px;
     z-index: 3;
+    overflow: visible;
 }
 
 .hero-bl-card-inner {
     background: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    border-radius: 20px;
-    padding: 20px 18px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255,255,255,1);
+    padding: 20px 18px 28px 18px;
     display: flex;
     flex-direction: column;
     gap: 10px;
     position: relative;
+    overflow: visible;
+    clip-path: path('M 24,0 L 276,0 C 288,0 300,12 300,24 L 300,136 C 300,155 340,175 360,185 C 340,175 300,160 276,160 L 24,160 C 12,160 0,148 0,136 L 0,24 C 0,12 12,0 24,0 Z');
+    filter: drop-shadow(0 8px 32px rgba(0, 0, 0, 0.14));
 }
 
 .hero-bl-card-icon {
@@ -2188,7 +2189,7 @@ select.form-control option {
 /* Bottom-right stats card — liquid glass style */
 .hero-card-br {
     position: absolute;
-    bottom: 52px;
+    bottom: 8px;
     right: 52px;
     width: 340px;
     z-index: 3;
