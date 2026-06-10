@@ -100,8 +100,11 @@ if (hasWebGL) {
     // Place globe ON the desk initially
     globeGroup.scale.set(0.18, 0.18, 0.18); // Small globe
     // Place over the glowing spot in the image (right-side of center, on the table)
-    const initialX = sizes.width > 768 ? -1.8 : -0.2;
-    const initialY = -1.6;
+    // Three tiers: phones sit lower-left, tablets lower and toward center, desktop unchanged
+    const isMobileGlobe = sizes.width <= 768;
+    const isTabletGlobe = sizes.width > 768 && sizes.width <= 1024;
+    const initialX = isMobileGlobe ? -0.6 : isTabletGlobe ? -1.35 : -1.8;
+    const initialY = (isMobileGlobe || isTabletGlobe) ? -1.85 : -1.6;
     globeGroup.position.set(initialX, initialY, -3.5);
     globeGroup.rotation.y = -Math.PI / 2;
     globeGroup.rotation.x = 0.2;
@@ -315,8 +318,10 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
     // Fade out Vignette & Globe Stand
     tl.to(".img-vignette", { opacity: 0, duration: 0.8, ease: "power2.inOut" }, step2Start);
     if (hasWebGL) {
+        // Fade the stand out quickly, before the camera zoom becomes visible —
+        // otherwise the zoom makes the (stationary) stand appear to slide and grow.
         tl.to(standMaterial, {
-            opacity: 0, duration: 0.8, ease: "power2.inOut",
+            opacity: 0, duration: 0.15, ease: "power1.out",
             onReverseComplete: () => { standMaterial.opacity = 1; }
         }, step2Start);
     }

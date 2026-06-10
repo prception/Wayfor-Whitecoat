@@ -1,4 +1,4 @@
-﻿:root {
+:root {
     --primary-blue: #041a3b;
     --accent-blue: #0D1B8C;
     --white-bg: #FFFFFF;
@@ -679,16 +679,15 @@ html.lenis body {
 
 /* Phase 1 & 2 Restored Inline Styles */
 .image-hero-title {
-    color: #ffffff;
+    color: #1a1f6e;
     font-size: 4.2rem;
     line-height: 1.05;
-    text-shadow: 0 2px 20px rgba(0,0,0,0.45);
     pointer-events: auto;
 }
 
 .image-hero-subtitle {
-    color: #ffffff;
-    text-shadow: 0 1px 10px rgba(0,0,0,0.4);
+    color: #0f172a;
+    font-weight: 500;
     pointer-events: none;
     max-width: 400px;
     width: auto;
@@ -2313,12 +2312,74 @@ select.form-control option {
     .hero-card-br {
         display: none;
     }
+
+    /* Subjects sit right-of-center — bias the crop right so they stay in frame */
+    .hero-bg-img-1,
+    .hero-bg-img-2 {
+        background-position: 68% center;
+    }
+
+    .image-hero-title {
+        font-size: 3.2rem;
+        font-weight: 800 !important;
+    }
+
+    .image-hero-subtitle {
+        font-weight: 700;
+    }
+
+    .initial-text {
+        top: -4%;
+    }
+}
+
+/* Mobile/tablet: image goes full-bleed — no white mat around it */
+@media (max-width: 991px) {
+    #pinned-container {
+        padding: 0;
+    }
+
+    .hero-image-frame {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 0;
+        box-shadow: none;
+    }
 }
 
 @media (max-width: 768px) {
     .hero-cta-btn {
         padding: 14px 26px;
         font-size: 0.88rem;
+    }
+
+    .image-hero-title {
+        font-size: 2.3rem;
+        line-height: 1.15;
+    }
+
+    .image-hero-subtitle {
+        font-size: 0.88rem;
+        max-width: 92%;
+        margin-bottom: 1.5rem !important;
+    }
+
+    .initial-text {
+        top: -2%;
+    }
+
+    /* Phone cover-crop shows ~1/3 of the image width — pull focus further right */
+    .hero-bg-img-1,
+    .hero-bg-img-2 {
+        background-position: 72% center;
+    }
+}
+
+@media (max-width: 576px) {
+    .image-hero-title {
+        font-size: 2rem;
     }
 }
 
@@ -3419,7 +3480,7 @@ select.form-control option {
 .usp-premium-stack {
     background: transparent;
     padding-top: 100px;
-    padding-bottom: 0px;
+    padding-bottom: 0;
     position: relative;
     /* NOTE: Do NOT use overflow:hidden here — it breaks position:sticky on children */
 }
@@ -3549,10 +3610,17 @@ select.form-control option {
 /* --- LEFT COLUMN: Sticky Anchor --- */
 .sticky-left-col {
     position: sticky;
-    top: 70px;
-    height: fit-content;
-    padding-bottom: 50px;
+    top: 0;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 5;
+    align-self: flex-start;
+}
+
+.sticky-content-wrapper {
+    width: 100%;
 }
 
 /* Zero Donation Enhanced Badge */
@@ -3843,22 +3911,191 @@ select.form-control option {
     background: rgba(245, 158, 11, 0.14);
 }
 
+/* --- RIGHT COLUMN: Blog-style Standards List --- */
+.standards-list-col {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 160px;
+    padding-bottom: 120px;
+}
+
+.standards-list-wrapper {
+    width: 100%;
+    border-top: 2px solid #111;
+}
+
+.standards-list-item {
+    border-bottom: 1.5px solid #d0d0d0;
+    padding: 60px 24px 56px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+}
+
+/* Dark blue fill on hover */
+.standards-list-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #050c3a;
+    transform: translateY(100%);
+    transition: transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+}
+
+.standards-list-item:hover::before {
+    transform: translateY(0);
+}
+
+.standards-list-top,
+.standards-list-bottom {
+    position: relative;
+    z-index: 1;
+}
+
+.standards-list-top {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 16px;
+}
+
+.standards-list-tag {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #555;
+    transition: color 0.3s ease;
+}
+
+.standards-list-item:hover .standards-list-tag {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.standards-list-date {
+    font-size: 0.85rem;
+    color: #888;
+    transition: color 0.3s ease;
+}
+
+.standards-list-item:hover .standards-list-date {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.standards-list-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.standards-list-title {
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-weight: 700;
+    color: #111;
+    margin: 0;
+    line-height: 1.2;
+    transition: color 0.3s ease;
+}
+
+.standards-list-item:hover .standards-list-title {
+    color: #fff;
+}
+
+.standards-list-arrow {
+    font-size: 2rem;
+    color: #111;
+    flex-shrink: 0;
+    transition: transform 0.3s ease, color 0.3s ease;
+    display: inline-block;
+    line-height: 1;
+}
+
+.standards-list-item:hover .standards-list-arrow {
+    transform: translateX(6px);
+    color: #fff;
+}
+
+.standards-list-desc {
+    font-size: 1rem;
+    color: #555;
+    line-height: 1.65;
+    margin: 20px 0 24px;
+    max-width: 90%;
+    position: relative;
+    z-index: 1;
+    transition: color 0.3s ease;
+}
+
+.standards-list-item:hover .standards-list-desc {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.standards-list-chips {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+.standards-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 30px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    background: rgba(46, 63, 191, 0.07);
+    color: #2E3FBF;
+    border: 1px solid rgba(46, 63, 191, 0.18);
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.standards-chip svg {
+    flex-shrink: 0;
+}
+
+.standards-list-item:hover .standards-chip {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
 /* Mobile Adjustments */
 @media (max-width: 991px) {
     .usp-premium-stack {
-        padding-top: 60px;
+        padding-top: 40px;
     }
 
     .sticky-left-col {
         position: relative;
         top: 0;
-        margin-bottom: 40px;
+        height: auto;
+        margin-bottom: 0;
+        padding-bottom: 0 !important;
     }
 
-    .stack-card {
-        position: relative;
-        top: 0 !important;
-        margin-bottom: 20px;
+    .standards-list-col {
+        margin-top: 0;
+        padding-top: 0 !important;
+        padding-bottom: 40px;
+    }
+
+    /* Kill Bootstrap row gap between the two cols on mobile */
+    .usp-premium-stack .row {
+        --bs-gutter-y: 0.5rem;
+    }
+
+    .standards-list-title {
+        font-size: 1.3rem;
+    }
+
+    .standards-list-item {
+        padding: 32px 12px 28px;
     }
 
     .zero-donation-badge-wrap {
@@ -3875,185 +4112,364 @@ select.form-control option {
 }
 
 /* ==================================================
-   CINEMATIC HORIZONTAL ACCORDION (Desktop) & SNAP DECK (Mobile)
+   DREAM DESTINATION — REFERENCE-EXACT LAYOUT
 ================================================== */
-.universities-accordion-section {
-    background: transparent;
-}
 
-.cinematic-accordion {
-    display: flex;
-    width: 100%;
-    height: 650px;
-    /* Fixed height! Never gets longer */
-    gap: 12px;
-    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-    align-items: stretch;
-}
-
-.accordion-slice {
+/* ── Section shell ── */
+.dd-section {
+    background: #0a1628;
     position: relative;
-    flex: 1;
-    /* Unexpanded state */
-    border-radius: 24px;
+}
+
+/* ── Header (top of the left column, inside the pinned stage) ── */
+.dd-header {
+    text-align: left;
+    padding: 0 0 24px;
+}
+.dd-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 16px;
+    border: 1px solid rgba(100,200,255,0.25);
+    background: rgba(100,200,255,0.06);
+    color: #64c8ff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+}
+.dd-pulse {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: #64c8ff;
+    animation: ddPulse 1.8s ease-in-out infinite;
+}
+@keyframes ddPulse {
+    0%,100% { opacity:1; transform:scale(1); }
+    50%      { opacity:0.3; transform:scale(1.7); }
+}
+.dd-title {
+    color: #ffffff;
+    font-size: clamp(1.7rem, 2vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.25;
+    margin-bottom: 10px;
+}
+.dd-title-accent {
+    color: #64c8ff;
+    font-weight: 400;
+    font-size: 0.58em;
+    display: block;
+}
+.dd-subtitle {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.82rem;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ── Pin wrapper ── */
+.dd-pin-wrap {
+    position: relative;
+    /* JS sets height = TOTAL × 100vh */
+}
+
+/* ── Sticky stage — fills 100vh, dark bg ── */
+.dd-sticky-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     overflow: hidden;
+    background: #0a1628;
+    display: grid;
+    /* left-box | center-image | right-counter */
+    grid-template-columns: 280px auto 80px;
+    grid-template-rows: 1fr;
+    align-items: stretch;
+    /* Pull side panels in tight against the image */
+    justify-content: center;
+    column-gap: 28px;
+}
+
+/* ══════════════════════════════════════
+   LEFT — top-aligned info box
+══════════════════════════════════════ */
+.dd-left-panel {
+    padding: 40px 0 40px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    /* Header sits at the top, info box drops to the bottom (image's lower edge) */
+    justify-content: space-between;
+    gap: 24px;
+}
+.dd-info-box {
+    border: 1px solid rgba(100,200,255,0.25);
+    background: transparent;
+    padding: 32px 28px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 0;
+    /* Fixed height so box never resizes between destinations */
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+}
+.dd-country-flag-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+.dd-flag-img {
+    border-radius: 0;
+    box-shadow: none;
+}
+.dd-country-label {
+    color: #64c8ff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+.dd-univ-name {
+    color: #ffffff;
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.35;
+    margin: 0 0 14px;
+}
+.dd-desc-text {
+    color: rgba(255,255,255,0.55);
+    font-size: 0.82rem;
+    line-height: 1.7;
+    margin: 0;
+    /* Clamp to 4 lines max so the box never grows */
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+/* Desc ticker line takes up all remaining vertical space */
+#ddDescLine {
+    flex: 1;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+.dd-fees-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(100,200,255,0.18);
+    border-radius: 0;
+    padding: 9px 13px;
+    margin-bottom: 22px;
+    background: rgba(100,200,255,0.04);
+}
+.dd-fees-label {
+    color: rgba(255,255,255,0.4);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.dd-fees-value {
+    color: #64c8ff;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+.dd-cta-btn {
+    display: block;
+    width: 100%;
+    background: #64c8ff;
+    color: #0a1628;
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 0;
     cursor: pointer;
-    background: #0f172a;
-    transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.4s ease, margin 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.22s;
+    text-align: center;
+    letter-spacing: 0.03em;
 }
+.dd-cta-btn:hover { background: #93d9ff; }
 
-/* Staggered Layout for Unexpanded Cards */
-.accordion-slice:nth-child(odd) {
-    margin-top: 0;
-    margin-bottom: 40px;
+/* ══════════════════════════════════════
+   CENTER — big square image, sharp
+══════════════════════════════════════ */
+.dd-center-stage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+    height: 100%;
 }
-
-.accordion-slice:nth-child(even) {
-    margin-top: 40px;
-    margin-bottom: 0;
+.dd-img-frame {
+    /* Square, as large as the viewport height allows (capped so side panels fit) */
+    width: min(calc(100vh - 80px), calc(100vw - 480px));
+    aspect-ratio: 1 / 1;
+    border-radius: 0;           /* SHARP corners */
+    overflow: hidden;
+    position: relative;
+    background: #0a1628;
+    flex-shrink: 0;
 }
-
-/* The Magic Expansion */
-.accordion-slice.active {
-    flex: 12;
-    /* Takes up massive space when active */
-    margin-top: 0;
-    margin-bottom: 0;
-    cursor: default;
-    box-shadow: 0 0 40px rgba(14, 165, 233, 0.15);
-    border-color: rgba(14, 165, 233, 0.3);
-}
-
-/* Background Images */
-.slice-bg {
-    position: absolute;
-    inset: -5%;
-    background-size: cover;
-    background-position: center;
-    transition: transform 10s linear, filter 0.6s ease;
-    filter: grayscale(80%) brightness(0.6);
-}
-
-.accordion-slice.active .slice-bg {
-    filter: grayscale(0%) brightness(1);
-    transform: scale(1.05);
-    /* Slow cinemtic pan */
-}
-
-/* Overlays */
-.slice-overlay {
+/* All images stacked inside the frame — translateY drives the reveal */
+.dd-img-slide {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, #020617 0%, rgba(2, 6, 23, 0.4) 60%, transparent 100%);
-    opacity: 0.8;
-    transition: opacity 0.6s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    will-change: transform;
+    transform: translateY(-100%);  /* parked above by default */
+    transition: transform 0.55s cubic-bezier(0.77, 0, 0.18, 1);
 }
+/* Visible: sitting in place (covers whatever is beneath it) */
+.dd-img-slide.dd-cur  { transform: translateY(0%); }
+/* Instant repositioning helper — no transition while set */
+.dd-img-slide.dd-snap { transition: none; }
 
-.accordion-slice.active .slice-overlay {
-    background: linear-gradient(to top, rgba(2, 6, 23, 0.95) 0%, rgba(2, 6, 23, 0.3) 60%, transparent 100%);
-    opacity: 1;
+/* ══════════════════════════════════════
+   RIGHT — bottom-aligned counter, sharp
+══════════════════════════════════════ */
+.dd-right-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 0 0 40px 0;
+    gap: 12px;
 }
-
-/* Collapsed Text (Vertical text for unexpanded slices) */
-.slice-collapsed-text {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
-    writing-mode: vertical-rl;
-    /* Turns text vertical */
-    text-orientation: mixed;
-    white-space: nowrap;
-    opacity: 1;
-    transition: opacity 0.3s ease;
-    z-index: 5;
-    pointer-events: none;
+.dd-counter-box {
+    border: 1px solid rgba(100,200,255,0.25);
+    border-radius: 0;           /* SHARP corners */
+    padding: 16px 14px;
+    background: transparent;
+    text-align: center;
+    min-width: 72px;
 }
-
-.accordion-slice.active .slice-collapsed-text {
+.dd-counter-current {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #64c8ff;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.dd-counter-current.dd-flip {
     opacity: 0;
-    /* Hide when expanded */
+    transform: translateY(-8px);
+}
+.dd-counter-divider {
+    height: 1px;
+    background: rgba(100,200,255,0.2);
+    margin: 7px 0;
+}
+.dd-counter-total {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.35);
+    font-weight: 600;
+}
+.dd-counter-label {
+    font-size: 0.58rem;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 5px;
 }
 
-/* Expanded Content */
-.slice-expanded-content {
+/* Ticker animation for left box inner content */
+.dd-ticker-line {
+    overflow: hidden;
+}
+.dd-ticker-line span {
+    display: block;
+    transition: transform 0.55s cubic-bezier(0.77, 0, 0.18, 1),
+                opacity   0.55s cubic-bezier(0.77, 0, 0.18, 1);
+}
+.dd-ticker-line.dd-tick-out span {
+    transform: translateY(-110%);
     opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.4s ease;
-    transition-delay: 0s;
 }
-
-.accordion-slice.active .slice-expanded-content {
+.dd-ticker-line.dd-tick-in span {
+    transform: translateY(110%);
+    opacity: 0;
+    transition: none;
+}
+.dd-ticker-line.dd-tick-settle span {
+    transform: translateY(0%);
     opacity: 1;
-    pointer-events: auto;
-    transition-delay: 0.3s;
-    /* Wait for expansion to finish before fading in text */
+    transition: transform 0.55s cubic-bezier(0.77, 0, 0.18, 1),
+                opacity   0.55s cubic-bezier(0.77, 0, 0.18, 1);
 }
+/* Stagger each line slightly for a cascade feel */
+.dd-ticker-line:nth-child(1) span { transition-delay: 0s;     }
+.dd-ticker-line:nth-child(2) span { transition-delay: 0.06s;  }
+.dd-ticker-line:nth-child(3) span { transition-delay: 0.12s;  }
+.dd-ticker-line:nth-child(4) span { transition-delay: 0.18s;  }
 
-/* Prevent text wrapping weirdly during animation */
-.content-fade-in {
-    min-width: 400px;
-    transform: translateY(20px);
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
-}
-
-.slice-expanded-content p {
-    font-size: 1rem !important;
-}
-
-.accordion-slice.active .content-fade-in {
-    transform: translateY(0);
-}
-
-/* ==================================================
-   MOBILE FALLBACK: HORIZONTAL SNAP DECK
-   (Since 9 vertical slices are too thin for a phone)
-================================================== */
+/* ── Mobile ── */
 @media (max-width: 991px) {
-    .cinematic-accordion {
-        flex-direction: row;
-        overflow-x: auto;
-        overflow-y: hidden;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 20px;
-        /* Room for scrollbar/shadow */
-        -webkit-overflow-scrolling: touch;
-        gap: 16px;
-        height: 550px;
+    /* header on top, info box + counter side by side, image below */
+    .dd-sticky-stage {
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas:
+            "header header"
+            "info   counter"
+            "image  image";
+        justify-content: stretch;
+        column-gap: 12px;
+        row-gap: 12px;
+        height: auto;
+        min-height: 100svh;
+        align-items: start;
+        padding: 20px 16px 28px;
     }
+    /* Dissolve the left panel wrapper so header + info box become grid items */
+    .dd-left-panel { display: contents; }
 
-    .cinematic-accordion::-webkit-scrollbar {
-        display: none;
-    }
+    .dd-header { grid-area: header; padding: 0; }
 
-    .accordion-slice {
-        flex: 0 0 85vw !important;
-        /* Force width to 85% of screen */
-        scroll-snap-align: center;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
+    /* Compact info box */
+    .dd-info-box {
+        grid-area: info;
+        height: auto;
+        padding: 12px 12px;
     }
+    .dd-univ-name { font-size: 1rem; margin-bottom: 8px; }
+    .dd-desc-text { font-size: 0.75rem; -webkit-line-clamp: 3; }
+    .dd-country-flag-wrap { margin-bottom: 10px; }
+    .dd-fees-row { padding: 7px 10px; margin-bottom: 12px; }
+    .dd-cta-btn { padding: 9px 14px; font-size: 0.78rem; }
+    #ddDescLine { margin-bottom: 10px; }
 
-    /* Force Active State styles on all cards for Mobile */
-    .slice-collapsed-text {
-        display: none;
+    .dd-right-panel {
+        grid-area: counter;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
+        padding: 0;
     }
+    .dd-counter-current { font-size: 1.5rem; }
 
-    .slice-bg {
-        filter: grayscale(0%) brightness(0.8);
+    .dd-center-stage {
+        grid-area: image;
+        padding: 0;
+        height: auto;
+        align-items: flex-start;
     }
-
-    .slice-expanded-content {
-        opacity: 1;
-        pointer-events: auto;
+    .dd-img-frame {
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
     }
-
-    .content-fade-in {
-        min-width: unset;
-        transform: translateY(0);
-    }
+    .dd-dot-nav { flex-direction: row; }
 }
+
 
 /* ==================================================
    HORIZONTAL CINEMATIC JOURNEY (THE PROCESS)
