@@ -215,29 +215,83 @@
     background: rgba(255, 255, 255, 0.2);
 } */
 
-@media (max-width: 768px) {
+/* Mobile-only "Get Started" inside the dropdown — hidden on desktop */
+.nav-mobile-cta {
+    display: none;
+}
+
+.nav-mobile-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 11px 24px;
+    background: #1a1a2e;
+    color: #fff;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+.nav-mobile-cta-btn:hover {
+    background: var(--primary-mid, #2563eb);
+    color: #fff;
+}
+
+@media (max-width: 991px) {
+
+    /* Navbar collapses to a single hamburger button pinned top-right */
+    #nav-wrapper {
+        justify-content: flex-end;
+    }
+
     .liquid-navbar {
         min-width: unset;
         width: auto;
-        padding: 12px 24px 16px;
+        padding: 0;
         gap: 0;
-        justify-content: space-between;
-        border-radius: 0 0 28px 28px;
+        margin: 16px 16px 0 0;
+        background: transparent;
+        -webkit-mask-image: none;
+        mask-image: none;
     }
 
+    .mobile-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        background: transparent;
+        color: #1a1a2e;
+        filter: drop-shadow(0 2px 6px rgba(255, 255, 255, 0.4));
+    }
+
+    /* White icon on pages with dark hero backgrounds */
+    body.country-page .mobile-toggle,
+    body.contact .mobile-toggle {
+        color: #ffffff;
+        filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+    }
+
+    /* Dropdown opens below the hamburger, right-aligned */
     .nav-links {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: calc(100% + 6px);
-        left: 50%;
-        transform: translateX(-50%);
+        top: calc(100% + 10px);
+        right: 0;
+        left: auto;
+        transform: none;
         width: max-content;
-        min-width: 200px;
+        min-width: 220px;
         background: #ffffff;
-        border-radius: 16px;
-        padding: 16px 24px;
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        border-radius: 18px;
+        padding: 18px 22px;
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.16);
         gap: 14px;
         z-index: 100;
     }
@@ -246,10 +300,23 @@
         display: flex;
     }
 
-    .mobile-toggle {
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    /* Get Started lives inside the dropdown; hide the corner button */
+    .nav-mobile-cta {
+        display: block;
+        margin-top: 4px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-cta-corner {
+        display: none;
+    }
+
+    /* Logo stays top-left, slightly tightened */
+    .nav-brand-corner {
+        top: 24px;
+        left: 16px;
+        font-size: 0.95rem;
     }
 }
 
