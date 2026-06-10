@@ -247,130 +247,123 @@
         </section>
 
         <!-- Reality Check Section -->
-        <section class="reality-section position-relative overflow-hidden" id="reality-check">
-            <!-- Soft background blobs -->
-            <div class="rc-blob rc-blob-1"></div>
-            <div class="rc-blob rc-blob-2"></div>
-            <div class="rc-blob rc-blob-3"></div>
+        <section class="reality-section" id="reality-check">
 
-            <div class="container position-relative z-1 py-5">
+            <!-- Pinned text reveal panel -->
+            <div class="rc-pin-wrap" id="rc-pin-wrap">
+                <div class="rc-pin-inner">
 
-                <!-- Two-column split: text left, cards right -->
-                <div class="rc-split-layout">
+                    <!-- Label sits naturally above the title inside the pin -->
+                    <div class="rc-top-label">REALITY CHECK</div>
 
-                    <!-- Left: Text block -->
-                    <div class="rc-text-col">
-                        <div class="rc-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill mb-4">
-                            <span class="pulse-dot-light"></span>
-                            <span class="rc-badge-text fw-semibold small text-uppercase">The Reality Check</span>
+                    <!-- Giant word-reveal heading — each word reveals individually -->
+                    <h2 class="rc-reveal-title" id="rc-reveal-title">
+                        <span class="rc-line rc-line-1">
+                            <span class="rc-word" data-index="0">YOUR</span>
+                            <span class="rc-word" data-index="1">DREAM</span>
+                        </span>
+                        <span class="rc-line rc-line-2">
+                            <span class="rc-word" data-index="2">IS</span>
+                            <span class="rc-word" data-index="3">STILL</span>
+                        </span>
+                        <span class="rc-line rc-line-3">
+                            <span class="rc-word" data-index="4">WITHIN</span>
+                        </span>
+                        <span class="rc-line rc-line-4">
+                            <span class="rc-word" data-index="5">REACH.</span>
+                        </span>
+                    </h2>
+
+                    <!-- Sub-line fades in at end of pin -->
+                    <p class="rc-reveal-sub" id="rc-reveal-sub">24 Lakh+ students. Smarter ones choose a global path.</p>
+                </div>
+            </div>
+
+            <!-- Editorial pinned panel -->
+            <div class="rc-editorial-wrap" id="rc-editorial-wrap">
+            <div class="rc-editorial" id="rc-editorial">
+
+                <!-- LEFT: The Smart Choice -->
+                <div class="rc-col rc-col-left" id="rc-col-left">
+                    <span class="rc-col-label">THE SMART CHOICE</span>
+                    <h3 class="rc-col-title">MBBS<br>ABROAD</h3>
+                    <div class="rc-col-rows">
+                        <div class="rc-row">
+                            <span class="rc-row-key">COST</span>
+                            <span class="rc-row-val">₹20L – ₹40L Total</span>
                         </div>
-                        <h2 class="rc-title fw-bold mb-3">
-                            The Odds Are Stacked Against You.
-                        </h2>
-                        <p class="rc-subtitle fs-5 mb-4">But your dream doesn't have to end here.</p>
-                        <p class="rc-body-text">24 Lakh+ students compete for fewer seats every year. The system is broken — but there's a smarter path forward for those who know where to look.</p>
-                        <a href="#contact" class="lq-cta rc-text-cta mt-4">
-                            Find Your Path
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-                        </a>
+                        <div class="rc-row">
+                            <span class="rc-row-key">APPROVAL</span>
+                            <span class="rc-row-val">NMC Recognised Universities</span>
+                        </div>
+                        <div class="rc-row">
+                            <span class="rc-row-key">FEES</span>
+                            <span class="rc-row-val">Zero Hidden Charges</span>
+                        </div>
+                        <div class="rc-row">
+                            <span class="rc-row-key">EXPOSURE</span>
+                            <span class="rc-row-val">Global Clinical Training</span>
+                        </div>
+                        <div class="rc-row">
+                            <span class="rc-row-key">SUPPORT</span>
+                            <span class="rc-row-val">End-to-End Guidance</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CENTER: Vertical divider line -->
+                <div class="rc-divider-line" id="rc-divider-line"></div>
+
+                <!-- RIGHT: The Problems -->
+                <div class="rc-col rc-col-right" id="rc-col-right">
+
+                    <!-- Top right: The Bottleneck -->
+                    <div class="rc-right-block" id="rc-right-top">
+                        <span class="rc-col-label rc-label-red">THE BOTTLENECK</span>
+                        <h3 class="rc-col-title rc-title-right">GOVT.<br>SEATS</h3>
+                        <div class="rc-col-rows">
+                            <div class="rc-row">
+                                <span class="rc-row-key rc-key-right">SEATS</span>
+                                <span class="rc-row-val">Only ~2.5% of aspirants</span>
+                            </div>
+                            <div class="rc-row">
+                                <span class="rc-row-key rc-key-right">COMPETITION</span>
+                                <span class="rc-row-val">24 Lakh+ students yearly</span>
+                            </div>
+                            <div class="rc-row">
+                                <span class="rc-row-key rc-key-right">REALITY</span>
+                                <span class="rc-row-val">Brutal cutoffs, no guarantee</span>
+                            </div>
+                        </div>
                     </div>
 
-                    <!-- Right: Cascading cards (big → small) -->
-                    <div class="rc-cards-col">
+                    <!-- Horizontal rule between the two right blocks -->
+                    <div class="rc-h-rule" id="rc-h-rule"></div>
 
-                        <!-- Card 1 (largest): The Smart Choice -->
-                        <div class="gc-card gc-card-solution rc-priority-card">
-                            <div class="gc-card-shine"></div>
-                            <div class="gc-icon-badge gc-icon-navy">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
-                                </svg>
+                    <!-- Bottom right: The Financial Trap -->
+                    <div class="rc-right-block" id="rc-right-bot">
+                        <span class="rc-col-label rc-label-amber">THE FINANCIAL TRAP</span>
+                        <h3 class="rc-col-title rc-title-right">PRIVATE<br>COLLEGE</h3>
+                        <div class="rc-col-rows">
+                            <div class="rc-row">
+                                <span class="rc-row-key rc-key-right">COST</span>
+                                <span class="rc-row-val">₹60L – ₹1Cr+ in fees</span>
                             </div>
-                            <div class="gc-stats-row">
-                                <div class="gc-stat-item">
-                                    <span class="gc-stat-num">₹20L</span>
-                                    <span class="gc-stat-label">– ₹40L Total<br>Cost Abroad</span>
-                                </div>
-                                <div class="gc-stat-divider"></div>
-                                <div class="gc-stat-item">
-                                    <span class="gc-stat-num">NMC</span>
-                                    <span class="gc-stat-label">Approved<br>Universities</span>
-                                </div>
-                                <div class="gc-stat-divider"></div>
-                                <div class="gc-stat-item">
-                                    <span class="gc-stat-num">Zero</span>
-                                    <span class="gc-stat-label">Hidden<br>Fees</span>
-                                </div>
+                            <div class="rc-row">
+                                <span class="rc-row-key rc-key-right">DONATIONS</span>
+                                <span class="rc-row-val">Hidden management quota</span>
                             </div>
-                            <div class="gc-divider"></div>
-                            <div class="gc-tag gc-tag-navy">MBBS Abroad via WayForWhitecoat</div>
-                            <h4 class="gc-heading gc-heading-navy">The Smart Choice</h4>
-                            <p class="gc-desc">Global NMC-approved universities, world-class clinical exposure, and zero hidden fees. Become a doctor without the financial ruin.</p>
-                            <div class="gc-perks">
-                                <span class="gc-perk">NMC Approved</span>
-                                <span class="gc-perk">Zero Hidden Fees</span>
-                                <span class="gc-perk">Global Exposure</span>
+                            <div class="rc-row">
+                                <span class="rc-row-key rc-key-right">DEBT</span>
+                                <span class="rc-row-val">Financial burden for life</span>
                             </div>
-                        </div>
-
-                        <!-- Cards row: two smaller cards -->
-                        <div class="rc-small-cards">
-
-                            <!-- Card 2: The Bottleneck -->
-                            <div class="gc-card gc-card-red rc-sm-card">
-                                <div class="gc-card-shine"></div>
-                                <div class="gc-icon-badge gc-icon-red">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
-                                        <circle cx="9" cy="7" r="4"/>
-                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                                        <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                                    </svg>
-                                </div>
-                                <div class="gc-stats-row">
-                                    <div class="gc-stat-item">
-                                        <span class="gc-stat-num gc-stat-red">~2.5%</span>
-                                        <span class="gc-stat-label">Govt. Seats<br>in India</span>
-                                    </div>
-                                </div>
-                                <div class="gc-divider"></div>
-                                <div class="gc-tag gc-tag-red">Govt. Seats</div>
-                                <h4 class="gc-heading gc-heading-red">The Bottleneck</h4>
-                                <p class="gc-desc gc-desc-sm">Only 2.5% of the 24 Lakh+ NEET aspirants secure a government medical seat. The competition is brutal.</p>
-                                <div class="gc-bar-wrap">
-                                    <div class="gc-bar gc-bar-red" data-width="2.5"></div>
-                                </div>
-                            </div>
-
-                            <!-- Card 3: The Financial Trap -->
-                            <div class="gc-card gc-card-amber rc-sm-card">
-                                <div class="gc-card-shine"></div>
-                                <div class="gc-icon-badge gc-icon-amber">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                        <line x1="12" x2="12" y1="2" y2="22"/>
-                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-                                    </svg>
-                                </div>
-                                <div class="gc-stats-row">
-                                    <div class="gc-stat-item">
-                                        <span class="gc-stat-num gc-stat-amber">₹60L+</span>
-                                        <span class="gc-stat-label">Private College<br>Fees</span>
-                                    </div>
-                                </div>
-                                <div class="gc-divider"></div>
-                                <div class="gc-tag gc-tag-amber">Private Medical Colleges</div>
-                                <h4 class="gc-heading gc-heading-amber">The Financial Trap</h4>
-                                <p class="gc-desc gc-desc-sm">Private colleges demand ₹60 Lakhs to over ₹1 Crore in donations and tuition fees.</p>
-                                <div class="gc-bar-wrap">
-                                    <div class="gc-bar gc-bar-amber" data-width="85"></div>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
 
                 </div>
-            </div>
+
+            </div><!-- /.rc-editorial -->
+            </div><!-- /.rc-editorial-wrap -->
         </section>
 
         <!-- Anatomy Section -->

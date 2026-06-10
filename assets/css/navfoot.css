@@ -13,6 +13,8 @@
     pointer-events: none;
     padding: 0;
     box-sizing: border-box;
+    opacity: 0;
+    visibility: hidden;
 }
 
 /* Prevent w-100 on #header-container from breaking centered flex layout */
@@ -58,6 +60,8 @@
     pointer-events: auto;
     white-space: nowrap;
     z-index: 20;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .nav-brand-corner .brand-icon {
@@ -89,6 +93,8 @@
     white-space: nowrap;
     z-index: 20;
     transition: background 0.2s, transform 0.2s;
+    opacity: 0;
+    visibility: hidden;
 }
 
 .nav-cta-corner:hover {

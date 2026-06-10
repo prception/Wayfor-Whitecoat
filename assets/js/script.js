@@ -241,12 +241,28 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
         scrollTrigger: {
             trigger: "#pinned-container",
             start: "top top",
-            end: "+=1600",
+            end: "+=600",
             pin: true,
             pinSpacing: true,
-            scrub: 1.2,
+            scrub: 0.5,
             onUpdate: (self) => {
                 scrollProgress = self.progress;
+            },
+            onLeave: () => {
+                // Hide initial hero content and cards that would bleed through
+                gsap.set(".initial-text", { opacity: 0 });
+                gsap.set(".initial-text-cards", { opacity: 0 });
+            },
+            onEnterBack: () => {
+                // Scrub timeline re-runs in reverse from progress=1 (phase-2 state).
+                // Ensure final-text is visible as phase-2 starting point.
+                gsap.set(".final-text", { opacity: 1, y: 0 });
+                // Force stand back to its correct phase-2 state (large globe, stand hidden)
+                // so the scrub reverse can animate it correctly back to phase-1.
+                if (hasWebGL && standMaterial) {
+                    standMaterial.transparent = true;
+                    standMaterial.opacity = 0;
+                }
             }
         }
     });
@@ -257,27 +273,18 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
     // ==========================================
     tl.to(".hero-bg-img-2", {
         opacity: 1,
-        duration: 1.5,
+        duration: 0.3,
         ease: "power1.inOut"
     }, 0); // Starts immediately upon scroll
 
     // Small pause variable so the user can appreciate the second image before zooming
-    const step2Start = 2.0;
+    const step2Start = 0;
 
     // ==========================================
     // STEP 2: Cinematic Zoom & Dark Transition
     // ==========================================
 
-    // Hide navbar and corner elements as dark phase begins
-    tl.to(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
-        opacity: 0,
-        pointerEvents: "none",
-        duration: 0.4,
-        ease: "power2.inOut",
-        onReverseComplete: () => {
-            gsap.set(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], { opacity: 1, pointerEvents: "auto" });
-        }
-    }, step2Start);
+    // Nav is managed by a separate ScrollTrigger below — not part of the scrub timeline.
 
     // Remove white mat around the frame as the dark phase begins
     tl.to("#pinned-container", {
@@ -308,7 +315,10 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
     // Fade out Vignette & Globe Stand
     tl.to(".img-vignette", { opacity: 0, duration: 0.8, ease: "power2.inOut" }, step2Start);
     if (hasWebGL) {
-        tl.to(standMaterial, { opacity: 0, duration: 0.8, ease: "power2.inOut" }, step2Start);
+        tl.to(standMaterial, {
+            opacity: 0, duration: 0.8, ease: "power2.inOut",
+            onReverseComplete: () => { standMaterial.opacity = 1; }
+        }, step2Start);
     }
 
     // Fly Initial Text up and fade out
@@ -356,9 +366,12 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
             }
         }, step2Start);
 
-        tl.fromTo(globeGroup.scale,
-            { x: 0.18, y: 0.18, z: 0.18 },
-            { x: 0.68, y: 0.68, z: 0.68, duration: 1.2, ease: "power2.inOut" },
+        tl.to(globeGroup.scale,
+            { x: 0.68, y: 0.68, z: 0.68, duration: 1.2, ease: "power2.inOut",
+              onReverseComplete: () => {
+                  globeGroup.scale.set(0.18, 0.18, 0.18);
+              }
+            },
         step2Start);
 
         // Rotate the globe so Central Asia/Eurasia faces the camera perfectly
@@ -436,6 +449,37 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
         step3Start + 0.3
     );
 }
+
+// Nav visibility: hide as soon as user scrolls away from top, restore only at top.
+// Uses both Lenis (if loaded) and native scroll so nothing is missed.
+(function () {
+    const THRESHOLD = 10; // px
+    let navVisible = true;
+
+    function checkNav(scrollY) {
+        const atTop = scrollY <= THRESHOLD;
+        if (atTop && !navVisible) {
+            navVisible = true;
+            gsap.to(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
+                opacity: 1, visibility: 'visible', pointerEvents: "auto",
+                duration: 0.5, ease: "power2.out", overwrite: true
+            });
+        } else if (!atTop && navVisible) {
+            navVisible = false;
+            gsap.to(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
+                opacity: 0, duration: 0.3, ease: "power2.in", overwrite: true,
+                onComplete: () => gsap.set(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], { pointerEvents: 'none' })
+            });
+        }
+    }
+
+    // Lenis scroll event (fires on every smooth scroll tick)
+    if (window.lenis) {
+        window.lenis.on('scroll', ({ scroll }) => checkNav(scroll));
+    }
+    // Native fallback
+    window.addEventListener('scroll', () => checkNav(window.scrollY), { passive: true });
+}());
 
 // G. About Section High-End Reveals
 if (typeof gsap !== 'undefined') {
@@ -652,39 +696,116 @@ if (countryListEl && scrollContainer) {
 // 7. Preloader Logic & GSAP Entrance Animations
 // ==============================================
 if (typeof gsap !== 'undefined') {
-    // Hide hero elements immediately to prevent flash before animation
-    gsap.set("#nav-wrapper", { y: -30, opacity: 0 });
-    gsap.set(".image-hero-subtitle", { y: 30, opacity: 0 });
-    gsap.set(".hero-cta-btn", { y: 20, opacity: 0 });
-    gsap.set(".hero-card-bl", { y: 30, opacity: 0 });
-    gsap.set(".hero-card-br", { y: 30, opacity: 0 });
 
     // Set up the entrance timeline
     const introTl = gsap.timeline({ paused: true });
 
-    // Check if we need to split title for cinematic effect
-    const heroTitleEl = document.querySelector('.image-hero-title');
-    if (heroTitleEl) {
-        const text = heroTitleEl.innerHTML;
-        const words = text.split(/(<br.*?>)/);
-        heroTitleEl.innerHTML = words.map(w => {
-            if (w.includes('<br')) return w;
-            return ` <span class="hero-word" style="display:inline-block; opacity:0; transform:translateY(30px)">${w}</span>`;
-        }).join('');
-    }
-
-    if (hasWebGL) {
-        introTl.fromTo([globeGroup.scale, standGroup.scale], { x: 0.001, y: 0.001, z: 0.001 }, { x: 0.18, y: 0.18, z: 0.18, duration: 2.5, ease: "power4.out" }, 0.2);
-    }
-    introTl.to("#nav-wrapper", { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, 0.5)
-        .to(".hero-word", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out" }, 0.7)
-        .to(".image-hero-subtitle", { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, 1.1)
-        .to(".hero-cta-btn", { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, 1.3)
-        .to(".hero-card-bl", { y: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, 1.5)
-        .to(".hero-card-br", { y: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, 1.65);
+    // Word-split and intro timeline are set up inside afterLoad()
+    // once we know the scroll position, so mid-scroll loads never get hidden states.
 
     window.addEventListener('load', () => {
         const preloader = document.getElementById('preloader');
+
+        const afterLoad = () => {
+            if (window.scrollY <= 0) {
+                // Split hero title into words for the cinematic reveal animation
+                const heroTitleEl = document.querySelector('.image-hero-title');
+                if (heroTitleEl) {
+                    const text = heroTitleEl.innerHTML;
+                    const words = text.split(/(<br.*?>)/);
+                    heroTitleEl.innerHTML = words.map(w => {
+                        if (w.includes('<br')) return w;
+                        return ` <span class="hero-word" style="display:inline-block; opacity:0; transform:translateY(30px)">${w}</span>`;
+                    }).join('');
+                }
+
+                // Set initial hidden states for hero elements before intro animates them in
+                gsap.set("#nav-wrapper", { y: -30, opacity: 0, visibility: 'visible' });
+                gsap.set([".nav-brand-corner", ".nav-cta-corner"], { visibility: 'visible', opacity: 0, y: -10 });
+                gsap.set(".image-hero-subtitle", { y: 30, opacity: 0 });
+                gsap.set(".hero-cta-btn", { y: 20, opacity: 0 });
+                gsap.set(".hero-card-bl", { y: 30, opacity: 0 });
+                gsap.set(".hero-card-br", { y: 30, opacity: 0 });
+
+                // Build the intro timeline tweens
+                introTl.to("#nav-wrapper", { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, 0.5)
+                    .to([".nav-brand-corner", ".nav-cta-corner"], { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.5)
+                    .to(".hero-word", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out" }, 0.7)
+                    .to(".image-hero-subtitle", { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, 1.1)
+                    .to(".hero-cta-btn", { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, 1.3)
+                    .to(".hero-card-bl", { y: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, 1.5)
+                    .to(".hero-card-br", { y: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, 1.65);
+
+                // Loading at the top — play the globe scale-in as part of the intro animation
+                if (hasWebGL) {
+                    globeGroup.scale.set(0.001, 0.001, 0.001);
+                    standGroup.scale.set(0.001, 0.001, 0.001);
+                    introTl.fromTo(
+                        [globeGroup.scale, standGroup.scale],
+                        { x: 0.001, y: 0.001, z: 0.001 },
+                        { x: 0.18, y: 0.18, z: 0.18, duration: 2.5, ease: "power4.out" },
+                        0.2
+                    );
+                }
+                introTl.play();
+            } else {
+                // Mid-scroll load — hide nav, hide hero-only UI elements immediately.
+                gsap.set(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
+                    opacity: 0, visibility: 'visible', pointerEvents: 'none'
+                });
+                // Hero cards and initial text must be hidden when loaded mid/past pin
+                gsap.set([".initial-text", ".initial-text-cards"], { opacity: 0 });
+
+                const pinnedEl = document.getElementById('pinned-container');
+                const pinTop = pinnedEl ? pinnedEl.offsetTop : 0;
+                const pinScrollLength = 600;
+                const pinBottom = pinTop + pinScrollLength;
+
+                if (window.scrollY >= pinBottom) {
+                    // Fully past the hero pin — lock everything into phase-2 end state
+                    if (hasWebGL) {
+                        globeGroup.scale.set(0.68, 0.68, 0.68);
+                        globeGroup.position.set(0, -0.2, 0);
+                        globeGroup.rotation.y = Math.PI * 1.02;
+                        globeGroup.rotation.x = Math.PI * 0.15;
+                        standGroup.scale.set(0.18, 0.18, 0.18);
+                        standGroup.position.set(initialX, initialY, -3.5);
+                        standMaterial.opacity = 0;
+                        standMaterial.transparent = true;
+                        camera.position.z = 6;
+                        material.color.copy(colorBlueState);
+                        pinsVisible = true;
+                        startCarousel();
+                        const pinsContainer = document.getElementById('html-pins-container');
+                        if (pinsContainer) pinsContainer.style.opacity = '1';
+                    }
+                    // Also set final-text visible and initial-text hidden for this state
+                    gsap.set(".final-text", { opacity: 1, y: 0 });
+                } else {
+                    // Mid-scrub inside the pin — reset to phase-1 baseline so
+                    // ScrollTrigger.refresh() can scrub to the correct progress.
+                    if (hasWebGL) {
+                        globeGroup.scale.set(0.18, 0.18, 0.18);
+                        globeGroup.position.set(initialX, initialY, -3.5);
+                        globeGroup.rotation.y = -Math.PI / 2;
+                        globeGroup.rotation.x = 0.2;
+                        standGroup.scale.set(0.18, 0.18, 0.18);
+                        standGroup.position.set(initialX, initialY, -3.5);
+                        standMaterial.opacity = 1;
+                        standMaterial.transparent = true;
+                        camera.position.z = 8;
+                        material.color.copy(colorWhiteState);
+                    }
+                }
+            }
+
+            // Refresh ScrollTrigger after state is fully set
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+                requestAnimationFrame(() => ScrollTrigger.update());
+            }
+        };
+
         if (preloader) {
             // Wait for 3D textures and buffering to completely clear
             setTimeout(() => {
@@ -698,16 +819,10 @@ if (typeof gsap !== 'undefined') {
                     }
                 });
 
-                // Simultaneously play entrance animations so elements rise beautifully
-                introTl.play();
-
+                afterLoad();
             }, 1500);
         } else {
-            introTl.play();
-        }
-        // Final refresh to lock in page dimensions
-        if (typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.refresh();
+            afterLoad();
         }
     });
 } else {
@@ -725,59 +840,170 @@ if (typeof gsap !== 'undefined') {
     });
 }
 
-// Reality Check — Liquid Glass Redesign Animations
-if (document.querySelector('.reality-section') && typeof gsap !== 'undefined') {
+// Reality Check — Pinned word-reveal animation
+if (document.querySelector('.reality-section') && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 
-    // Soft blob drift
-    gsap.to(".rc-blob-1", { x: 30, y: 20, duration: 8, yoyo: true, repeat: -1, ease: "sine.inOut" });
-    gsap.to(".rc-blob-2", { x: -20, y: -30, duration: 10, yoyo: true, repeat: -1, ease: "sine.inOut" });
-    gsap.to(".rc-blob-3", { x: 15, y: 15, duration: 7, yoyo: true, repeat: -1, ease: "sine.inOut" });
+    const pinWrap = document.getElementById('rc-pin-wrap');
+    const words   = document.querySelectorAll('.rc-word');
+    const sub     = document.getElementById('rc-reveal-sub');
 
-    if (typeof ScrollTrigger !== 'undefined') {
-        const rcTl = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".reality-pipeline",
-                start: "top 78%",
-            }
-        });
+    if (pinWrap && words.length) {
+        // Pin the panel for scrolling space proportional to word count
+        const pinDuration = '250%';
 
-        rcTl
-            .from(".rc-title", { y: 28, opacity: 0, duration: 0.75, ease: "power3.out" })
-            .from(".rc-subtitle", { y: 16, opacity: 0, duration: 0.6, ease: "power2.out" }, "-=0.5")
-            .from(".rc-card-1", { y: 60, opacity: 0, duration: 0.9, ease: "power3.out" }, "-=0.3")
-            .from(".rc-card-2", { y: 60, opacity: 0, duration: 0.9, ease: "power3.out" }, "-=0.7")
-            .from(".rc-card-3", { y: 60, scale: 0.96, opacity: 0, duration: 1.1, ease: "power3.out" }, "-=0.7")
-            .from(".lq-perk", { y: 12, opacity: 0, duration: 0.5, stagger: 0.1, ease: "back.out(2)" }, "-=0.5");
-
-        // Animate progress bars after cards enter
         ScrollTrigger.create({
-            trigger: ".reality-pipeline",
-            start: "top 70%",
-            onEnter: () => {
-                document.querySelectorAll('.lq-bar').forEach(bar => {
-                    const targetWidth = bar.dataset.width + '%';
-                    bar.style.width = targetWidth;
+            trigger: pinWrap,
+            start: 'top top',
+            end: '+=' + pinDuration,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            onUpdate(self) {
+                const p = self.progress; // 0 → 1
+                const wordCount = words.length;
+
+                // Each word gets revealed across its slice of scroll progress
+                // Words 0–(n-1) light up across 0→0.85, sub fades in 0.85→1
+                words.forEach((word, i) => {
+                    const start  = (i / wordCount) * 0.85;
+                    const end    = ((i + 1) / wordCount) * 0.85;
+                    const t      = Math.min(1, Math.max(0, (p - start) / (end - start)));
+                    // interpolate from rgba(255,255,255,0.02) → rgba(255,255,255,1)
+                    const alpha  = 0.02 + (1 - 0.02) * t;
+                    word.style.color = `rgba(255,255,255,${alpha.toFixed(3)})`;
                 });
+
+                // Sub-line fades in during last 15% of scroll
+                const subT = Math.min(1, Math.max(0, (p - 0.82) / 0.18));
+                if (sub) sub.style.color = `rgba(255,255,255,${(subT * 0.55).toFixed(3)})`;
             }
         });
     }
 
-    // 3D tilt on hover
-    document.querySelectorAll('.lq-card').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const cx = rect.width / 2;
-            const cy = rect.height / 2;
-            const rx = ((e.clientY - rect.top - cy) / cy) * -6;
-            const ry = ((e.clientX - rect.left - cx) / cx) * 6;
-            card.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateY(-8px) scale(1.015)`;
-            card.style.transition = 'transform 0.12s ease-out';
+    // Editorial pinned panel — line scrub + staggered row reveal
+    const rcEditWrap  = document.getElementById('rc-editorial-wrap');
+    const rcEditorial = document.getElementById('rc-editorial');
+    const rcDivLine   = document.getElementById('rc-divider-line');
+    const rcHRule     = document.getElementById('rc-h-rule');
+    const rcColLeft   = document.getElementById('rc-col-left');
+    const rcColRight  = document.getElementById('rc-col-right');
+    const rcRightTop  = document.getElementById('rc-right-top');
+    const rcRightBot  = document.getElementById('rc-right-bot');
+
+    if (rcEditWrap && rcDivLine && typeof ScrollTrigger !== 'undefined') {
+
+        const leftRows     = Array.from(rcColLeft  ? rcColLeft.querySelectorAll('.rc-row')  : []);
+        // Separate the right rows by block so we can order them correctly
+        const rightTopRows = Array.from(rcRightTop ? rcRightTop.querySelectorAll('.rc-row') : []);
+        const rightBotRows = Array.from(rcRightBot ? rcRightBot.querySelectorAll('.rc-row') : []);
+
+        const leftTitle     = rcColLeft  ? rcColLeft.querySelector('.rc-col-title')   : null;
+        const rightTopTitle = rcRightTop ? rcRightTop.querySelector('.rc-col-title')  : null;
+        const rightBotLabel = rcRightBot ? rcRightBot.querySelector('.rc-col-label')  : null;
+        const rightBotTitle = rcRightBot ? rcRightBot.querySelector('.rc-col-title')  : null;
+
+        // Fade-in window — wider = slower, scrub-reversible
+        const FADE = 0.18;
+        const scrubFade = (p, start) => Math.min(1, Math.max(0, (p - start) / FADE));
+
+        // Remove CSS transitions so scrub drives opacity/transform directly (reversible)
+        [leftTitle, rightTopTitle, rightBotLabel, rightBotTitle, ...leftRows, ...rightTopRows, ...rightBotRows]
+            .forEach(el => { if (el) el.style.transition = 'none'; });
+        if (rcHRule) rcHRule.style.transition = 'none';
+
+        // Build a unified top-to-bottom sequence of "slots".
+        // Each slot = { leftEl, rightEl } — they reveal together at the same scroll position.
+        // Left col:  title  + 5 rows
+        // Right col: topTitle + 3 topRows + hRule + botLabel + botTitle + 3 botRows
+        // We zip them so each vertical position fires simultaneously on both sides.
+        // rcHRule is driven separately below — not in the slot array.
+        const leftSlots  = [leftTitle,     ...leftRows];
+        const rightSlots = [rightTopTitle, ...rightTopRows, rightBotLabel, rightBotTitle, ...rightBotRows];
+        const totalSlots = Math.max(leftSlots.length, rightSlots.length);
+
+        const ROWS_START = 0.06;
+        const ROWS_END   = 0.90;
+        const ROWS_SPAN  = ROWS_END - ROWS_START;
+
+        ScrollTrigger.create({
+            trigger: rcEditWrap,
+            start: 'top top',
+            end: '+=300%',
+            pin: true,
+            pinSpacing: true,
+            scrub: 3,
+            onUpdate(self) {
+                const p = self.progress;
+
+                // Divider line grows top-to-bottom with scroll
+                rcDivLine.style.setProperty('--line-progress', (p * 100).toFixed(1) + '%');
+
+                if (rcColLeft)  rcColLeft.classList.toggle('rc-visible',  p >= 0.02);
+                if (rcColRight) rcColRight.classList.toggle('rc-visible', p >= 0.02);
+
+                // Each slot index i maps to a scroll start position.
+                // Both the left and right element at row i reveal at the exact same time.
+                for (let i = 0; i < totalSlots; i++) {
+                    const slotStart = ROWS_START + (i / totalSlots) * ROWS_SPAN;
+                    const a = scrubFade(p, slotStart);
+
+                    const lEl = leftSlots[i]  || null;
+                    const rEl = rightSlots[i] || null;
+
+                    if (lEl) {
+                        lEl.style.opacity   = a;
+                        lEl.style.transform = `translateY(${(1 - a) * 20}px)`;
+                        if (lEl.classList && lEl.classList.contains('rc-row')) {
+                            lEl.style.borderBottomColor = `rgba(100,255,218,${(a * 0.08).toFixed(3)})`;
+                        }
+                    }
+                    if (rEl) {
+                        rEl.style.opacity   = a;
+                        rEl.style.transform = `translateY(${(1 - a) * 20}px)`;
+                        if (rEl.classList && rEl.classList.contains('rc-row')) {
+                            rEl.style.borderBottomColor = `rgba(255,255,255,${(a * 0.05).toFixed(3)})`;
+                        }
+                    }
+                }
+
+                // rc-right-top rows border-top: scrub-driven, tied to rightTopTitle slot
+                if (rcRightTop) {
+                    const topRowsStart = ROWS_START + (0 / totalSlots) * ROWS_SPAN;
+                    const tA = Math.min(1, Math.max(0, (p - topRowsStart) / FADE));
+                    const topRows = rcRightTop.querySelector('.rc-col-rows');
+                    if (topRows) topRows.style.borderTopColor = `rgba(255,255,255,${(tA * 0.07).toFixed(3)})`;
+                }
+
+                // h-rule: appears only after the last rightTopRow is fully revealed.
+                // Start = last rightTopRow slot index + FADE (fully done).
+                if (rcHRule) {
+                    const lastTopRowIdx   = rightTopRows.length;
+                    const lastTopRowStart = ROWS_START + (lastTopRowIdx / totalSlots) * ROWS_SPAN;
+                    const hRuleStart      = lastTopRowStart + FADE;
+                    const hA = Math.min(1, Math.max(0, (p - hRuleStart) / FADE));
+                    if (hA > 0) {
+                        rcHRule.style.height  = '1px';
+                        rcHRule.style.margin  = 'clamp(0.8rem, 2vh, 1.5rem) 0';
+                    } else {
+                        rcHRule.style.height  = '0';
+                        rcHRule.style.margin  = '0';
+                    }
+                    rcHRule.style.width   = (hA * 100).toFixed(1) + '%';
+                    rcHRule.style.opacity = hA > 0 ? '1' : '0';
+                }
+
+                // rc-right-bot rows border-top: appears when rightBotTitle (slot index 5) is fully in
+                if (rcRightBot) {
+                    const botTitleIdx   = 1 + rightTopRows.length + 1; // botLabel + botTitle
+                    const botTitleStart = ROWS_START + (botTitleIdx / totalSlots) * ROWS_SPAN;
+                    const bRuleStart    = botTitleStart + FADE;
+                    const bA = Math.min(1, Math.max(0, (p - bRuleStart) / FADE));
+                    const botRows = rcRightBot.querySelector('.rc-col-rows');
+                    if (botRows) botRows.style.borderTopColor = `rgba(255,255,255,${(bA * 0.07).toFixed(3)})`;
+                }
+            }
         });
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = '';
-            card.style.transition = 'transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
-        });
-    });
+    }
 }
 
 // Anatomy Stack Section - Scroll Card Stack
@@ -852,28 +1078,53 @@ if (document.querySelector('.reality-section') && typeof gsap !== 'undefined') {
     });
 })();
 
-// Hide logo + CTA once user scrolls past the hero section
-if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    const heroCornerEls = ['.nav-brand-corner', '.nav-cta-corner'];
+// Hide/show navbar based on scroll position relative to the hero pin.
+// We do this with a plain scroll listener instead of a second ScrollTrigger
+// because pinned elements have unreliable bounding boxes during the pin phase.
+(function () {
+    const heroPinnedEl = document.getElementById('pinned-container');
+    if (!heroPinnedEl) return;
 
-    // The first section after the hero is #reality-check.
-    // When it enters the top of the viewport, hide the fixed logo/CTA.
-    // When the user scrolls back up into the hero, restore them.
-    const postHeroSection = document.querySelector('#reality-check') || document.querySelector('.reality-section');
-    if (postHeroSection) {
-        ScrollTrigger.create({
-            trigger: postHeroSection,
-            start: 'top bottom',   // fires as soon as post-hero section enters viewport bottom
-            onEnter: () => {
-                gsap.to(heroCornerEls, { opacity: 0, pointerEvents: 'none', duration: 0.2, overwrite: true });
-            },
-            onLeaveBack: () => {
-                // user scrolled back up — hero is visible again
-                gsap.to(heroCornerEls, { opacity: 1, pointerEvents: 'auto', duration: 0.3, overwrite: true });
-            }
-        });
+    const navEls = ['#nav-wrapper', '.nav-brand-corner', '.nav-cta-corner'];
+    let navHidden = false;
+
+    function setNavHidden(hide) {
+        if (hide === navHidden) return;
+        navHidden = hide;
+        if (hide) {
+            gsap.set(navEls, { opacity: 0, visibility: 'hidden', pointerEvents: 'none' });
+        } else {
+            gsap.set(navEls, { opacity: 1, visibility: 'visible', pointerEvents: 'auto', y: 0 });
+        }
     }
-}
+
+    function checkNavVisibility() {
+        // pinTop = where the hero section sits in the document before pinning begins
+        const pinTop = heroPinnedEl.offsetTop;
+        // The scrub timeline runs for 600px of scroll
+        const pinEnd = pinTop + 600;
+
+        if (window.scrollY <= pinTop) {
+            // At or above the hero — nav visible (intro anim owns opacity on fresh load)
+            setNavHidden(false);
+        } else if (window.scrollY >= pinEnd) {
+            // Past the entire hero scrub — hide nav
+            setNavHidden(true);
+        } else {
+            // Inside the scrub range — nav is hidden by the scrub tween itself,
+            // but keep visibility:visible so the scrub opacity can show through
+            if (navHidden) {
+                gsap.set(navEls, { visibility: 'visible' });
+                navHidden = false;
+            }
+        }
+    }
+
+    window.addEventListener('scroll', checkNavVisibility, { passive: true });
+    if (typeof lenis !== 'undefined') {
+        lenis.on('scroll', checkNavVisibility);
+    }
+})();
 
     // 2. The Sticky Card Stack Depth Effect
     // On desktop, as cards stack over each other, the ones underneath scale down slightly

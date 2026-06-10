@@ -220,6 +220,7 @@ html.lenis body {
     padding: 0 10px 10px 10px;
 }
 
+
 /* Image frame — sits below the navbar droopdown, white visible on sides/bottom */
 .hero-image-frame {
     position: absolute;
@@ -2463,181 +2464,318 @@ select.form-control option {
 }
 
 /* ==================================================
-   REALITY CHECK SECTION — LIGHT LIQUID GLASS REDESIGN
+   REALITY CHECK SECTION — PINNED WORD REVEAL
 ================================================== */
 .reality-section {
-    background:
-        radial-gradient(ellipse 70% 50% at 15% 60%, rgba(239,68,68,0.09) 0%, transparent 65%),
-        radial-gradient(ellipse 60% 50% at 85% 30%, rgba(26,31,110,0.1) 0%, transparent 65%),
-        radial-gradient(ellipse 50% 60% at 50% 80%, rgba(245,158,11,0.07) 0%, transparent 60%),
-        linear-gradient(160deg, #f0f4ff 0%, #f8f9ff 50%, #eef2fb 100%);
-    overflow: clip;
-    padding: 100px 0 120px;
+    background: #020617;
     position: relative;
 }
 
-/* Soft background blobs */
-.rc-blob {
+/* Masks the hard section cut between pinned-container and reality-section */
+.reality-section::before {
+    content: '';
     position: absolute;
-    border-radius: 50%;
-    filter: blur(90px);
+    top: -180px;
+    left: 0;
+    right: 0;
+    height: 180px;
+    background: linear-gradient(to bottom, transparent 0%, #020617 100%);
     pointer-events: none;
-    z-index: 0;
+    z-index: 20;
 }
 
-.rc-blob-1 {
-    width: 500px;
-    height: 500px;
-    top: -120px;
-    left: -100px;
-    background: radial-gradient(circle, rgba(239, 68, 68, 0.12), transparent 70%);
+/* ── Pinned viewport panel ── */
+.rc-pin-wrap {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
 }
 
-.rc-blob-2 {
-    width: 400px;
-    height: 400px;
-    bottom: -80px;
-    right: 5%;
-    background: radial-gradient(circle, rgba(59, 130, 246, 0.14), transparent 70%);
+.rc-pin-inner {
+    width: 100%;
+    padding: 0 clamp(24px, 5vw, 72px);
 }
 
-.rc-blob-3 {
-    width: 350px;
-    height: 350px;
-    top: 40%;
-    left: 40%;
-    background: radial-gradient(circle, rgba(245, 158, 11, 0.09), transparent 70%);
+/* Top label — in normal flow, sits above the title */
+.rc-top-label {
+    display: block;
+    font-size: 1rem;
+    letter-spacing: 0.2em;
+    color: #e74c3c;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 2rem;
 }
 
-/* Header badge */
-.rc-badge {
-    background: rgba(255, 255, 255, 0.7);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(239, 68, 68, 0.25);
-    color: #dc2626;
+/* ── Giant word-reveal title ── */
+.rc-reveal-title {
+    font-size: clamp(2.6rem, 7.5vw, 7rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    margin: 0 0 2rem;
+    font-family: 'Outfit', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05em;
 }
 
-.rc-badge-text {
-    color: #dc2626;
-    letter-spacing: 0.08em;
-    font-size: 0.72rem;
+/* Each line is a block, with staggered left indent like the reference */
+.rc-line {
+    display: block;
+}
+.rc-line-1 { margin-left: clamp(60px, 10vw, 180px); }
+.rc-line-2 { margin-left: clamp(120px, 16vw, 300px); }
+.rc-line-3 { margin-left: clamp(180px, 22vw, 420px); }
+.rc-line-4 { margin-left: clamp(60px, 10vw, 180px); }
+
+/* Each word starts near-invisible, JS drives alpha to 1 via scroll */
+.rc-word {
+    display: inline-block;
+    color: rgba(255, 255, 255, 0.02);
+    will-change: color;
+    margin-right: 0.25em;
+}
+.rc-word:last-child { margin-right: 0; }
+
+/* Sub-line — hidden until near end of pin */
+.rc-reveal-sub {
+    font-size: clamp(0.9rem, 1.4vw, 1.05rem);
+    color: rgba(255, 255, 255, 0);
+    max-width: 480px;
+    line-height: 1.7;
+    margin: 0;
+    font-weight: 400;
+    will-change: color;
+    margin-left: 2px;
 }
 
+/* ── Editorial pinned panel ── */
+.rc-editorial-wrap {
+    position: relative;
+    height: 100vh;          /* JS will pin this */
+}
+
+.rc-editorial {
+    display: grid;
+    grid-template-columns: 1fr 1px 1fr;
+    height: 100vh;
+    background: #020617;
+    padding: clamp(40px, 6vh, 80px) clamp(24px, 5vw, 72px);
+    box-sizing: border-box;
+    align-items: stretch;
+    column-gap: clamp(24px, 4vw, 60px);
+}
+
+/* ── Vertical divider — center column ── */
+.rc-divider-line {
+    grid-column: 2;
+    align-self: stretch;
+    width: 1px;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.rc-divider-line::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: var(--line-progress, 0%);
+    background: linear-gradient(to bottom,
+        var(--cta-color) 0%,
+        rgba(100,255,218,0.3) 100%);
+    will-change: height;
+}
+
+/* ── Columns ── */
+.rc-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+/* ── Label ── */
+.rc-col-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--cta-color);        /* site teal */
+    font-weight: 700;
+    margin-bottom: clamp(0.6rem, 1.5vh, 1.2rem);
+    display: block;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.rc-label-red   { color: #2563eb; }   /* site accent blue */
+.rc-label-amber { color: #8892B0; }   /* site muted */
+
+/* ── Big title ── */
+.rc-col-title {
+    font-size: clamp(1.8rem, 4.2vw, 4.8rem);
+    font-weight: 900;
+    line-height: 0.93;
+    letter-spacing: -0.025em;
+    text-transform: uppercase;
+    color: #E6F1FF;             /* --text-light */
+    font-family: 'Outfit', sans-serif;
+    margin: 0 0 clamp(0.8rem, 2vh, 1.8rem);
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.5s ease 0.08s, transform 0.5s ease 0.08s;
+}
+.rc-title-right { color: #2563eb; }   /* site blue for right col titles */
+
+
+/* ── Row list ── */
+.rc-col-rows {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid transparent;   /* hidden until col is visible */
+    flex: 1;
+    transition: border-color 0.4s ease;
+}
+
+.rc-col.rc-visible .rc-col-rows {
+    border-top-color: rgba(255,255,255,0.07);
+}
+
+.rc-col-left.rc-visible .rc-col-rows {
+    border-top-color: rgba(100,255,218,0.2);
+}
+
+.rc-row {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(0.8rem, 2vw, 1.5rem);
+    padding: clamp(0.45rem, 1vh, 0.75rem) 0;
+    border-bottom: 1px solid transparent;  /* hidden until row is visible */
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.4s ease, transform 0.4s ease, border-color 0.4s ease;
+}
+
+.rc-row.rc-row-visible {
+    border-bottom-color: rgba(255,255,255,0.05);
+}
+
+.rc-col-left .rc-row.rc-row-visible {
+    border-bottom-color: rgba(100,255,218,0.08);
+}
+
+.rc-row.rc-row-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.rc-row-key {
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--cta-color);
+    font-weight: 700;
+    min-width: clamp(60px, 8vw, 100px);
+    flex-shrink: 0;
+}
+.rc-key-right { color: #2563eb; }
+
+.rc-row-val {
+    font-size: clamp(0.75rem, 1vw, 0.9rem);
+    color: rgba(230,241,255,0.6);
+    font-family: 'Outfit', sans-serif;
+}
+
+/* When column becomes visible, label + title animate in */
+.rc-col.rc-visible .rc-col-label,
+.rc-col.rc-visible .rc-col-title {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Smart Choice + Bottleneck labels always visible from start */
+.rc-col-left .rc-col-label,
+#rc-right-top .rc-col-label {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Financial Trap label + all right-col rows borders are scrub-driven by JS */
+#rc-right-bot .rc-col-label {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: none;
+}
+#rc-right-bot .rc-col-rows,
+#rc-right-top .rc-col-rows {
+    border-top-color: transparent !important;
+    transition: none;
+}
+
+/* Right column internal split */
+.rc-right-block { flex: 0 0 auto; }
+
+/* Remove extra space after last row in each block */
+.rc-right-block .rc-col-rows .rc-row:last-child {
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+/* Horizontal rule between the two right blocks — hidden until JS activates */
+.rc-h-rule {
+    height: 0;
+    background: rgba(255,255,255,0.08);
+    margin: 0;
+    width: 0%;
+    opacity: 0;
+    overflow: hidden;
+    transition: none;
+}
+
+@media (max-width: 767px) {
+    .rc-editorial {
+        grid-template-columns: 1fr;
+        height: auto;
+        overflow-y: auto;
+        padding: 48px 24px;
+        row-gap: 48px;
+    }
+    .rc-editorial-wrap { height: auto; }
+    .rc-divider-line { display: none; }
+    .rc-col-title { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+}
+
+/* pulse dot — keep for badge use elsewhere */
 .pulse-dot-light {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
-    background: #dc2626;
+    background: #ef4444;
     position: relative;
     flex-shrink: 0;
 }
-
 .pulse-dot-light::after {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: 50%;
-    background: #dc2626;
+    background: #ef4444;
     animation: pulseBadgeLight 2s infinite;
 }
-
 @keyframes pulseBadgeLight {
-    0% { transform: scale(1); opacity: 0.8; }
-    100% { transform: scale(3); opacity: 0; }
-}
-
-.rc-title {
-    color: #0f172a;
-    line-height: 1.2;
-    font-size: clamp(1.8rem, 3vw, 2.6rem);
-}
-
-.rc-subtitle {
-    color: #64748b;
-    font-weight: 400;
-}
-
-/* Split layout: text left, cards right */
-.rc-split-layout {
-    display: grid;
-    grid-template-columns: 1fr 1.15fr;
-    gap: 48px;
-    align-items: center;
-    min-height: 480px;
-}
-
-.rc-text-col {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-}
-
-.rc-body-text {
-    font-size: 0.97rem;
-    color: #64748b;
-    line-height: 1.7;
-    max-width: 380px;
-}
-
-.rc-text-cta {
-    display: inline-flex;
-    align-self: flex-start;
-}
-
-.rc-cards-col {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    overflow: visible;
-}
-
-/* Priority card: full width of right column, largest */
-.rc-priority-card {
-    width: 100%;
-}
-
-.rc-priority-top {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 4px;
-}
-
-/* Two smaller cards in a row below */
-.rc-small-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    overflow: visible;
-}
-
-.rc-sm-card {
-    width: 100%;
-}
-
-
-@media (max-width: 991px) {
-    .rc-split-layout {
-        grid-template-columns: 1fr;
-        gap: 36px;
-    }
-    .rc-text-col {
-        align-items: center;
-        text-align: center;
-    }
-    .rc-body-text {
-        max-width: 100%;
-    }
-    .rc-text-cta {
-        align-self: center;
-    }
+    0%   { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(3.5); opacity: 0; }
 }
 
 @media (max-width: 575px) {
-    .rc-small-cards {
-        grid-template-columns: 1fr;
-    }
+    .rc-small-cards { grid-template-columns: 1fr; }
+    .rc-reveal-title { font-size: clamp(2rem, 10vw, 3.5rem); }
+    .rc-line-2 { margin-left: clamp(20px, 5vw, 60px); }
+    .rc-line-3 { margin-left: clamp(40px, 8vw, 100px); }
 }
 
 /* ══════════════════════════════════════════════
@@ -2971,6 +3109,8 @@ select.form-control option {
     color: #fff;
 }
 
+
+
 .solution-col { z-index: 5; }
 
 /* Keep old pulse-dot for any remaining uses */
@@ -3073,8 +3213,8 @@ select.form-control option {
     justify-content: center;
     gap: 0;
     position: relative;
-    background: #2563eb;
-    border-left: 4px solid #1d4ed8;
+    background: #041a3b;
+    border-left: 4px solid #0a2d5e;
 }
 
 .anatomy-card-number {

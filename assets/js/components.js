@@ -39,6 +39,9 @@
         window.dispatchEvent(new Event('resize'));
     }
 
+    // Hide body until components are injected so mid-scroll loads don't flash wrong pin spacings
+    document.documentElement.style.visibility = 'hidden';
+
     /**
      * Load a component into a container element
      * @param {string} componentPath - Path to the component HTML file
@@ -64,16 +67,11 @@
                 if (containerId === 'header-container') {
                     highlightActiveNav();
                     initMobileNavbar();
-                    refreshScrollLayout();
                     document.dispatchEvent(new CustomEvent('headerLoaded'));
                 }
 
                 if (containerId === 'footer-container') {
                     initScrollToTop();
-                    refreshScrollLayout();
-                    requestAnimationFrame(refreshScrollLayout);
-                    setTimeout(refreshScrollLayout, 300);
-                    setTimeout(refreshScrollLayout, 1000);
                     document.dispatchEvent(new CustomEvent('footerLoaded'));
                 }
             })
@@ -193,8 +191,14 @@
             loadComponent(components.header, 'header-container'),
             loadComponent(components.footer, 'footer-container')
         ]).then(() => {
-            refreshScrollLayout();
-            setTimeout(refreshScrollLayout, 500);
+            // Both components are in the DOM — do one clean layout refresh
+            // then reveal the page so ScrollTrigger pin spacings are always correct
+            requestAnimationFrame(() => {
+                refreshScrollLayout();
+                requestAnimationFrame(() => {
+                    document.documentElement.style.visibility = '';
+                });
+            });
         });
     });
 
