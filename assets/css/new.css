@@ -77,7 +77,7 @@ html.lenis body {
     width: 6px;
     height: 100vh;
     z-index: 99999;
-    pointer-events: none;
+    pointer-events: auto;
     background: transparent;
 }
 
