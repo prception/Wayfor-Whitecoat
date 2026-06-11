@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -817,19 +817,19 @@
             </div>
 
             <div class="container position-relative z-1 py-5">
-                <div class="row align-items-center g-5">
+                <div class="row align-items-stretch g-5">
                     <!-- Left Content -->
-                    <div class="col-lg-6 contact-content pe-lg-5">
+                    <div class="col-lg-6 contact-content pe-lg-5 d-flex flex-column justify-content-center">
                         <div
-                            class="urgency-badge d-inline-flex align-items-center gap-2 px-3 py-2 rounded-pill border border-white border-opacity-10 mb-4">
-                            <span class="pulse-dot rounded-circle bg-secondary d-inline-block shadow-sm"
+                            class="urgency-badge d-inline-flex align-items-center gap-2 mb-4">
+                            <span class="pulse-dot rounded-circle bg-primary d-inline-block"
                                 style="width: 8px; height: 8px;"></span>
-                            <span class="text-secondary fw-semibold small">Admissions Open 2026</span>
+                            <span class="text-dark fw-semibold small">Admissions Open 2026</span>
                         </div>
 
-                        <h2 class="contact-title display-5 fw-bold mb-4 text-white">
+                        <h2 class="contact-title display-5 fw-bold mb-4 text-dark">
                             Ready to Secure Your <br>
-                            <span class="highlight-text d-inline-block">MBBS Seat?</span>
+                            <span class="highlight-text-light d-inline-block">MBBS Seat?</span>
                         </h2>
 
                         <p class="contact-subtitle text-secondary fs-5 mb-3 pe-lg-4">
@@ -852,7 +852,7 @@
                         </div>
 
                         <div class="row g-4 trust-indicators fw-medium">
-                            <div class="col-sm-6 d-flex align-items-center gap-2 text-light">
+                            <div class="col-sm-6 d-flex align-items-center gap-2 text-dark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -861,7 +861,7 @@
                                 </svg>
                                 Free Consultation
                             </div>
-                            <div class="col-sm-6 d-flex align-items-center gap-2 text-light">
+                            <div class="col-sm-6 d-flex align-items-center gap-2 text-dark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -870,7 +870,7 @@
                                 </svg>
                                 Visa Assistance
                             </div>
-                            <div class="col-sm-6 d-flex align-items-center gap-2 text-light">
+                            <div class="col-sm-6 d-flex align-items-center gap-2 text-dark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -879,7 +879,7 @@
                                 </svg>
                                 Airport Pickup
                             </div>
-                            <div class="col-sm-6 d-flex align-items-center gap-2 text-light">
+                            <div class="col-sm-6 d-flex align-items-center gap-2 text-dark">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
                                     fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round"
                                     stroke-linejoin="round">
@@ -910,66 +910,51 @@
                     </div>
 
                     <!-- Right Form -->
-                    <div class="col-lg-6 ps-lg-4 mt-5 mt-lg-0">
-                        <div class="glass-form p-4 p-md-5 rounded-4 border border-white border-opacity-10 shadow-lg">
-                            <h3 class="fw-bold mb-2 text-white fs-3">Secure Your Seat</h3>
-                            <p class="text-secondary mb-4 pb-2">Check your eligibility instantly</p>
-                            <form action="#" method="POST">
-                                <div class="mb-4">
-                                    <label for="name" class="form-label text-light fw-medium mb-2 w-100 text-start">Full
-                                        Name</label>
-                                    <input type="text" id="name" name="name"
-                                        class="form-control bg-dark bg-opacity-25 border-white border-opacity-10 text-white py-3 rounded-3 shadow-none custom-input"
-                                        placeholder="Enter your full name" required>
-                                </div>
+                    <div class="col-lg-6 ps-lg-5 mt-5 mt-lg-0 d-flex flex-column justify-content-center">
 
-                                <div class="mb-4">
-                                    <label for="phone"
-                                        class="form-label text-light fw-medium mb-2 w-100 text-start">Phone
-                                        Number</label>
-                                    <div class="input-group">
-                                        <span
-                                            class="input-group-text bg-dark bg-opacity-25 border-white border-opacity-10 border-end-0 text-secondary fw-medium px-3">+91</span>
-                                        <input type="tel" id="phone" name="phone"
-                                            class="form-control bg-dark bg-opacity-25 border-white border-opacity-10 text-white py-3 border-start-0 rounded-end-3 shadow-none custom-input"
-                                            placeholder="Enter your mobile number" required>
+                        <h3 class="cfc-heading">Secure Your Seat</h3>
+                        <p class="cfc-subheading">Check your eligibility instantly</p>
+
+                        <form action="#" method="POST" class="cfc-form">
+
+                            <div class="cfc-field">
+                                <label for="name" class="cfc-label">FULL NAME</label>
+                                <input type="text" id="name" name="name" class="cfc-input" required>
+                            </div>
+
+                            <div class="cfc-row">
+                                <div class="cfc-field">
+                                    <label for="phone" class="cfc-label">PHONE</label>
+                                    <div class="cfc-phone-wrap">
+                                        <span class="cfc-prefix">+91</span>
+                                        <input type="tel" id="phone" name="phone" class="cfc-input cfc-input--phone" required>
                                     </div>
                                 </div>
-
-                                <div class="mb-4 pb-2">
-                                    <label for="neet" class="form-label text-light fw-medium mb-2 w-100 text-start">NEET
-                                        Status</label>
-                                    <select id="neet" name="neet"
-                                        class="form-select bg-dark bg-opacity-25 border-white border-opacity-10 text-light py-3 rounded-3 shadow-none custom-input"
-                                        required>
-                                        <option value="" disabled selected>Select NEET status</option>
-                                        <option value="qualified" class="bg-dark text-white">Qualified</option>
-                                        <option value="not_qualified" class="bg-dark text-white">Not Qualified</option>
-                                        <option value="appearing_2026" class="bg-dark text-white">Appearing in 2026
-                                        </option>
-                                    </select>
+                                <div class="cfc-field">
+                                    <label for="neet" class="cfc-label">NEET STATUS</label>
+                                    <div class="cfc-select-wrap">
+                                        <select id="neet" name="neet" class="cfc-input cfc-select" required>
+                                            <option value="" disabled selected></option>
+                                            <option value="qualified">Qualified</option>
+                                            <option value="not_qualified">Not Qualified</option>
+                                            <option value="appearing_2026">Appearing 2026</option>
+                                        </select>
+                                        <svg class="cfc-chevron" xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+                                    </div>
                                 </div>
-                                <div class="button-wrap dark-theme-btn w-100 mt-2">
-                                    <button type="submit" class="premium-glass-btn w-100 text-center"
-                                        style="display:block;">
-                                        <span class="w-100 text-center" style="display:block;">Get Free
-                                            Consultation</span>
-                                    </button>
-                                    <div class="button-shadow"></div>
-                                </div>
-                            </form>
-
-                            <div
-                                class="d-flex align-items-center justify-content-center gap-2 mt-4 pt-2 text-secondary small fw-medium">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                                </svg>
-                                100% Secure & Confidential
                             </div>
-                        </div>
+
+                            <div class="cfc-field">
+                                <label for="message" class="cfc-label">MESSAGE</label>
+                                <textarea id="message" name="message" class="cfc-input cfc-textarea" rows="2" placeholder=" "></textarea>
+                            </div>
+
+                            <div class="cfc-bottom">
+                                <button type="submit" class="cfc-submit">Book Free Consultation</button>
+                            </div>
+
+                        </form>
+
                     </div>
                 </div>
             </div>
@@ -979,175 +964,124 @@
     
 
         <footer class="premium-footer">
-            <!-- Ambient Glows -->
-            <div class="footer-glow footer-glow-top"></div>
-            <div class="footer-glow footer-glow-bottom"></div>
+    <!-- Ambient Glows -->
+    <div class="footer-glow footer-glow-top"></div>
+    <div class="footer-glow footer-glow-bottom"></div>
 
-            <div class="container position-relative z-1">
-                <div class="row gx-4 gy-5">
-                    <!-- Brand Column -->
-                    <div class="col-lg-4 col-md-12">
-                        <a href="index.html"
-                            class="nav-brand footer-brand-title text-white fw-bold d-inline-flex align-items-center gap-2 mb-4 text-decoration-none">
-                            <div class="bg-info bg-opacity-10 p-2 rounded-3 border border-info border-opacity-25">
-                                <svg class="brand-icon text-info" xmlns="http://www.w3.org/2000/svg" width="28"
-                                    height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
-                                </svg>
-                            </div>
-                            <span>WayFor<span class="text-info fw-normal">Whitecoat</span></span>
-                        </a>
-                        <p class="footer-desc-text mb-4">
-                            Empowering the next generation of global medical professionals with ethical guidance and
-                            end-to-end support for MBBS abroad.
-                        </p>
-                        <div class="social-links mt-4">
-                            <a href="#" class="footer-social-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                                </svg>
-                            </a>
-                            <a href="#" class="footer-social-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                    <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                                </svg>
-                            </a>
-                            <a href="#" class="footer-social-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path
-                                        d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z">
-                                    </path>
-                                </svg>
-                            </a>
-                            <a href="#" class="footer-social-btn">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round">
-                                    <path
-                                        d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
-                                    </path>
-                                    <rect x="2" y="9" width="4" height="12"></rect>
-                                    <circle cx="4" cy="4" r="2"></circle>
-                                </svg>
-                            </a>
-                        </div>
+    <div class="container position-relative z-1">
+        <div class="row gx-5 gy-5 footer-main-row justify-content-between align-items-start">
+
+            <!-- Col 1: Brand -->
+            <div class="col-lg-4 col-md-12">
+                <a href="index.html" class="nav-brand footer-brand-title text-white fw-bold d-inline-flex align-items-center gap-2 mb-4 text-decoration-none">
+                    <div class="bg-info bg-opacity-10 p-2 rounded-3 border border-info border-opacity-25">
+                        <svg class="brand-icon text-info" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                        </svg>
                     </div>
-
-                    <!-- Links Columns -->
-                    <div class="col-lg-2 col-md-6 col-6">
-                        <h6 class="text-white fw-bold mb-4">Destinations</h6>
-                        <ul class="footer-link-list">
-                            <li><a href="#" class="footer-link">MBBS in Russia</a></li>
-                            <li><a href="#" class="footer-link">MBBS in Uzbekistan</a></li>
-                            <li><a href="#" class="footer-link">MBBS in Kazakhstan</a></li>
-                            <li><a href="#" class="footer-link">MBBS in Georgia</a></li>
-                            <li><a href="#" class="footer-link">MBBS in Philippines</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="col-lg-2 col-md-6 col-6">
-                        <h6 class="text-white fw-bold mb-4">Resources</h6>
-                        <ul class="footer-link-list">
-                            <li><a href="#" class="footer-link">University Selection</a></li>
-                            <li><a href="#" class="footer-link">Visa Assistance</a></li>
-                            <li><a href="#" class="footer-link">Experience Center</a></li>
-                            <li><a href="#" class="footer-link">FMGE / NEXT Info</a></li>
-                            <li><a href="#" class="footer-link">Loan Support</a></li>
-                        </ul>
-                    </div>
-
-                    <!-- Newsletter & contact -->
-                    <div class="col-lg-4 col-md-12">
-                        <div class="footer-newsletter-box">
-                            <h6 class="text-white fw-bold mb-3">Join our community</h6>
-                            <p class="small text-secondary mb-4">Get the latest updates on admissions and scholarships
-                                directly in your inbox.</p>
-                            <form>
-                                <div class="newsletter-input-group">
-                                    <input type="email" class="form-control" placeholder="Email address" required>
-                                    <button class="btn btn-info newsletter-submit" type="submit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </form>
-
-                            <div class="mt-4 pt-2">
-                                <div
-                                    class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all mb-2">
-                                    <div class="footer-contact-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path
-                                                d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
-                                            </path>
-                                        </svg>
-                                    </div>
-                                    <span class="small text-white">+1 (800) 123-4567</span>
-                                </div>
-                                <div
-                                    class="footer-contact-item d-flex align-items-center gap-3 text-secondary transition-all">
-                                    <div class="footer-contact-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                            stroke-linecap="round" stroke-linejoin="round">
-                                            <path
-                                                d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
-                                            </path>
-                                            <polyline points="22,6 12,13 2,6"></polyline>
-                                        </svg>
-                                    </div>
-                                    <span class="small text-white">contact@wayforwhitecoat.com</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recognition Badges -->
-                <!-- <div class="footer-recognition d-flex justify-content-center flex-wrap gap-4">
-                    <span class="recognition-badge">NMC (MCI)</span>
-                    <span class="recognition-badge">WHO</span>
-                    <span class="recognition-badge">WFME</span>
-                    <span class="recognition-badge">ECFMG</span>
-                    <span class="recognition-badge">FAIMER</span>
-                </div> -->
+                    <span>WayFor<span class="text-info fw-normal">Whitecoat</span></span>
+                </a>
+                <p class="footer-desc-text mb-0">
+                    Empowering the next generation of global medical professionals with ethical guidance and
+                    end-to-end support for MBBS abroad.
+                </p>
             </div>
 
-            <!-- Bottom Strip -->
-            <div class="footer-bottom-strip">
-                <div class="container">
-                    <div class="row align-items-center">
-                        
-                        <div class="col-md-6 text-center text-md-start">
-                            <div class="d-flex justify-content-center justify-content-md-start gap-4">
-                                <a href="#" class="footer-bottom-link">Privacy Policy</a>
-                                <a href="#" class="footer-bottom-link">Terms of Service</a>
-                                <a href="#" class="footer-bottom-link">Sitemap</a>
-                            </div>
-                        </div>
-                        <div class="col-md-6 text-center text-md-end mb-3 mb-md-0">
-                            <p class="mb-0 fw-light">&copy; 2026 WayFor Whitecoat. All Rights Reserved. Designed by <a href="#"
-                                    class="text-info text-decoration-none fw-medium">PRception</a></p>
-                        </div>
+            <!-- Cols 2+3: Destinations & Resources side by side, tight gap -->
+            <div class="col-lg-auto col-md-12 d-flex gap-5">
+                <div>
+                    <h6 class="footer-col-heading mb-4">Destinations</h6>
+                    <ul class="footer-link-list">
+                        <li><a href="#" class="footer-link">MBBS in Russia</a></li>
+                        <li><a href="#" class="footer-link">MBBS in Uzbekistan</a></li>
+                        <li><a href="#" class="footer-link">MBBS in Kazakhstan</a></li>
+                        <li><a href="#" class="footer-link">MBBS in Georgia</a></li>
+                        <li><a href="#" class="footer-link">MBBS in Philippines</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h6 class="footer-col-heading mb-4">Resources</h6>
+                    <ul class="footer-link-list">
+                        <li><a href="#" class="footer-link">University Selection</a></li>
+                        <li><a href="#" class="footer-link">Visa Assistance</a></li>
+                        <li><a href="#" class="footer-link">Experience Center</a></li>
+                        <li><a href="#" class="footer-link">FMGE / NEXT Info</a></li>
+                        <li><a href="#" class="footer-link">Loan Support</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Col 4: Contact & Social -->
+            <div class="col-lg-auto col-md-12">
+                <h6 class="footer-col-heading mb-4">Contact</h6>
+                <div class="footer-contact-item d-flex align-items-center gap-3 mb-3">
+                    <div class="footer-contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                    </div>
+                    <span class="text-white">+1 (800) 123-4567</span>
+                </div>
+                <div class="footer-contact-item d-flex align-items-center gap-3 mb-4">
+                    <div class="footer-contact-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                    </div>
+                    <span class="text-white">contact@wayforwhitecoat.com</span>
+                </div>
+
+                <h6 class="footer-col-heading mb-3">Follow Us</h6>
+                <div class="social-links">
+                    <a href="#" class="footer-social-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="footer-social-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="footer-social-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="footer-social-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Bottom Strip -->
+    <div class="footer-bottom-strip">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <p class="mb-0 fw-light">&copy; 2026 WayFor Whitecoat. All Rights Reserved. Designed by <a href="#" class="text-info text-decoration-none fw-medium">PRception</a></p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <div class="d-flex justify-content-center justify-content-md-end gap-4">
+                        <a href="#" class="footer-bottom-link">Privacy Policy</a>
+                        <a href="#" class="footer-bottom-link">Terms of Service</a>
+                        <a href="#" class="footer-bottom-link">Sitemap</a>
                     </div>
                 </div>
             </div>
-        </footer>
+        </div>
+    </div>
+</footer>
 
     <button id="scrollToTopBtn" class="scroll-to-top" aria-label="Scroll to top">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

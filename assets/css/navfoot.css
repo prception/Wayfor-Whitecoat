@@ -338,14 +338,15 @@
 .premium-footer {
     background-color: #020617;
     color: #f8fafc;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 2.5rem 2.5rem 0 0;
     position: relative;
-    padding-top: 5rem;
+    padding-top: 7rem;
     padding-bottom: 0;
     z-index: 10;
     width: 100%;
     display: block;
     overflow: hidden;
+    margin-top: -2.5rem;
 }
 
 .premium-footer .container {
@@ -363,13 +364,13 @@
 }
 
 .footer-brand-title {
-    font-size: 1.75rem;
+    font-size: 2rem;
     letter-spacing: -0.5px;
 }
 
 .footer-desc-text {
-    font-size: 0.95rem;
-    line-height: 1.8;
+    font-size: 1rem;
+    line-height: 1.9;
     color: #94a3b8;
 }
 
@@ -383,11 +384,11 @@
 .footer-link {
     color: #94a3b8;
     text-decoration: none;
-    font-size: 0.95rem;
+    font-size: 1rem;
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 0;
+    padding: 8px 0;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -516,8 +517,8 @@
 }
 
 .footer-social-btn {
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -537,12 +538,24 @@
     box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2);
 }
 
+.footer-col-heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #94a3b8;
+}
+
+.footer-main-row {
+    padding-bottom: 1rem;
+}
+
 /* Footer Bottom Strip */
 .footer-bottom-strip {
     background: rgba(0, 0, 0, 0.2);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 1.5rem 0;
-    margin-top: 4rem;
+    padding: 2rem 0;
+    margin-top: 5rem;
 }
 .footer-bottom-strip p{
     font-size: 0.85rem;

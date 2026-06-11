@@ -5,6 +5,39 @@
 //         ? false : true;
 
 
+// Shared nav scroll-hide/show behaviour — called from both script.js (home) and here (other pages)
+window.__initNavScrollBehaviour = (function () {
+    let initialised = false;
+    return function () {
+        if (initialised) return;
+        initialised = true;
+        const THRESHOLD = 10;
+        const navEls = ['#nav-wrapper', '.nav-brand-corner', '.nav-cta-corner'];
+        let navVisible = true;
+
+        function checkNav(scrollY) {
+            const atTop = scrollY <= THRESHOLD;
+            if (atTop && !navVisible) {
+                navVisible = true;
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(navEls, { opacity: 1, visibility: 'visible', pointerEvents: 'auto', duration: 0.5, ease: 'power2.out', overwrite: true });
+                }
+            } else if (!atTop && navVisible) {
+                navVisible = false;
+                if (typeof gsap !== 'undefined') {
+                    gsap.to(navEls, {
+                        opacity: 0, duration: 0.3, ease: 'power2.in', overwrite: true,
+                        onComplete: () => gsap.set(navEls, { pointerEvents: 'none' })
+                    });
+                }
+            }
+        }
+
+        window.addEventListener('scroll', () => checkNav(window.scrollY), { passive: true });
+        if (window.lenis) window.lenis.on('scroll', ({ scroll }) => checkNav(scroll));
+    };
+}());
+
 (function () {
     'use strict';
 
@@ -67,6 +100,19 @@
                 if (containerId === 'header-container') {
                     highlightActiveNav();
                     initMobileNavbar();
+                    // On non-home pages show nav immediately then wire scroll-hide behaviour
+                    if (!document.getElementById('pinned-container')) {
+                        const navEls = ['#nav-wrapper', '.nav-brand-corner', '.nav-cta-corner'];
+                        if (typeof gsap !== 'undefined') {
+                            gsap.set(navEls, { opacity: 1, visibility: 'visible', pointerEvents: 'auto', y: 0 });
+                        } else {
+                            navEls.forEach(sel => {
+                                const el = document.querySelector(sel);
+                                if (el) { el.style.opacity = '1'; el.style.visibility = 'visible'; }
+                            });
+                        }
+                        window.__initNavScrollBehaviour();
+                    }
                     document.dispatchEvent(new CustomEvent('headerLoaded'));
                 }
 
