@@ -6,35 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WayFor Whitecoat - Global Journey</title>
 
-    <!-- Google Fonts -->
+    <!-- Google Fonts — preconnect first so DNS+TLS resolves in parallel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;700&display=swap"
-        rel="stylesheet">
+        rel="stylesheet" media="print" onload="this.media='all'">
+    <noscript>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    </noscript>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- GSAP and ScrollTrigger -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
-
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-    <!-- Font Awesome 6 -->
+    <!-- Font Awesome 6 — non-blocking -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-referrer" media="print" onload="this.media='all'" />
+    <noscript>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" />
+    </noscript>
 
-    <!-- Flag Icons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    <!-- Flag Icons — non-blocking -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css"
+        media="print" onload="this.media='all'" />
+    <noscript>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.2.3/css/flag-icons.min.css" />
+    </noscript>
 
     <!-- external css -->
     <link rel="stylesheet" href="assets/css/new.css">
     <link rel="stylesheet" href="assets/css/navfoot.css">
+
+    <!-- GSAP, Three.js — deferred so they never block first paint -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
 
-<body>
+<body class="preloader-active">
     <!-- Custom Overlay Scrollbar -->
     <div id="custom-scrollbar-track">
         <div id="custom-scrollbar-thumb"></div>
@@ -224,7 +234,7 @@
                             with advanced facilities and highly affordable tuition fees.</p>
                         <div class="mt-4">
                             <div class="button-wrap dark-theme-btn">
-                                <a href="#contact" class="premium-glass-btn">
+                                <a href="countries/MBBS-in-Russia.html" id="country-view-details" class="premium-glass-btn">
                                     <span>View Details</span>
                                 </a>
                                 <div class="button-shadow"></div>
@@ -756,7 +766,7 @@
                                 <div class="dd-ticker-line" id="ddDescLine">
                                     <span><p id="ddDesc" class="dd-desc-text" style="margin:0;">One of the oldest and most prestigious medical universities in Russia, offering world-class infrastructure.</p></span>
                                 </div>
-                                <button class="dd-cta-btn">Explore University &#8594;</button>
+                                <a href="countries/MBBS-in-Russia.html" id="ddExploreBtn" class="dd-cta-btn">Explore University &#8594;</a>
                             </div>
                         </div>
 
@@ -1691,28 +1701,28 @@
     </button>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- Lenis Smooth Scroll -->
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+    <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
     <!-- external js -->
-    <script src="assets/js/components.js"></script>
-    <script src="assets/js/script.js"></script>
+    <script defer src="assets/js/components.js"></script>
+    <script defer src="assets/js/script.js"></script>
 
     <!-- Dream Destination Scroll Driver -->
     <script>
     (function () {
         const DESTINATIONS = [
-            { country:'Russia',     flag:'ru', univ:'Kazan Federal University',          fees:'₹28L – ₹32L', desc:'One of the oldest and most prestigious medical universities in Russia, offering world-class infrastructure.' },
-            { country:'Kazakhstan', flag:'kz', univ:'Al-Farabi Kazakh National Univ.',   fees:'₹24L – ₹28L', desc:'Ranked among the top universities globally, offering excellent English-medium medical programs.' },
-            { country:'Uzbekistan', flag:'uz', univ:'Tashkent Medical Academy',          fees:'₹22L – ₹26L', desc:'The premier medical institution in Uzbekistan, known for its affordable fees and modern teaching hospitals.' },
-            { country:'Kyrgyzstan', flag:'kg', univ:'Kyrgyz State Medical Academy',      fees:'₹20L – ₹24L', desc:'Highly affordable yet premium option with a massive international student body.' },
-            { country:'Georgia',    flag:'ge', univ:'Tbilisi State Medical University',  fees:'₹35L – ₹40L', desc:'Rising star in European medical education offering high USMLE pass rates.' },
-            { country:'Egypt',      flag:'eg', univ:'Cairo University Faculty of Med.',  fees:'₹30L – ₹35L', desc:'Study medicine with a rich heritage and world-recognized universities.' },
-            { country:'Tajikistan', flag:'tj', univ:'Avicenna Tajik State Med Univ.',    fees:'₹18L – ₹22L', desc:'Emerging destination for highly affordable medical education with hands-on practice.' },
-            { country:'Bangladesh', flag:'bd', univ:'Dhaka National Medical College',    fees:'₹32L – ₹38L', desc:'FMGE-friendly curriculum with a similar clinical and disease pattern to India.' },
-            { country:'Nepal',      flag:'np', univ:'Kathmandu University Medical',      fees:'₹45L – ₹55L', desc:'Study close to home with top-ranking medical institutions recognized globally.' }
+            { country:'Russia',     flag:'ru', univ:'Kazan Federal University',          fees:'₹28L – ₹32L', page:'countries/MBBS-in-Russia.html',     desc:'One of the oldest and most prestigious medical universities in Russia, offering world-class infrastructure.' },
+            { country:'Kazakhstan', flag:'kz', univ:'Al-Farabi Kazakh National Univ.',   fees:'₹24L – ₹28L', page:'countries/MBBS-In-Kazakhstan.html', desc:'Ranked among the top universities globally, offering excellent English-medium medical programs.' },
+            { country:'Uzbekistan', flag:'uz', univ:'Tashkent Medical Academy',          fees:'₹22L – ₹26L', page:'countries/MBBS-in-Uzbekistan.html', desc:'The premier medical institution in Uzbekistan, known for its affordable fees and modern teaching hospitals.' },
+            { country:'Kyrgyzstan', flag:'kg', univ:'Kyrgyz State Medical Academy',      fees:'₹20L – ₹24L', page:'countries/MBBS-in-Kyrgyzstan.html', desc:'Highly affordable yet premium option with a massive international student body.' },
+            { country:'Georgia',    flag:'ge', univ:'Tbilisi State Medical University',  fees:'₹35L – ₹40L', page:'countries/MBBS-in-Georgio.html',    desc:'Rising star in European medical education offering high USMLE pass rates.' },
+            { country:'Egypt',      flag:'eg', univ:'Cairo University Faculty of Med.',  fees:'₹30L – ₹35L', page:'countries/MBBS-in-Egypt.html',      desc:'Study medicine with a rich heritage and world-recognized universities.' },
+            { country:'Tajikistan', flag:'tj', univ:'Avicenna Tajik State Med Univ.',    fees:'₹18L – ₹22L', page:'countries/MBBS-in-Tajikistan.html', desc:'Emerging destination for highly affordable medical education with hands-on practice.' },
+            { country:'Bangladesh', flag:'bd', univ:'Dhaka National Medical College',    fees:'₹32L – ₹38L', page:'countries/MBBS-in-Bangladesh.html', desc:'FMGE-friendly curriculum with a similar clinical and disease pattern to India.' },
+            { country:'Nepal',      flag:'np', univ:'Kathmandu University Medical',      fees:'₹45L – ₹55L', page:'countries/MBBS-In-Nepal.html',      desc:'Study close to home with top-ranking medical institutions recognized globally.' }
         ];
         const TOTAL = DESTINATIONS.length;
 
@@ -1722,6 +1732,7 @@
         const univEl    = document.getElementById('ddUnivName');
         const descEl    = document.getElementById('ddDesc');
         const feesEl    = document.getElementById('ddFees');
+        const exploreBtn = document.getElementById('ddExploreBtn');
         const counter   = document.getElementById('ddCounterCurrent');
         const slides    = Array.from(document.querySelectorAll('.dd-img-slide'));
         // Ticker lines inside the left box
@@ -1859,6 +1870,7 @@
                 countryEl.textContent = cur.country;
                 univEl.textContent    = cur.univ;
                 descEl.textContent    = cur.desc;
+                if (exploreBtn) exploreBtn.href = cur.page;
 
                 tickerLines.forEach(el => {
                     if (!el) return;
@@ -1888,6 +1900,7 @@
         let lastIdx = 0;
 
         function onScroll() {
+            // getBoundingClientRect gives correct position even with ScrollTrigger pins above
             const top    = pinWrap.getBoundingClientRect().top;
             const scroll = -top;
             const zone   = pinWrap.offsetHeight - window.innerHeight;
@@ -1901,7 +1914,12 @@
             showSlide(idx, goingDown);
         }
 
-        window.addEventListener('scroll', onScroll, { passive: true });
+        // Wire to Lenis for smooth scrub sync; fall back to native scroll if Lenis isn't ready
+        if (typeof lenis !== 'undefined' && lenis) {
+            lenis.on('scroll', onScroll);
+        } else {
+            window.addEventListener('scroll', onScroll, { passive: true });
+        }
 
         onScroll();
     })();

@@ -35,6 +35,8 @@ window.__initNavScrollBehaviour = (function () {
 
         window.addEventListener('scroll', () => checkNav(window.scrollY), { passive: true });
         if (window.lenis) window.lenis.on('scroll', ({ scroll }) => checkNav(scroll));
+        // Run once immediately so the nav state is correct on any load position
+        checkNav(window.scrollY);
     };
 }());
 
@@ -72,8 +74,11 @@ window.__initNavScrollBehaviour = (function () {
         window.dispatchEvent(new Event('resize'));
     }
 
-    // Hide body until components are injected so mid-scroll loads don't flash wrong pin spacings
-    document.documentElement.style.visibility = 'hidden';
+    // Only hide body at top of page — mid-scroll loads must not flash invisible
+    // (pin spacings are recalculated after injection anyway)
+    if (window.scrollY <= 0) {
+        document.documentElement.style.visibility = 'hidden';
+    }
 
     /**
      * Load a component into a container element
@@ -84,7 +89,7 @@ window.__initNavScrollBehaviour = (function () {
         const container = document.getElementById(containerId);
         if (!container) return;
 
-        return fetch(componentPath, { cache: 'no-store' })
+        return fetch(componentPath, { cache: 'default' })
             .then(response => {
                 if (!response.ok) throw new Error('Component not found: ' + componentPath);
                 return response.text();

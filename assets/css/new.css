@@ -114,6 +114,15 @@ html.lenis body {
     align-items: center;
 }
 
+/* Lock body scroll while preloader is visible so browser scroll-restoration
+   can't show a mid-page section before the hero animation starts. */
+body.preloader-active {
+    overflow: hidden !important;
+    position: fixed;
+    width: 100%;
+    top: 0;
+}
+
 .preloader-inner {
     display: flex;
     flex-direction: column;
@@ -2592,6 +2601,26 @@ select.form-control option {
     .initial-text {
         top: -4%;
     }
+
+    /* Blur overlay behind hero content on tablet — same radial spread as mobile */
+    .initial-text::before {
+        content: '';
+        position: absolute;
+        inset: -40px -30px;
+        border-radius: 0;
+        background: radial-gradient(ellipse at 40% 50%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, transparent 75%);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        -webkit-mask-image: radial-gradient(ellipse at 40% 50%, black 30%, transparent 75%);
+        mask-image: radial-gradient(ellipse at 40% 50%, black 30%, transparent 75%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .initial-text > * {
+        position: relative;
+        z-index: 1;
+    }
 }
 
 /* Mobile/tablet: image goes full-bleed — no white mat around it */
@@ -2663,6 +2692,9 @@ select.form-control option {
         align-self: flex-start;
         max-width: 85%;
         pointer-events: auto;
+        transform: scale(0.72);
+        transform-origin: left bottom;
+        margin-top: 56px;
     }
 }
 
@@ -3096,6 +3128,19 @@ select.form-control option {
     transition: none;
 }
 
+/* Tablet: push country-info (left dec) further down in the "Where Will You Study" section */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .final-text {
+        align-items: flex-end !important;
+        justify-content: space-between !important;
+    }
+
+    .country-info {
+        align-self: flex-end;
+        margin-bottom: 80px;
+    }
+}
+
 /* Tablet: 2-col layout still works but scale everything up */
 @media (min-width: 768px) and (max-width: 991px) {
     .rc-editorial {
@@ -3169,11 +3214,30 @@ select.form-control option {
     100% { transform: scale(3.5); opacity: 0; }
 }
 
+/* Tablet: scale up the word-reveal title */
+@media (min-width: 576px) and (max-width: 1024px) {
+    .rc-reveal-title { font-size: clamp(5rem, 10vw, 9rem); }
+    .rc-line-1 { margin-left: clamp(40px, 6vw, 100px); }
+    .rc-line-2 { margin-left: clamp(80px, 12vw, 200px); }
+    .rc-line-3 { margin-left: clamp(120px, 18vw, 300px); }
+    .rc-line-4 { margin-left: clamp(40px, 6vw, 100px); }
+}
+
+@media (max-width: 768px) {
+    .rc-reveal-title { font-size: clamp(4rem, 16vw, 7rem); }
+    .rc-line-1 { margin-left: clamp(20px, 4vw, 60px); }
+    .rc-line-2 { margin-left: clamp(40px, 8vw, 100px); }
+    .rc-line-3 { margin-left: clamp(60px, 12vw, 140px); }
+    .rc-line-4 { margin-left: clamp(20px, 4vw, 60px); }
+}
+
 @media (max-width: 575px) {
     .rc-small-cards { grid-template-columns: 1fr; }
-    .rc-reveal-title { font-size: clamp(2rem, 10vw, 3.5rem); }
+    .rc-reveal-title { font-size: clamp(3.5rem, 17vw, 5.5rem); }
+    .rc-line-1 { margin-left: clamp(10px, 2vw, 30px); }
     .rc-line-2 { margin-left: clamp(20px, 5vw, 60px); }
-    .rc-line-3 { margin-left: clamp(40px, 8vw, 100px); }
+    .rc-line-3 { margin-left: clamp(30px, 8vw, 80px); }
+    .rc-line-4 { margin-left: clamp(10px, 2vw, 30px); }
 }
 
 /* ══════════════════════════════════════════════
@@ -4671,6 +4735,7 @@ select.form-control option {
     width: 100%;
     background: #64c8ff;
     color: #0a1628;
+    text-decoration: none;
     font-weight: 700;
     font-size: 0.85rem;
     padding: 12px 20px;
@@ -5138,24 +5203,45 @@ select.form-control option {
 
 .trust-dossier-section {
     overflow: hidden;
-    padding: 4.5rem 0 6rem;
+    padding: 3rem 0 4rem;
     /* Breathing room so the dossier never touches the next section */
 }
 
 .trust-dossier-container {
-    min-height: 600px;
+    min-height: 480px;
+}
+
+/* Compact header on desktop so the heading + accordion fit in one viewport */
+@media (min-width: 992px) {
+    .trust-dossier-section .display-5 {
+        font-size: 2.1rem;
+    }
+
+    .trust-dossier-section p.fs-5 {
+        font-size: 1rem !important;
+        max-width: 600px;
+    }
+
+    /* 40/60 split: accordion text on the left, image on the right */
+    .trust-dossier-container > .col-lg-4 {
+        width: 40%;
+    }
+
+    .trust-dossier-container > .col-lg-8 {
+        width: 60%;
+    }
 }
 
 /* --- Left Side: Interactive Accordion --- */
 .dossier-accordion {
-    padding: 2rem 1.5rem;
+    padding: 1.25rem 1.25rem;
     justify-content: center;
     gap: 2px;
 }
 
 @media (min-width: 1200px) {
     .dossier-accordion {
-        padding: 2.5rem 1.75rem;
+        padding: 1.5rem 1.5rem;
     }
 }
 
@@ -5170,7 +5256,7 @@ select.form-control option {
 }
 
 .dossier-item {
-    padding: 14px 12px 14px 16px;
+    padding: 10px 10px 10px 14px;
     border-radius: 2px;
     margin-bottom: 0;
     border: 1px solid transparent;
@@ -5210,8 +5296,8 @@ select.form-control option {
 
 /* Icon */
 .dossier-icon {
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     border-radius: 4px;
     background: rgba(0, 0, 0, 0.04);
     display: flex;
@@ -5223,8 +5309,8 @@ select.form-control option {
 }
 
 .dossier-icon svg {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
 }
 
 .dossier-item.active .dossier-icon {
@@ -5475,10 +5561,31 @@ select.form-control option {
         transform: scale(1.02);
     }
 
+    /* Push the card row down so it clears the section header */
+    .comparison-section .row.position-relative {
+        margin-top: 3rem !important;
+    }
+
     .vs-badge {
-        /* On mobile, VS badge moves to top center between stacked cards */
-        top: 0 !important;
-        transform: translate(-50%, -50%) !important;
+        /* Pull out of absolute flow — become a row item centred between the two cards */
+        position: relative !important;
+        top: auto !important;
+        left: auto !important;
+        transform: none !important;
+        order: 0;
+        align-self: center;
+        margin: -8px auto;
+        z-index: 3;
+        flex-shrink: 0;
+    }
+
+    /* Flip card order — Smart Pathway (solution) on top, VS in middle, Private India below */
+    .comp-col-solution {
+        order: -1;
+    }
+
+    .comp-col-trap {
+        order: 1;
     }
 }
 
@@ -6694,6 +6801,23 @@ textarea.form-control {
     }
 
     /* Blur overlay behind hero content on mobile */
+    .atlas-hero .container.position-relative {
+        position: relative;
+    }
+    .atlas-hero .container.position-relative::before {
+        content: '';
+        position: absolute;
+        inset: -24px -20px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        z-index: -1;
+    }
+}
+
+/* Blur overlay behind hero content on tablet */
+@media (min-width: 769px) and (max-width: 991px) {
     .atlas-hero .container.position-relative {
         position: relative;
     }

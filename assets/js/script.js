@@ -1,5 +1,12 @@
 ﻿// new.js
 
+// Prevent browser from restoring mid-page scroll position on refresh.
+// The hero section has a pinned GSAP animation that must always start from top.
+if ('scrollRestoration' in history) {
+    history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 let lenis;
 if (typeof Lenis !== 'undefined') {
     lenis = new Lenis({
@@ -45,15 +52,15 @@ const hasWebGL = typeof THREE !== 'undefined' && canvas;
 
 // Setup Pins (Lat, Lng)
 const locations = [
-    { id: 'pin-russia', lat: 58.7558, lng: 37.6173, name: 'Russia', desc: 'Experience world-class medical education with advanced facilities and highly affordable tuition fees.' },
-    { id: 'pin-kazakhstan', lat: 54.0000, lng: 70.0000, name: 'Kazakhstan', desc: 'A modern hub for international medical students offering WHO-approved programs in English.' },
-    { id: 'pin-uzbekistan', lat: 41.0000, lng: 56.0000, name: 'Uzbekistan', desc: 'Rich in history and culture, offering top-tier medical universities with a secure environment.' },
-    { id: 'pin-kyrgyzstan', lat: 43.0000, lng: 82.0000, name: 'Kyrgyzstan', desc: 'Affordable medical study options with English medium instruction and great clinical exposure.' },
-    { id: 'pin-georgia', lat: 42.3154, lng: 43.3569, name: 'Georgia', desc: 'A rising star in European medical education with high USMLE pass rates and excellent infrastructure.' },
-    { id: 'pin-egypt', lat: 26.8206, lng: 30.8025, name: 'Egypt', desc: 'Study medicine with a rich heritage and world-recognized universities in a global crossroads.' },
-    { id: 'pin-tajikistan', lat: 35.0000, lng: 68.0000, name: 'Tajikistan', desc: 'Emerging destination for affordable and high-quality medical education with hands-on practice.' },
-    { id: 'pin-bangladesh', lat: 20.0000, lng: 92.0000, name: 'Bangladesh', desc: 'FMGE-friendly curriculum with a similar clinical and disease pattern to India for best practice.' },
-    { id: 'pin-nepal', lat: 30.0000, lng: 82.0000, name: 'Nepal', desc: 'Study close to home with top-ranking medical institutions recognized globally.' }
+    { id: 'pin-russia', lat: 58.7558, lng: 37.6173, name: 'Russia', page: 'countries/MBBS-in-Russia.html', desc: 'Experience world-class medical education with advanced facilities and highly affordable tuition fees.' },
+    { id: 'pin-kazakhstan', lat: 54.0000, lng: 70.0000, name: 'Kazakhstan', page: 'countries/MBBS-In-Kazakhstan.html', desc: 'A modern hub for international medical students offering WHO-approved programs in English.' },
+    { id: 'pin-uzbekistan', lat: 41.0000, lng: 56.0000, name: 'Uzbekistan', page: 'countries/MBBS-in-Uzbekistan.html', desc: 'Rich in history and culture, offering top-tier medical universities with a secure environment.' },
+    { id: 'pin-kyrgyzstan', lat: 43.0000, lng: 82.0000, name: 'Kyrgyzstan', page: 'countries/MBBS-in-Kyrgyzstan.html', desc: 'Affordable medical study options with English medium instruction and great clinical exposure.' },
+    { id: 'pin-georgia', lat: 42.3154, lng: 43.3569, name: 'Georgia', page: 'countries/MBBS-in-Georgio.html', desc: 'A rising star in European medical education with high USMLE pass rates and excellent infrastructure.' },
+    { id: 'pin-egypt', lat: 26.8206, lng: 30.8025, name: 'Egypt', page: 'countries/MBBS-in-Egypt.html', desc: 'Study medicine with a rich heritage and world-recognized universities in a global crossroads.' },
+    { id: 'pin-tajikistan', lat: 35.0000, lng: 68.0000, name: 'Tajikistan', page: 'countries/MBBS-in-Tajikistan.html', desc: 'Emerging destination for affordable and high-quality medical education with hands-on practice.' },
+    { id: 'pin-bangladesh', lat: 20.0000, lng: 92.0000, name: 'Bangladesh', page: 'countries/MBBS-in-Bangladesh.html', desc: 'FMGE-friendly curriculum with a similar clinical and disease pattern to India for best practice.' },
+    { id: 'pin-nepal', lat: 30.0000, lng: 82.0000, name: 'Nepal', page: 'countries/MBBS-In-Nepal.html', desc: 'Study close to home with top-ranking medical institutions recognized globally.' }
 ];
 
 let latLongToVector3 = () => { return { x: 0, y: 0, z: 0 }; };
@@ -615,6 +622,8 @@ if (countryListEl && scrollContainer) {
 
         if (titleEl) titleEl.textContent = loc.name;
         if (descEl) descEl.textContent = loc.desc;
+        const viewDetailsBtn = document.getElementById('country-view-details');
+        if (viewDetailsBtn) viewDetailsBtn.href = loc.page;
 
         Array.from(countryListEl.children).forEach(child => child.classList.remove('active'));
         if (countryListEl.children[index]) {
@@ -700,6 +709,8 @@ function startMobilePinRotation() {
 
         if (titleEl) titleEl.textContent = loc.name;
         if (descEl) descEl.textContent = loc.desc;
+        const viewDetailsBtn = document.getElementById('country-view-details');
+        if (viewDetailsBtn) viewDetailsBtn.href = loc.page;
 
         document.querySelectorAll('.country-pin').forEach(pin => {
             pin.classList.remove('active-pin', 'active-layer');
@@ -779,14 +790,14 @@ if (typeof gsap !== 'undefined') {
                 gsap.set(".hero-card-bl", { y: 30, opacity: 0 });
                 gsap.set(".hero-card-br", { y: 30, opacity: 0 });
 
-                // Build the intro timeline tweens
-                introTl.to("#nav-wrapper", { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, 0.5)
-                    .to([".nav-brand-corner", ".nav-cta-corner"], { y: 0, opacity: 1, duration: 0.8, ease: "power3.out" }, 0.5)
-                    .to(".hero-word", { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out" }, 0.7)
-                    .to(".image-hero-subtitle", { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }, 1.1)
-                    .to(".hero-cta-btn", { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, 1.3)
-                    .to(".hero-card-bl", { y: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, 1.5)
-                    .to(".hero-card-br", { y: 0, opacity: 1, duration: 0.9, ease: "power2.out" }, 1.65);
+                // Build the intro timeline tweens — tightened timing so content appears fast
+                introTl.to("#nav-wrapper", { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.1)
+                    .to([".nav-brand-corner", ".nav-cta-corner"], { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.1)
+                    .to(".hero-word", { y: 0, opacity: 1, duration: 0.8, stagger: 0.07, ease: "power4.out" }, 0.2)
+                    .to(".image-hero-subtitle", { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.5)
+                    .to(".hero-cta-btn", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.65)
+                    .to(".hero-card-bl", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.8)
+                    .to(".hero-card-br", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.9);
 
                 // Loading at the top — play the globe scale-in as part of the intro animation
                 if (hasWebGL) {
@@ -795,16 +806,24 @@ if (typeof gsap !== 'undefined') {
                     introTl.fromTo(
                         [globeGroup.scale, standGroup.scale],
                         { x: 0.001, y: 0.001, z: 0.001 },
-                        { x: 0.18, y: 0.18, z: 0.18, duration: 2.5, ease: "power4.out" },
-                        0.2
+                        { x: 0.18, y: 0.18, z: 0.18, duration: 1.4, ease: "power4.out" },
+                        0.1
                     );
                 }
                 introTl.play();
             } else {
                 // Mid-scroll load — hide nav, hide hero-only UI elements immediately.
-                gsap.set(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
-                    opacity: 0, visibility: 'visible', pointerEvents: 'none'
-                });
+                // Apply once now (in case header is already in DOM) and again on headerLoaded
+                // (in case the async fetch hasn't completed yet).
+                const hideMidScrollNav = () => {
+                    gsap.set(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
+                        opacity: 0, visibility: 'visible', pointerEvents: 'none'
+                    });
+                    // Wire scroll-hide/show so nav reappears when user scrolls back to top.
+                    window.__initNavScrollBehaviour();
+                };
+                hideMidScrollNav();
+                document.addEventListener('headerLoaded', hideMidScrollNav, { once: true });
                 // Hero cards and initial text must be hidden when loaded mid/past pin
                 gsap.set([".initial-text", ".initial-text-cards"], { opacity: 0 });
 
@@ -861,6 +880,11 @@ if (typeof gsap !== 'undefined') {
         if (preloader) {
             // Wait for 3D textures and buffering to completely clear
             setTimeout(() => {
+                // Force scroll to top now — body is still locked, so this is safe.
+                // Then unlock body so GSAP/Lenis can take over from position 0.
+                window.scrollTo(0, 0);
+                document.body.classList.remove('preloader-active');
+
                 // Fade out preloader
                 gsap.to(preloader, {
                     opacity: 0,
@@ -874,6 +898,9 @@ if (typeof gsap !== 'undefined') {
                 afterLoad();
             }, 1500);
         } else {
+            // No preloader — still remove lock and reset scroll
+            document.body.classList.remove('preloader-active');
+            window.scrollTo(0, 0);
             afterLoad();
         }
     });
@@ -883,11 +910,16 @@ if (typeof gsap !== 'undefined') {
         const preloader = document.getElementById('preloader');
         if (preloader) {
             setTimeout(() => {
+                window.scrollTo(0, 0);
+                document.body.classList.remove('preloader-active');
                 preloader.style.opacity = '0';
                 setTimeout(() => {
                     preloader.style.display = 'none';
                 }, 2500);
             }, 1500);
+        } else {
+            document.body.classList.remove('preloader-active');
+            window.scrollTo(0, 0);
         }
     });
 }
@@ -901,7 +933,9 @@ if (document.querySelector('.reality-section') && typeof gsap !== 'undefined' &&
 
     if (pinWrap && words.length) {
         // Pin the panel for scrolling space proportional to word count
-        const pinDuration = '250%';
+        // Shorter on mobile/tablet = faster scrub through the word reveal
+        const isMobileOrTablet = window.innerWidth <= 1024;
+        const pinDuration = isMobileOrTablet ? '160%' : '250%';
 
         ScrollTrigger.create({
             trigger: pinWrap,
@@ -977,13 +1011,14 @@ if (document.querySelector('.reality-section') && typeof gsap !== 'undefined' &&
         const ROWS_END   = 0.90;
         const ROWS_SPAN  = ROWS_END - ROWS_START;
 
+        const isMobileTablet = window.innerWidth <= 1024;
         ScrollTrigger.create({
             trigger: rcEditWrap,
             start: 'top top',
-            end: '+=300%',
+            end: isMobileTablet ? '+=180%' : '+=300%',
             pin: true,
             pinSpacing: true,
-            scrub: 3,
+            scrub: isMobileTablet ? 1.5 : 3,
             onUpdate(self) {
                 const p = self.progress;
 
@@ -1667,7 +1702,7 @@ if (dossierItems.length > 0 && dossierImages.length > 0) {
         if (typeof gsap !== 'undefined') {
             dossierTimer = gsap.to(activePaths, {
                 strokeDashoffset: 0,
-                duration: 6, // 6 seconds per card
+                duration: 2, // 2 seconds per card
                 ease: "linear",
                 onComplete: () => {
                     // Auto-advance to next
@@ -1679,7 +1714,7 @@ if (dossierItems.length > 0 && dossierImages.length > 0) {
             dossierTimer = setTimeout(() => {
                 currentDossierIndex = (currentDossierIndex + 1) % dossierItems.length;
                 activateDossierItem(currentDossierIndex);
-            }, 6000);
+            }, 2000);
             activePaths.forEach(p => { p.style.strokeDashoffset = '0'; });
         }
 
@@ -1757,8 +1792,8 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         compTl.from(".comparison-section h2, .comparison-section p", {
             y: 30,
             opacity: 0,
-            stagger: 0.1,
-            duration: 0.5,
+            stagger: 0.06,
+            duration: 0.3,
             ease: "power3.out"
         })
 
@@ -1766,36 +1801,36 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             .from(".comp-col-trap", {
                 x: -50,
                 opacity: 0,
-                duration: 0.5,
+                duration: 0.3,
                 ease: "power3.out"
-            }, "<0.1") // Starts 0.1s after header begins
+            }, "<0.05") // Starts 0.05s after header begins
 
             // 3. SLAM down the "Solution" (Right Card) with a dramatic elastic effect
             .from(".comp-col-solution", {
                 scale: 0.8,
                 x: 50,
                 opacity: 0,
-                duration: 0.8,
+                duration: 0.6,
                 ease: "elastic.out(1, 0.6)"
-            }, "<0.1") // Starts 0.1s after Trap begins
+            }, "<0.05") // Starts 0.05s after Trap begins
 
             // 3.5 POP the VS badge
             .from(".vs-badge", {
                 scale: 0,
                 rotation: -180,
                 opacity: 0,
-                duration: 0.4,
+                duration: 0.3,
                 ease: "back.out(1.5)"
-            }, "<0.1")
+            }, "<0.05")
 
             // 4. Stagger the winning checkmarks for emphasis
             .from(".comp-win-row", {
                 x: -20,
                 opacity: 0,
-                stagger: 0.1,
-                duration: 0.4,
+                stagger: 0.07,
+                duration: 0.3,
                 ease: "power2.out"
-            }, "-=0.4");
+            }, "-=0.3");
     }
 }
 
