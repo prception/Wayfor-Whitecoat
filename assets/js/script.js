@@ -34,6 +34,9 @@ if (typeof Lenis !== 'undefined') {
 
 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
+    // Don't re-measure pins on mobile URL-bar show/hide (height-only resizes):
+    // mid-scroll refreshes desync pinned sections and cause overlap glitches.
+    ScrollTrigger.config({ ignoreMobileResize: true });
 }
 
 const canvas = document.getElementById('webgl-canvas');
@@ -251,6 +254,18 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
             onUpdate: (self) => {
                 scrollProgress = self.progress;
             },
+            onStart: () => {
+                // If the page-load intro animation is still running (user fast-scrolled),
+                // kill it and snap the globe to its correct phase-1 baseline size so the
+                // scrub timeline starts from the right scale instead of near-zero.
+                if (introTl && introTl.isActive()) {
+                    introTl.kill();
+                    if (hasWebGL) {
+                        globeGroup.scale.set(0.18, 0.18, 0.18);
+                        standGroup.scale.set(0.18, 0.18, 0.18);
+                    }
+                }
+            },
             onLeave: () => {
                 // Hide initial hero content and cards that would bleed through
                 gsap.set(".initial-text", { opacity: 0 });
@@ -455,35 +470,11 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
     );
 }
 
-// Nav visibility: hide as soon as user scrolls away from top, restore only at top.
-// Uses both Lenis (if loaded) and native scroll so nothing is missed.
+// Nav visibility: hide on scroll, restore at top — home page only.
+// All other pages use the same logic wired in components.js after header loads.
 (function () {
-    const THRESHOLD = 10; // px
-    let navVisible = true;
-
-    function checkNav(scrollY) {
-        const atTop = scrollY <= THRESHOLD;
-        if (atTop && !navVisible) {
-            navVisible = true;
-            gsap.to(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
-                opacity: 1, visibility: 'visible', pointerEvents: "auto",
-                duration: 0.5, ease: "power2.out", overwrite: true
-            });
-        } else if (!atTop && navVisible) {
-            navVisible = false;
-            gsap.to(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
-                opacity: 0, duration: 0.3, ease: "power2.in", overwrite: true,
-                onComplete: () => gsap.set(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], { pointerEvents: 'none' })
-            });
-        }
-    }
-
-    // Lenis scroll event (fires on every smooth scroll tick)
-    if (window.lenis) {
-        window.lenis.on('scroll', ({ scroll }) => checkNav(scroll));
-    }
-    // Native fallback
-    window.addEventListener('scroll', () => checkNav(window.scrollY), { passive: true });
+    if (!document.getElementById('pinned-container')) return;
+    window.__initNavScrollBehaviour();
 }());
 
 // G. About Section High-End Reveals
@@ -697,16 +688,72 @@ if (countryListEl && scrollContainer) {
     // Carousel is started/stopped exclusively by the timeline tween callbacks below
 }
 
+// Mobile pin + description auto-rotate (fires only on touch/small screens)
+let mobilePinTimer = null;
+let mobilePinIndex = 0;
+
+function startMobilePinRotation() {
+    if (mobilePinTimer) return;
+    mobilePinTimer = setInterval(() => {
+        mobilePinIndex = (mobilePinIndex + 1) % locations.length;
+        const loc = locations[mobilePinIndex];
+
+        if (titleEl) titleEl.textContent = loc.name;
+        if (descEl) descEl.textContent = loc.desc;
+
+        document.querySelectorAll('.country-pin').forEach(pin => {
+            pin.classList.remove('active-pin', 'active-layer');
+        });
+        const activePin = document.getElementById(loc.id);
+        if (activePin) {
+            activePin.classList.add('active-pin', 'active-layer');
+        }
+    }, 3000);
+}
+
+function stopMobilePinRotation() {
+    clearInterval(mobilePinTimer);
+    mobilePinTimer = null;
+}
+
+// Start on mobile when phase 2 becomes visible; stop when it leaves
+if (window.matchMedia('(max-width: 768px)').matches && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.create({
+        trigger: '#pinned-container',
+        start: 'top top',
+        end: 'bottom bottom',
+        onEnter: startMobilePinRotation,
+        onLeave: stopMobilePinRotation,
+        onEnterBack: startMobilePinRotation,
+        onLeaveBack: stopMobilePinRotation,
+    });
+}
+
 // ==============================================
 // 7. Preloader Logic & GSAP Entrance Animations
 // ==============================================
+let introTl;
 if (typeof gsap !== 'undefined') {
 
     // Set up the entrance timeline
-    const introTl = gsap.timeline({ paused: true });
+    introTl = gsap.timeline({ paused: true });
 
     // Word-split and intro timeline are set up inside afterLoad()
     // once we know the scroll position, so mid-scroll loads never get hidden states.
+
+    // On non-home pages (no #pinned-container), show nav immediately after header loads
+    if (!document.getElementById('pinned-container')) {
+        const showNavNow = () => {
+            gsap.set(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner"], {
+                opacity: 1, visibility: 'visible', pointerEvents: 'auto', y: 0
+            });
+        };
+        document.addEventListener('headerLoaded', showNavNow);
+        // Fallback in case headerLoaded already fired
+        window.addEventListener('load', () => {
+            if (document.querySelector('.nav-brand-corner')) showNavNow();
+        });
+    }
 
     window.addEventListener('load', () => {
         const preloader = document.getElementById('preloader');
@@ -986,15 +1033,12 @@ if (document.querySelector('.reality-section') && typeof gsap !== 'undefined' &&
                     const lastTopRowStart = ROWS_START + (lastTopRowIdx / totalSlots) * ROWS_SPAN;
                     const hRuleStart      = lastTopRowStart + FADE;
                     const hA = Math.min(1, Math.max(0, (p - hRuleStart) / FADE));
-                    if (hA > 0) {
-                        rcHRule.style.height  = '1px';
-                        rcHRule.style.margin  = 'clamp(0.8rem, 2vh, 1.5rem) 0';
-                    } else {
-                        rcHRule.style.height  = '0';
-                        rcHRule.style.margin  = '0';
-                    }
+                    // Interpolate height/margin with hA — a binary toggle here causes a
+                    // sudden layout jump that shoves the bottom block down in one frame.
+                    rcHRule.style.height  = hA > 0 ? '1px' : '0';
+                    rcHRule.style.margin  = `calc(clamp(0.8rem, 2vh, 1.5rem) * ${hA.toFixed(3)}) 0`;
                     rcHRule.style.width   = (hA * 100).toFixed(1) + '%';
-                    rcHRule.style.opacity = hA > 0 ? '1' : '0';
+                    rcHRule.style.opacity = hA.toFixed(3);
                 }
 
                 // rc-right-bot rows border-top: appears when rightBotTitle (slot index 5) is fully in
@@ -1018,9 +1062,6 @@ if (document.querySelector('.reality-section') && typeof gsap !== 'undefined' &&
     if (!pinWrap || !cards.length) return;
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
 
-    // Mobile: skip pinning, show cards in normal flow
-    if (window.innerWidth <= 991) return;
-
     const cardCount = cards.length;
 
     // Card 1 is always visible (translateY 0). Cards 2-4 start below (translateY 100%)
@@ -1041,8 +1082,8 @@ if (document.querySelector('.reality-section') && typeof gsap !== 'undefined' &&
     };
 
     // Pin the wrap and scrub each card sliding up
-    // Each card transition gets equal scroll distance (600px per card)
-    const scrollPerCard = 700;
+    // Reduce scroll distance on small screens so snapping feels natural
+    const scrollPerCard = window.innerWidth <= 576 ? 500 : window.innerWidth <= 991 ? 600 : 700;
     const totalScroll = scrollPerCard * (cardCount - 1);
 
     const tl = gsap.timeline({
@@ -1441,8 +1482,8 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     const journeySection = document.querySelector('.journey-section');
     const journeyTrack = document.querySelector('.journey-track');
 
-    // Only apply GSAP horizontal scroll on Desktop. Mobile uses native CSS swipe deck.
-    if (journeySection && journeyTrack && window.innerWidth > 991) {
+    // Pinned horizontal scroll on all breakpoints (desktop, tablet, mobile)
+    if (journeySection && journeyTrack) {
 
         // Calculate how far to move horizontally
         const getScrollAmount = () => -(journeyTrack.scrollWidth - window.innerWidth);
@@ -1458,6 +1499,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
             start: "top top",
             end: () => `+=${getScrollAmount() * -1}`, // Scroll distance equals track length
             pin: true,
+            anticipatePin: 1, // Pre-pin on fast touch scroll so the section doesn't lag in
             animation: tween,
             scrub: 1, // Smooth scrubbing
             invalidateOnRefresh: true // Recalculates on window resize
@@ -1556,8 +1598,10 @@ if (dossierItems.length > 0 && dossierImages.length > 0) {
             });
         }
 
-        // Manual hover override
+        // Manual hover override (ignore the already-active item so its
+        // image/text animations don't restart and cause a visible jump)
         item.addEventListener('mouseenter', () => {
+            if (item.classList.contains('active')) return;
             activateDossierItem(index, true);
         });
     });
@@ -1600,9 +1644,10 @@ if (dossierItems.length > 0 && dossierImages.length > 0) {
             targetImg.classList.add('active');
             // Premium Image Animation (Subtle Zoom)
             if (typeof gsap !== 'undefined') {
+                gsap.killTweensOf(dossierImages);
                 gsap.fromTo(targetImg,
-                    { scale: 1.05 },
-                    { scale: 1, duration: 6, ease: "power1.out" }
+                    { scale: 1.06 },
+                    { scale: 1, duration: 7, ease: "none", overwrite: true }
                 );
             }
         }
@@ -1611,8 +1656,8 @@ if (dossierItems.length > 0 && dossierImages.length > 0) {
         const activeText = item.querySelector('.dossier-body p');
         if (activeText && typeof gsap !== 'undefined') {
             gsap.fromTo(activeText,
-                { y: 15, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.6, ease: "power2.out", delay: 0.2 }
+                { y: 10, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.5, ease: "power2.out", delay: 0.15, overwrite: true }
             );
         }
 
@@ -1688,6 +1733,14 @@ if (dossierItems.length > 0 && dossierImages.length > 0) {
         activateDossierItem(0);
     }
 }
+
+// Contact form — click anywhere in a field row to focus its input
+document.querySelectorAll('.cfc-field').forEach(field => {
+    field.addEventListener('click', () => {
+        const input = field.querySelector('input, select');
+        if (input) input.focus();
+    });
+});
 
 // Comparison Matrix Entrance Animations
 if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
@@ -1777,6 +1830,60 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         lenis.on('scroll', updateThumb);
     }
     window.addEventListener('resize', updateThumb);
+
+    // Drag support — dragging the thumb scrolls the page
+    let isDragging = false;
+    let dragStartY = 0;
+    let dragStartScrollY = 0;
+
+    thumb.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        dragStartY = e.clientY;
+        dragStartScrollY = window.scrollY;
+        document.body.style.userSelect = 'none';
+        e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        const trackHeight = window.innerHeight;
+        const docHeight = document.documentElement.scrollHeight;
+        const viewHeight = window.innerHeight;
+        const thumbHeight = Math.max(30, (viewHeight / docHeight) * trackHeight);
+        const maxThumbTop = trackHeight - thumbHeight;
+        const maxScroll = docHeight - viewHeight;
+        const delta = e.clientY - dragStartY;
+        const scrollDelta = (delta / maxThumbTop) * maxScroll;
+        const newScroll = Math.min(maxScroll, Math.max(0, dragStartScrollY + scrollDelta));
+        if (typeof lenis !== 'undefined') {
+            lenis.scrollTo(newScroll, { immediate: true });
+        } else {
+            window.scrollTo({ top: newScroll });
+        }
+    });
+
+    document.addEventListener('mouseup', () => {
+        if (isDragging) {
+            isDragging = false;
+            document.body.style.userSelect = '';
+        }
+    });
+
+    // Click on track (outside thumb) — jump to that position
+    track.addEventListener('click', (e) => {
+        if (e.target === thumb) return;
+        const trackRect = track.getBoundingClientRect();
+        const clickRatio = (e.clientY - trackRect.top) / trackRect.height;
+        const docHeight = document.documentElement.scrollHeight;
+        const viewHeight = window.innerHeight;
+        const maxScroll = docHeight - viewHeight;
+        const newScroll = Math.min(maxScroll, Math.max(0, clickRatio * maxScroll));
+        if (typeof lenis !== 'undefined') {
+            lenis.scrollTo(newScroll, { duration: 0.6 });
+        } else {
+            window.scrollTo({ top: newScroll, behavior: 'smooth' });
+        }
+    });
 
     // Initial render
     updateThumb();

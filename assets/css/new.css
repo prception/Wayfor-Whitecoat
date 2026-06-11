@@ -669,7 +669,7 @@ html.lenis body {
 
 .final-text-header {
     position: absolute;
-    top: 8%;
+    top: 3%;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
@@ -681,6 +681,7 @@ html.lenis body {
 .image-hero-title {
     color: #1a1f6e;
     font-size: 4.2rem;
+    font-weight: 900;
     line-height: 1.05;
     pointer-events: auto;
 }
@@ -1017,6 +1018,25 @@ p {
         top: 20%;
         padding: 0 5%;
     }
+
+    .initial-text::before {
+        content: '';
+        position: absolute;
+        inset: -40px -30px;
+        border-radius: 0;
+        background: radial-gradient(ellipse at 40% 50%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, transparent 75%);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+        -webkit-mask-image: radial-gradient(ellipse at 40% 50%, black 30%, transparent 75%);
+        mask-image: radial-gradient(ellipse at 40% 50%, black 30%, transparent 75%);
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .initial-text > * {
+        position: relative;
+        z-index: 1;
+    }
 }
 
 /* ==================================================
@@ -1030,8 +1050,8 @@ p {
     justify-content: center;
     padding: 120px 5% 80px;
     overflow: hidden;
-    background: #020617;
-    color: white;
+    background: #f8fafc;
+    color: inherit;
 }
 
 /* Liquid Glass Background effect for Contact */
@@ -1049,7 +1069,7 @@ p {
 .contact-shape {
     position: absolute;
     border-radius: 50%;
-    opacity: 0.5;
+    opacity: 0.35;
     animation: float 20s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -1058,7 +1078,7 @@ p {
     height: 70vw;
     max-width: 800px;
     max-height: 800px;
-    background: var(--primary-mid);
+    background: rgba(14, 165, 233, 0.18);
     bottom: -20%;
     left: -10%;
 }
@@ -1068,11 +1088,11 @@ p {
     height: 60vw;
     max-width: 600px;
     max-height: 600px;
-    background: var(--sec-lavender);
+    background: rgba(139, 92, 246, 0.1);
     top: -20%;
     right: -10%;
     animation-delay: -5s;
-    opacity: 0.3;
+    opacity: 0.25;
 }
 
 .contact-shape-3 {
@@ -1080,11 +1100,11 @@ p {
     height: 40vw;
     max-width: 500px;
     max-height: 500px;
-    background: var(--primary-deep);
+    background: rgba(28, 49, 165, 0.1);
     bottom: 0%;
     right: 30%;
     animation-delay: -10s;
-    opacity: 0.4;
+    opacity: 0.2;
 }
 
 .contact-container {
@@ -1142,10 +1162,11 @@ p {
 
 .contact-title {
     font-size: 3.2rem;
-    font-weight: 700;
-    line-height: 1.2;
-    margin-bottom: 24px;
-    letter-spacing: -1px;
+    font-weight: 800;
+    line-height: 1.15;
+    margin-bottom: 20px;
+    letter-spacing: -1.5px;
+    color: #0f172a;
 }
 
 .highlight-text {
@@ -1156,12 +1177,35 @@ p {
     display: inline-block;
 }
 
+.highlight-text-light {
+    background: linear-gradient(100deg, #1C31A5 10%, #0ea5e9 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block;
+}
+
+/* Contact section left-side refinements for light theme */
+.contact-section .trust-indicators .col-sm-6 {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #374151 !important;
+}
+
+.contact-section .destination-options > span {
+    font-size: 0.78rem !important;
+    font-weight: 700 !important;
+    color: #94a3b8 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}
+
 .contact-subtitle {
-    font-size: 1.1rem;
-    color: var(--sec-muted);
-    line-height: 1.6;
-    margin-bottom: 40px;
-    max-width: 500px;
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.65;
+    margin-bottom: 36px;
+    max-width: 480px;
 }
 
 /* BUTTONS */
@@ -1271,17 +1315,184 @@ p {
     color: white;
 }
 
-/* CONTACT RIGHT FORM - GLASSMORPHISM */
+/* CONTACT RIGHT FORM - legacy kept for other pages */
 .glass-form {
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-radius: 24px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
     padding: 40px;
-    box-shadow: var(--glass-shadow);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.04), 0 20px 50px rgba(14, 165, 233, 0.07);
     position: relative;
     overflow: hidden;
+}
+
+/* ── Flat Underline Contact Form ── */
+.cfc-heading {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.6px;
+    line-height: 1.2;
+    margin: 0 0 8px;
+}
+
+.cfc-subheading {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin: 0 0 48px;
+}
+
+.cfc-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Two-column row */
+.cfc-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 48px;
+}
+
+.cfc-field {
+    padding: 18px 0 14px;
+    border-bottom: 1px solid rgba(0,0,0,0.13);
+    cursor: text;
+}
+
+/* Full-name field gets top border too */
+.cfc-form > .cfc-field:first-child,
+.cfc-row .cfc-field {
+    border-top: 1px solid rgba(0,0,0,0.13);
+}
+
+/* Row — only the row itself gets the bottom border, not each child */
+.cfc-row {
+    border-bottom: none;
+}
+
+.cfc-row .cfc-field {
+    border-bottom: 1px solid rgba(0,0,0,0.13);
+}
+
+.cfc-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: #94a3b8;
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
+}
+
+.cfc-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    padding: 8px 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #0f172a;
+    font-family: inherit;
+    outline: none;
+    appearance: none;
+    line-height: 1.4;
+    cursor: text;
+    display: block;
+}
+
+.cfc-input::placeholder {
+    color: transparent;
+}
+
+/* Phone */
+.cfc-phone-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+}
+
+.cfc-prefix {
+    font-size: 1rem;
+    font-weight: 400;
+    color: #475569;
+    white-space: nowrap;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.cfc-input--phone {
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 8px 0 !important;
+    flex: 1;
+    min-width: 0;
+    font-size: 1rem;
+}
+
+/* Select */
+.cfc-select-wrap {
+    position: relative;
+}
+
+.cfc-select {
+    padding-right: 24px !important;
+    cursor: pointer;
+    color: #0f172a;
+    width: 100%;
+}
+
+.cfc-select option {
+    color: #0f172a;
+}
+
+.cfc-chevron {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+/* Bottom row */
+.cfc-bottom {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 32px;
+}
+
+.cfc-textarea {
+    resize: none;
+    line-height: 1.6;
+    min-height: 56px;
+}
+
+/* Submit button */
+.cfc-submit {
+    padding: 14px 36px;
+    background: var(--primary-deep);
+    color: #ffffff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: inherit;
+    letter-spacing: 0.02em;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.cfc-submit:hover {
+    opacity: 0.88;
+    transform: translateY(-1px);
+}
+
+.cfc-submit:active {
+    transform: translateY(0);
+    opacity: 1;
 }
 
 .glass-form::before {
@@ -1332,9 +1543,53 @@ p {
 .form-group label {
     display: block;
     margin-bottom: 8px;
-    font-size: 0.9rem;
-    color: #e2e8f0;
-    font-weight: 500;
+    font-size: 0.85rem;
+    color: #374151;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+/* Light-theme form controls for contact section */
+.contact-section .form-label {
+    font-size: 0.82rem !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.contact-section .form-control,
+.contact-section .form-select,
+.contact-section .input-group-text {
+    background: #f8fafc !important;
+    border: 1.5px solid #e2e8f0 !important;
+    color: #0f172a !important;
+    border-radius: 10px !important;
+    font-size: 0.95rem !important;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.contact-section .form-control:focus,
+.contact-section .form-select:focus {
+    background: #ffffff !important;
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12) !important;
+    outline: none !important;
+}
+
+.contact-section .form-control::placeholder {
+    color: #cbd5e1 !important;
+}
+
+.contact-section .input-group-text {
+    border-right: none !important;
+    color: #64748b !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+}
+
+.contact-section .input-group .form-control {
+    border-left: none !important;
 }
 
 .form-control {
@@ -2160,9 +2415,10 @@ select.form-control option {
     transform: translate(2px, -2px);
 }
 
-/* Cards hidden during phase 2 */
+/* Cards hidden until JS intro animation reveals them */
 .initial-text-cards {
     pointer-events: auto;
+    opacity: 0;
 }
 
 /* Bottom-left card */
@@ -2320,12 +2576,17 @@ select.form-control option {
     }
 
     .image-hero-title {
-        font-size: 3.2rem;
-        font-weight: 800 !important;
+        font-size: 4rem;
+        font-weight: 900 !important;
+        letter-spacing: -0.5px;
+        text-shadow: none;
+        -webkit-text-stroke: 0;
     }
 
     .image-hero-subtitle {
-        font-weight: 700;
+        font-size: 1.05rem;
+        font-weight: 900;
+        text-shadow: none;
     }
 
     .initial-text {
@@ -2356,14 +2617,20 @@ select.form-control option {
     }
 
     .image-hero-title {
-        font-size: 2.3rem;
+        font-size: 3rem;
         line-height: 1.15;
+        font-weight: 900 !important;
+        letter-spacing: -0.5px;
+        text-shadow: none;
+        -webkit-text-stroke: 0;
     }
 
     .image-hero-subtitle {
-        font-size: 0.88rem;
+        font-size: 1rem;
         max-width: 92%;
         margin-bottom: 1.5rem !important;
+        font-weight: 900;
+        text-shadow: none;
     }
 
     .initial-text {
@@ -2375,11 +2642,43 @@ select.form-control option {
     .hero-bg-img-2 {
         background-position: 72% center;
     }
+
+    /* Phase 2 — country info pinned to bottom-left from the start */
+    .final-text {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        display: flex !important;
+        flex-direction: column;
+        justify-content: flex-end !important;
+        align-items: flex-start !important;
+        padding-bottom: 60px;
+        padding-left: 20px;
+        pointer-events: none;
+    }
+
+    .country-info {
+        align-self: flex-start;
+        max-width: 85%;
+        pointer-events: auto;
+    }
 }
 
 @media (max-width: 576px) {
     .image-hero-title {
-        font-size: 2rem;
+        font-size: 2.5rem;
+        font-weight: 900 !important;
+        letter-spacing: -0.5px;
+        text-shadow: none;
+        -webkit-text-stroke: 0;
+    }
+
+    .image-hero-subtitle {
+        font-size: 0.95rem;
+        font-weight: 900;
+        text-shadow: none;
     }
 }
 
@@ -2797,6 +3096,41 @@ select.form-control option {
     transition: none;
 }
 
+/* Tablet: 2-col layout still works but scale everything up */
+@media (min-width: 768px) and (max-width: 991px) {
+    .rc-editorial {
+        padding: clamp(48px, 7vh, 80px) clamp(32px, 5vw, 56px);
+        column-gap: clamp(28px, 4vw, 48px);
+        align-items: center;
+    }
+
+    .rc-col-label {
+        font-size: 0.75rem;
+        letter-spacing: 0.18em;
+        margin-bottom: 1rem;
+    }
+
+    .rc-col-title {
+        font-size: clamp(2.8rem, 7vw, 4.2rem);
+        margin-bottom: 1.6rem;
+    }
+
+    .rc-row {
+        padding: clamp(0.6rem, 1.4vh, 1rem) 0;
+        gap: 1.2rem;
+    }
+
+    .rc-row-key {
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        min-width: clamp(70px, 10vw, 110px);
+    }
+
+    .rc-row-val {
+        font-size: clamp(0.9rem, 1.6vw, 1.1rem);
+    }
+}
+
 @media (max-width: 767px) {
     .rc-editorial {
         grid-template-columns: 1fr;
@@ -2807,7 +3141,10 @@ select.form-control option {
     }
     .rc-editorial-wrap { height: auto; }
     .rc-divider-line { display: none; }
-    .rc-col-title { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+    .rc-col-title { font-size: clamp(2.4rem, 9vw, 3.2rem); }
+    .rc-col-label { font-size: 0.72rem; }
+    .rc-row-key { font-size: 0.68rem; }
+    .rc-row-val { font-size: clamp(0.88rem, 3.5vw, 1rem); }
 }
 
 /* pulse dot — keep for badge use elsewhere */
@@ -3418,11 +3755,46 @@ select.form-control option {
     direction: ltr;
 }
 
-/* Responsive */
+/* Responsive — tablet & mobile: keep the stacked scroll effect, stack card content vertically */
 @media (max-width: 991px) {
+    .anatomy-section-header {
+        padding: 56px 0 40px;
+        text-align: center;
+    }
+
+    .anatomy-main-title {
+        font-size: clamp(2rem, 5.5vw, 2.8rem);
+    }
+
+    .anatomy-main-sub {
+        font-size: 1rem;
+    }
+
+    /* Pin wrap stays full-viewport-height so GSAP can pin it */
+    .anatomy-pin-wrap {
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    /* Cards stay absolutely stacked — same as desktop */
+    .anatomy-card {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        padding: 12px 0;
+        align-items: center;
+    }
+
+    /* Two-column grid collapses to single column; image on top */
     .anatomy-card-inner {
         grid-template-columns: 1fr;
+        grid-template-rows: 45% 55%;
         min-height: auto;
+        height: 100%;
+        max-height: calc(100vh - 24px);
+        overflow: hidden;
     }
 
     .anatomy-card-inner.reversed {
@@ -3430,36 +3802,51 @@ select.form-control option {
     }
 
     .anatomy-card-right {
-        min-height: 300px;
-        height: 300px;
         order: -1;
+        height: 100%;
+        min-height: unset;
     }
 
     .anatomy-card-left {
-        padding: 36px 28px;
+        padding: 24px 22px;
+        overflow-y: auto;
     }
-
-    .anatomy-pin-wrap {
-        height: auto;
-        overflow: visible;
-    }
-
-    .anatomy-card {
-        position: relative;
-        height: auto;
-        min-height: auto;
-        padding: 20px 0;
-    }
-
 }
 
 @media (max-width: 576px) {
-    .anatomy-card-left {
-        padding: 28px 20px;
+    .anatomy-section-header {
+        padding: 44px 0 32px;
     }
 
     .anatomy-main-title {
-        font-size: 1.3rem;
+        font-size: clamp(1.75rem, 6.5vw, 2.2rem);
+    }
+
+    .anatomy-card {
+        padding: 8px 0;
+    }
+
+    .anatomy-card-inner {
+        grid-template-rows: 42% 58%;
+        max-height: calc(100vh - 16px);
+    }
+
+    .anatomy-card-right {
+        height: 100%;
+        min-height: unset;
+    }
+
+    .anatomy-card-left {
+        padding: 20px 16px;
+    }
+
+    .anatomy-card-title {
+        font-size: 1.25rem;
+    }
+
+    .anatomy-card-desc {
+        font-size: 0.9rem;
+        margin-bottom: 18px;
     }
 
     .anatomy-header-inner {
@@ -4470,192 +4857,278 @@ select.form-control option {
     .dd-dot-nav { flex-direction: row; }
 }
 
+/* ── Tablet: image shares the info-box column so both are the
+   same width and flush left; header gets more breathing room ── */
+@media (min-width: 768px) and (max-width: 991px) {
+    .dd-sticky-stage {
+        padding-top: 56px;
+        grid-template-areas:
+            "header header"
+            "info   counter"
+            "image  .";
+    }
+    .dd-img-frame {
+        max-width: none;
+        margin: 0;
+    }
+}
+
 
 /* ==================================================
    HORIZONTAL CINEMATIC JOURNEY (THE PROCESS)
+   Dark editorial layout: text row top-aligned,
+   square color tiles packed closely below.
 ================================================== */
 .journey-section {
     background-color: transparent;
 }
 
-/* Base Wrapper for the Pinning effect */
+/* Base Wrapper for the Pinning effect:
+   full viewport height so the track can be pushed flush to the bottom */
 .journey-pin-wrapper {
     width: 100%;
-    height: 100%;
-    /* Will be managed by GSAP pin */
+    height: 100vh;
+    /* Fixed vh (not dvh): the wrapper must NOT resize when the mobile
+       URL bar collapses mid-pin, or the pinned layout shifts and the
+       section above bleeds into this one. */
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
 }
 
-/* The horizontal flex container */
+/* The horizontal flex container — margin-top auto drops it to the
+   bottom edge of the pinned screen */
 .journey-track-container {
     width: 100%;
-    margin-top: 50px;
-    padding-bottom: 50px;
+    margin-top: auto;
+    padding-bottom: 0;
 }
 
 .journey-track {
     width: max-content;
     /* Critical: allows it to flow off-screen right */
     will-change: transform;
+    gap: 0;
+    /* Square cards are sealed together edge-to-edge */
+    align-items: flex-end;
 }
 
-/* The Connecting Line (Desktop Only) */
-.journey-path-line {
-    position: absolute;
-    top: 50%;
-    left: 3rem;
-    width: calc(100% - 6rem);
-    /* Full width minus padding */
-    height: 4px;
-    background: rgba(13, 27, 140, 0.05);
-    z-index: 0;
-    border-radius: 4px;
-    transform: translateY(-50%);
-}
-
-.journey-path-fill {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 0%;
-    /* JS will animate this from 0 to 100 */
-    height: 100%;
-    background: linear-gradient(90deg, #3b82f6, #0ea5e9, #2dd4bf);
-    border-radius: 4px;
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.6);
-}
-
-.journey-path-glow {
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translate(50%, -50%);
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 0 30px 10px rgba(14, 165, 233, 0.8);
-    opacity: 0;
-    /* JS will handle opacity */
-}
-
-/* Journey Cards */
-.journey-card {
-    width: 400px;
-    /* Fixed width to establish grid */
+/* The square card — all content lives inside it */
+.journey-item {
+    width: min(560px, 40vw, 62vh);
+    aspect-ratio: 1 / 1;
     flex-shrink: 0;
-    background: rgba(255, 255, 255, 0.9);
-    border: 1px solid rgba(13, 27, 140, 0.08);
-    border-radius: 24px;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 1;
+    position: relative;
     overflow: hidden;
-    opacity: 0.9;
-    transform: scale(0.95) translateY(20px);
+    border-radius: 0;
+    /* Sealed strip: only the outer corners of the row are rounded */
+    background: var(--tile-bg, #0d1b8c);
+    color: var(--tile-ink, #fff);
+    padding: clamp(1.25rem, 2.2vw, 2.25rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: box-shadow 0.5s ease;
 }
 
-.journey-card::before {
-    content: '';
+/* Hairline edge so white cards read against the white page */
+.journey-item {
+    box-shadow: inset 0 0 0 1px rgba(13, 27, 140, 0.3);
+}
+
+/* Top row inside the card: step label left, icon right */
+.journey-item-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    position: relative;
+    z-index: 1;
+}
+
+.journey-item-step {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: currentColor;
+    opacity: 0.7;
+    padding-top: 0.35rem;
+}
+
+.journey-tile-icon {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.journey-tile-icon svg {
+    width: clamp(36px, 3.4vw, 56px);
+    height: clamp(36px, 3.4vw, 56px);
+}
+
+/* Watermark number along the right edge, behind the content */
+.journey-tile-num {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(13, 27, 140, 0.1), transparent);
-    opacity: 0;
-    transition: opacity 0.5s;
+    top: 24%;
+    right: -0.25rem;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(3.75rem, 6vw, 6rem);
+    font-weight: 900;
+    line-height: 1;
+    opacity: 0.14;
+    pointer-events: none;
+    z-index: 0;
 }
 
+/* Bottom block inside the card: title + description, lifted off the bottom edge */
+.journey-item-body {
+    position: relative;
+    z-index: 1;
+    margin-bottom: clamp(1rem, 4vh, 2.75rem);
+}
+
+.journey-item-title {
+    color: currentColor;
+    font-weight: 700;
+    font-size: clamp(1.25rem, 1.6vw, 1.7rem);
+    line-height: 1.2;
+    margin-bottom: 0.65rem;
+}
+
+.journey-item-desc {
+    color: currentColor;
+    opacity: 0.78;
+    font-size: clamp(0.85rem, 0.95vw, 0.95rem);
+    line-height: 1.6;
+    margin-bottom: 0;
+    max-width: 92%;
+}
+
+/* Active state while the card crosses the viewport */
 .journey-card.is-active {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-    border-color: rgba(14, 165, 233, 0.3);
-    box-shadow: 0 20px 50px rgba(13, 27, 140, 0.1), 0 0 40px rgba(14, 165, 233, 0.1);
+    box-shadow: inset 0 0 0 1px rgba(13, 27, 140, 0.3), 0 24px 60px rgba(5, 12, 58, 0.25);
 }
 
-.journey-card.is-active::before {
-    opacity: 1;
-    background: linear-gradient(90deg, transparent, #0ea5e9, transparent);
+.journey-card.is-active .journey-tile-icon {
+    transform: scale(1.12);
+}
+
+.journey-card.is-active .journey-tile-num {
+    opacity: 0.24;
 }
 
 /* Empty buffer card so the 6th card can scroll to the middle of the screen */
 .buffer-card {
-    width: 30vw;
+    width: 22vw;
+    flex-shrink: 0;
     background: transparent;
     border: none;
-    backdrop-filter: none;
 }
 
-.journey-icon-box {
-    width: 70px;
-    height: 70px;
-    border-radius: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid rgba(13, 27, 140, 0.08);
-    transition: all 0.5s ease;
-}
-
-.journey-card.is-active .journey-icon-box {
-    transform: scale(1.1);
-    box-shadow: 0 0 20px currentColor;
-    border-color: rgba(14, 165, 233, 0.2);
-}
-
-.journey-step-num {
-    position: absolute;
-    top: -15px;
-    right: 20px;
-    font-size: 8rem;
-    font-weight: 900;
-    font-family: 'Outfit', sans-serif;
-    color: transparent;
-    -webkit-text-stroke: 1px rgba(13, 27, 140, 0.05);
-    line-height: 1;
-    pointer-events: none;
-    transition: all 0.5s ease;
-    z-index: 0;
-}
-
-.journey-card.is-active .journey-step-num {
-    -webkit-text-stroke: 1px rgba(14, 165, 233, 0.3);
-    color: rgba(14, 165, 233, 0.05);
-    transform: translateY(-10px);
-}
-
-
-
-
-
-/* Mobile Fallback: Native Swipe Deck */
+/* Tablet: pinned scroll continues — bigger header + cards to fill the
+   100vh pinned screen (portrait tablets leave a large gap otherwise) */
 @media (max-width: 991px) {
-    .journey-track-container {
-        margin-top: 20px;
+    /* Nudge the header block down from the top of the pinned screen */
+    .journey-section .journey-pin-wrapper > .container {
+        margin-top: clamp(2.5rem, 7vh, 5rem);
     }
 
-    .journey-track {
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
-        padding-bottom: 30px;
-        -webkit-overflow-scrolling: touch;
+    .journey-section h2 {
+        font-size: clamp(3.25rem, 6.5vw, 4.25rem);
     }
 
-    .journey-track::-webkit-scrollbar {
-        display: none;
+    .journey-section .journey-pin-wrapper .container p {
+        font-size: 1.5rem !important;
+        max-width: 620px;
     }
 
-    .journey-card {
-        width: 85vw;
-        /* Fills screen leaving a hint of the next card */
-        scroll-snap-align: center;
+    .journey-section .urgency-badge span {
+        font-size: 0.85rem;
+    }
+
+    .journey-item {
+        width: min(70vw, 600px, 58vh);
+        padding: 2rem;
+    }
+
+    .journey-item-body {
+        margin-bottom: 1rem;
+    }
+
+    .journey-item-title {
+        font-size: 1.6rem;
+    }
+
+    .journey-item-desc {
+        font-size: 1.05rem;
+        max-width: 100%;
+    }
+
+    .journey-tile-icon svg {
+        width: 52px;
+        height: 52px;
+    }
+
+    .journey-tile-num {
+        font-size: 5.5rem;
+        top: 28%;
     }
 
     .buffer-card {
-        display: none;
-        /* Not needed for native scroll */
+        width: 30vw;
+        /* Lets the last card travel clear of the screen edge */
+    }
+}
+
+/* Mobile: pinned scroll with one card filling the screen */
+@media (max-width: 767px) {
+    .journey-section .journey-pin-wrapper > .container {
+        margin-top: 0.75rem;
+    }
+
+    .journey-section h2 {
+        font-size: 2.4rem;
+    }
+
+    .journey-section .journey-pin-wrapper .container p {
+        font-size: 1.05rem !important;
+    }
+
+    .journey-item {
+        width: min(84vw, 46vh);
+        padding: 1.5rem;
+    }
+
+    .journey-item-title {
+        font-size: 1.25rem;
+    }
+
+    .journey-item-desc {
+        font-size: 0.875rem;
+        line-height: 1.55;
+    }
+
+    .journey-item-step {
+        font-size: 0.68rem;
+    }
+
+    .journey-tile-icon svg {
+        width: 38px;
+        height: 38px;
+    }
+
+    .journey-tile-num {
+        font-size: 3.5rem;
+    }
+
+    .buffer-card {
+        width: 40vw;
+    }
+}
+
+/* Small phones: slightly more width, tighter padding */
+@media (max-width: 420px) {
+    .journey-item {
+        width: min(88vw, 46vh);
+        padding: 1.25rem;
     }
 }
 
@@ -4665,6 +5138,8 @@ select.form-control option {
 
 .trust-dossier-section {
     overflow: hidden;
+    padding: 4.5rem 0 6rem;
+    /* Breathing room so the dossier never touches the next section */
 }
 
 .trust-dossier-container {
@@ -4673,67 +5148,111 @@ select.form-control option {
 
 /* --- Left Side: Interactive Accordion --- */
 .dossier-accordion {
-    padding: 1.5rem;
+    padding: 2rem 1.5rem;
+    justify-content: center;
+    gap: 2px;
 }
 
 @media (min-width: 1200px) {
     .dossier-accordion {
-        padding: 3rem 4rem 3rem 3rem;
-        /* Extra padding on right to avoid plaque overlap */
+        padding: 2.5rem 1.75rem;
     }
 }
 
-.dossier-item {
-    padding: 25px 30px;
-    border-radius: 20px;
-    margin-bottom: 10px;
-    border: 1px solid transparent;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    background-color: transparent;
+/* Divider between items */
+.dossier-item + .dossier-item {
+    border-top: 1px solid rgba(0, 0, 0, 0.055);
 }
 
-.dossier-item:hover {
-    background-color: rgba(14, 165, 233, 0.03);
+.dossier-item.active + .dossier-item,
+.dossier-item + .dossier-item.active {
+    border-top-color: transparent;
+}
+
+.dossier-item {
+    padding: 14px 12px 14px 16px;
+    border-radius: 2px;
+    margin-bottom: 0;
+    border: 1px solid transparent;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: background-color 0.35s ease, border-left-color 0.35s ease, box-shadow 0.35s ease;
+    background-color: transparent;
+    position: relative;
+}
+
+.dossier-item:hover:not(.active) {
+    background-color: rgba(14, 165, 233, 0.04);
+    border-left-color: rgba(14, 165, 233, 0.25);
 }
 
 .dossier-item.active {
     background-color: #ffffff;
-    border-color: rgba(0, 0, 0, 0.05);
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.06);
+    border-left-color: var(--primary-deep);
+    border-left-width: 3px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
     cursor: default;
 }
 
-@media (min-width: 992px) {
-    .dossier-item.active {
-        transform: translateX(15px);
-        width: calc(100% + 15px);
-    }
+/* Thin progress bar at bottom of active item */
+.dossier-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--primary-deep);
+    border-radius: 0 0 0 2px;
+    opacity: 0.35;
 }
 
-/* Icon Animation */
+/* Icon */
 .dossier-icon {
-    width: 50px;
-    height: 50px;
-    border-radius: 14px;
-    background: rgba(0, 0, 0, 0.03);
+    width: 36px;
+    height: 36px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.04);
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    flex-shrink: 0;
+    transition: background 0.35s ease, transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
     position: relative;
-    /* For absolute background SVG track */
+}
+
+.dossier-icon svg {
+    width: 18px;
+    height: 18px;
 }
 
 .dossier-item.active .dossier-icon {
-    transform: scale(1.15);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-    background: transparent;
+    background: rgba(14, 165, 233, 0.08);
+}
+
+/* Step number badge */
+.dossier-step-num {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0, 0, 0, 0.25);
+    display: block;
+    margin-bottom: 2px;
+    transition: color 0.3s ease;
+}
+
+.dossier-item.active .dossier-step-num {
+    color: var(--primary-deep);
+    opacity: 0.6;
 }
 
 .dossier-item h4 {
     transition: color 0.3s ease;
-    font-size: 1.2rem;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    margin-bottom: 0;
 }
 
 .dossier-item.active h4 {
@@ -4741,7 +5260,8 @@ select.form-control option {
 }
 
 .dossier-body .text-secondary {
-    font-size: 0.9rem !important;
+    font-size: 0.83rem !important;
+    line-height: 1.6 !important;
 }
 
 /* Accordion Body Reveal */
@@ -4749,12 +5269,14 @@ select.form-control option {
     max-height: 0;
     overflow: hidden;
     opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    transform: translateY(6px);
+    transition: max-height 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+                opacity 0.4s ease 0.12s,
+                transform 0.55s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .dossier-item.active .dossier-body {
-    max-height: 200px;
+    max-height: 150px;
     opacity: 1;
     transform: translateY(0);
 }
@@ -4777,12 +5299,13 @@ select.form-control option {
     object-fit: cover;
     opacity: 0;
     transform: scale(1.05);
-    transition: opacity 0.8s ease, transform 4s linear;
+    /* Opacity only — GSAP owns the scale, a CSS transform transition fights it and stutters */
+    transition: opacity 1s ease;
+    will-change: opacity, transform;
 }
 
 .dossier-img.active {
     opacity: 1;
-    transform: scale(1);
     z-index: 1;
 }
 
@@ -4841,7 +5364,11 @@ select.form-control option {
     }
 
     .dossier-item {
-        padding: 25px 20px;
+        padding: 16px 18px;
+    }
+
+    .trust-dossier-section {
+        padding: 3.5rem 0 4.5rem;
     }
 
     .dossier-img-overlay {
@@ -6164,6 +6691,21 @@ textarea.form-control {
     }
     .bento-stat {
         padding: 8px;
+    }
+
+    /* Blur overlay behind hero content on mobile */
+    .atlas-hero .container.position-relative {
+        position: relative;
+    }
+    .atlas-hero .container.position-relative::before {
+        content: '';
+        position: absolute;
+        inset: -24px -20px;
+        border-radius: 24px;
+        background: rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        z-index: -1;
     }
 }
 
