@@ -140,7 +140,7 @@ window.__initNavScrollBehaviour = (function () {
 
         // Show/Hide on scroll
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 500) {
+            if (window.scrollY > 50) {
                 scrollBtn.classList.add('visible');
             } else {
                 scrollBtn.classList.remove('visible');

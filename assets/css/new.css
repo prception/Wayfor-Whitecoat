@@ -5625,6 +5625,43 @@ select.form-control option {
     transform: translateY(-3px);
 }
 
+/* Floating WhatsApp button — sits at the bottom corner, slides up
+   above the scroll-to-top button when that button becomes visible */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: #25d366;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    text-decoration: none;
+    box-shadow: 0 8px 32px 0 rgba(37, 211, 102, 0.4);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+body:has(.scroll-to-top.visible) .whatsapp-float {
+    bottom: 95px;
+}
+
+.whatsapp-float:hover {
+    background: #1fb855;
+    color: #fff;
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 12px 40px 0 rgba(37, 211, 102, 0.5);
+}
+
+.whatsapp-float svg {
+    width: 28px;
+    height: 28px;
+    fill: currentColor;
+}
+
 
 
 /* ==================================================
