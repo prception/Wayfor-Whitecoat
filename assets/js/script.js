@@ -71,13 +71,13 @@ const hasWebGL = typeof THREE !== 'undefined' && canvas;
 const locations = [
     { id: 'pin-russia', lat: 58.7558, lng: 37.6173, name: 'Russia', page: 'countries/MBBS-in-Russia.html', desc: 'Experience world-class medical education with advanced facilities and highly affordable tuition fees.' },
     { id: 'pin-kazakhstan', lat: 54.0000, lng: 70.0000, name: 'Kazakhstan', page: 'countries/MBBS-In-Kazakhstan.html', desc: 'A modern hub for international medical students offering WHO-approved programs in English.' },
-    { id: 'pin-uzbekistan', lat: 41.0000, lng: 56.0000, name: 'Uzbekistan', page: 'countries/MBBS-in-Uzbekistan.html', desc: 'Rich in history and culture, offering top-tier medical universities with a secure environment.' },
-    { id: 'pin-kyrgyzstan', lat: 43.0000, lng: 82.0000, name: 'Kyrgyzstan', page: 'countries/MBBS-in-Kyrgyzstan.html', desc: 'Affordable medical study options with English medium instruction and great clinical exposure.' },
+    { id: 'pin-uzbekistan', lat: 41.4000, lng: 64.6000, name: 'Uzbekistan', page: 'countries/MBBS-in-Uzbekistan.html', desc: 'Rich in history and culture, offering top-tier medical universities with a secure environment.' },
+    { id: 'pin-kyrgyzstan', lat: 41.2000, lng: 74.8000, name: 'Kyrgyzstan', page: 'countries/MBBS-in-Kyrgyzstan.html', desc: 'Affordable medical study options with English medium instruction and great clinical exposure.' },
     { id: 'pin-georgia', lat: 42.3154, lng: 43.3569, name: 'Georgia', page: 'countries/MBBS-in-Georgio.html', desc: 'A rising star in European medical education with high USMLE pass rates and excellent infrastructure.' },
     { id: 'pin-egypt', lat: 26.8206, lng: 30.8025, name: 'Egypt', page: 'countries/MBBS-in-Egypt.html', desc: 'Study medicine with a rich heritage and world-recognized universities in a global crossroads.' },
-    { id: 'pin-tajikistan', lat: 35.0000, lng: 68.0000, name: 'Tajikistan', page: 'countries/MBBS-in-Tajikistan.html', desc: 'Emerging destination for affordable and high-quality medical education with hands-on practice.' },
-    { id: 'pin-bangladesh', lat: 20.0000, lng: 92.0000, name: 'Bangladesh', page: 'countries/MBBS-in-Bangladesh.html', desc: 'FMGE-friendly curriculum with a similar clinical and disease pattern to India for best practice.' },
-    { id: 'pin-nepal', lat: 30.0000, lng: 82.0000, name: 'Nepal', page: 'countries/MBBS-In-Nepal.html', desc: 'Study close to home with top-ranking medical institutions recognized globally.' }
+    { id: 'pin-tajikistan', lat: 38.9000, lng: 71.3000, name: 'Tajikistan', page: 'countries/MBBS-in-Tajikistan.html', desc: 'Emerging destination for affordable and high-quality medical education with hands-on practice.' },
+    { id: 'pin-bangladesh', lat: 23.7000, lng: 90.4000, name: 'Bangladesh', page: 'countries/MBBS-in-Bangladesh.html', desc: 'FMGE-friendly curriculum with a similar clinical and disease pattern to India for best practice.' },
+    { id: 'pin-nepal', lat: 28.2000, lng: 84.0000, name: 'Nepal', page: 'countries/MBBS-In-Nepal.html', desc: 'Study close to home with top-ranking medical institutions recognized globally.' }
 ];
 
 let latLongToVector3 = () => { return { x: 0, y: 0, z: 0 }; };
