@@ -786,7 +786,7 @@ body.preloader-active {
     font-weight: 600;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: #a5b4fc;
+    color: #ffffff;
     backdrop-filter: blur(8px);
     margin-bottom: 14px;
     align-self: flex-start;
@@ -808,7 +808,8 @@ body.preloader-active {
 }
 
 .country-info p {
-    opacity: 0.65;
+    color: #ffffff;
+    opacity: 1;
     font-size: 0.97rem;
     line-height: 1.7;
     font-weight: 400;
@@ -842,7 +843,7 @@ body.preloader-active {
     pointer-events: none;
     font-size: 0.68rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.35) !important;
+    color: #ffffff !important;
     text-transform: uppercase;
     margin-bottom: 18px !important;
 }
@@ -890,8 +891,15 @@ p {
 .light-para {
     margin: 0 auto;
     max-width: 600px;
-    color: #ffffff98;
+    color: #ffffff;
     font-size: 1rem;
+}
+
+/* Keep header text readable over the bright globe behind it */
+.final-text-header h2,
+.final-text-header p {
+    color: #ffffff;
+    text-shadow: 0 2px 14px rgba(4, 12, 36, 0.9), 0 0 5px rgba(4, 12, 36, 0.65);
 }
 
 .glass-text {
@@ -997,7 +1005,7 @@ p {
 
 .country-pin:hover .pin-icon {
     stroke: #facc15;
-    fill: none;
+    fill: #facc15;
 }
 
 /* Normal Section Below */
@@ -1201,14 +1209,6 @@ p {
     color: #374151 !important;
 }
 
-.contact-section .destination-options > span {
-    font-size: 0.78rem !important;
-    font-weight: 700 !important;
-    color: #94a3b8 !important;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-}
-
 .contact-subtitle {
     font-size: 1.05rem;
     color: #64748b;
@@ -1286,19 +1286,6 @@ p {
     width: 20px;
     height: 20px;
     color: #10b981;
-}
-
-/* DESTINATIONS */
-.destination-options {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.destination-options>span {
-    font-size: 0.9rem;
-    color: var(--sec-muted);
-    font-weight: 500;
 }
 
 .country-tags {
@@ -1824,7 +1811,7 @@ select.form-control option {
     font-size: 1.7rem;
     font-family: 'Outfit', sans-serif;
     font-weight: 500;
-    color: rgba(255, 255, 255, 0.25);
+    color: #ffffff;
     padding: 14px 0;
     cursor: pointer;
     transition: all 0.35s ease;
@@ -1841,7 +1828,7 @@ select.form-control option {
 }
 
 .country-list li:hover {
-    color: rgba(255, 255, 255, 0.55);
+    color: #ffffff;
 }
 
 .vertical-carousel-container {
@@ -1866,13 +1853,13 @@ select.form-control option {
 
 .country-pin.active-pin .pin-icon {
     stroke: #facc15;
-    fill: none;
-    filter: drop-shadow(0 0 10px rgba(250, 204, 21, 0.8));
+    fill: #facc15;
+    filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.85));
     animation: pinBounce 0.5s ease-out forwards;
 }
 
 .country-pin.active-pin span {
-    color: #facc15;
+    color: #fde047;
     font-size: 1rem;
     /* background: rgba(0, 0, 0, 0.195); */
     padding: 3px 8px;
@@ -5587,85 +5574,6 @@ select.form-control option {
     .comp-col-trap {
         order: 1;
     }
-}
-
-/* ==================================================
-   DESTINATION COUNTRY BADGES
-================================================== */
-.destination-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    border-radius: 50px;
-    font-size: 0.82rem;
-    font-weight: 600;
-    letter-spacing: 0.02em;
-    border: 1px solid transparent;
-    cursor: default;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    white-space: nowrap;
-}
-
-.destination-badge:hover {
-    transform: translateY(-2px);
-}
-
-/* Flag icon sizing inside badge */
-.destination-badge .country-flag {
-    width: 1.3em;
-    height: 1em;
-    border-radius: 3px;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
-    flex-shrink: 0;
-}
-
-/* Russia — tricolour: white / blue / red */
-.destination-badge--russia {
-    background: linear-gradient(135deg, rgba(0, 57, 166, 0.18), rgba(213, 43, 30, 0.22));
-    border-color: rgba(213, 43, 30, 0.45);
-    color: #f87171;
-    box-shadow: 0 2px 12px rgba(213, 43, 30, 0.15);
-}
-
-.destination-badge--russia:hover {
-    box-shadow: 0 6px 20px rgba(213, 43, 30, 0.3);
-}
-
-/* Kazakhstan — light blue / gold */
-.destination-badge--kazakhstan {
-    background: linear-gradient(135deg, rgba(0, 175, 240, 0.18), rgba(255, 198, 0, 0.20));
-    border-color: rgba(0, 175, 240, 0.5);
-    color: #7dd3f0;
-    box-shadow: 0 2px 12px rgba(0, 175, 240, 0.15);
-}
-
-.destination-badge--kazakhstan:hover {
-    box-shadow: 0 6px 20px rgba(0, 175, 240, 0.3);
-}
-
-/* Uzbekistan — teal / white / green crescent */
-.destination-badge--uzbekistan {
-    background: linear-gradient(135deg, rgba(30, 190, 181, 0.18), rgba(30, 190, 100, 0.20));
-    border-color: rgba(30, 190, 120, 0.5);
-    color: #6ee7c7;
-    box-shadow: 0 2px 12px rgba(30, 190, 120, 0.15);
-}
-
-.destination-badge--uzbekistan:hover {
-    box-shadow: 0 6px 20px rgba(30, 190, 120, 0.3);
-}
-
-/* Georgia — white / red cross */
-.destination-badge--georgia {
-    background: linear-gradient(135deg, rgba(220, 38, 38, 0.16), rgba(255, 255, 255, 0.08));
-    border-color: rgba(220, 38, 38, 0.45);
-    color: #fca5a5;
-    box-shadow: 0 2px 12px rgba(220, 38, 38, 0.15);
-}
-
-.destination-badge--georgia:hover {
-    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
 }
 
 /* ==================================================

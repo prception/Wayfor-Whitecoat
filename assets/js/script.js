@@ -1,11 +1,28 @@
 ﻿// new.js
 
-// Prevent browser from restoring mid-page scroll position on refresh.
-// The hero section has a pinned GSAP animation that must always start from top.
-if ('scrollRestoration' in history) {
-    history.scrollRestoration = 'manual';
+// ScrollTrigger silently sets history.scrollRestoration = "manual" the first
+// time it writes the viewport scroll (every refresh() does), so the browser
+// never restores the position on reload. Persist the position ourselves and
+// re-apply it on reload / back-forward; afterLoad() then locks the pinned hero
+// animation into the correct phase for wherever the page lands.
+const SCROLL_RESTORE_KEY = 'wfwc-scroll:' + location.pathname;
+window.addEventListener('pagehide', () => {
+    try {
+        sessionStorage.setItem(SCROLL_RESTORE_KEY, String(window.scrollY || window.pageYOffset || 0));
+    } catch (e) { /* storage unavailable */ }
+});
+function getSavedScrollY() {
+    try {
+        const nav = performance.getEntriesByType('navigation')[0];
+        // Only restore on reload / back-forward — a fresh link navigation
+        // should start at the top like the browser's native behaviour.
+        if (!nav || (nav.type !== 'reload' && nav.type !== 'back_forward')) return 0;
+        const y = parseFloat(sessionStorage.getItem(SCROLL_RESTORE_KEY));
+        return isNaN(y) ? 0 : y;
+    } catch (e) {
+        return 0;
+    }
 }
-window.scrollTo(0, 0);
 
 let lenis;
 if (typeof Lenis !== 'undefined') {
@@ -67,7 +84,7 @@ let latLongToVector3 = () => { return { x: 0, y: 0, z: 0 }; };
 let updateHTMLPins = () => {};
 
 let scene, camera, renderer, globeGroup, standGroup, globeMesh, standMaterial, material;
-let colorWhiteState, colorBlueState;
+let colorWhiteState, colorDimState;
 let pinsVisible = false;
 let scrollProgress = 0;
 
@@ -90,15 +107,68 @@ if (hasWebGL) {
     const geometry = new THREE.SphereGeometry(1.8, 64, 64);
     // High quality bump map for the surface
     const bumpTexture = textureLoader.load('https://unpkg.com/three-globe/example/img/earth-topology.png');
+    // Realistic Earth color texture — blue-marble for its rich green land,
+    // with the dark oceans recolored below via the water mask.
+    // NOTE: built manually (not via textureLoader.load) so nothing else ever
+    // writes earthTexture.image — a TextureLoader callback racing the canvas
+    // composite used to overwrite the navy oceans on warm-cache reloads.
+    const earthTexture = new THREE.Texture();
 
-    // Initial state is white geometric look
-    colorWhiteState = new THREE.Color(0xffffff);
-    colorBlueState = new THREE.Color(0x0A192F);
+    // Composite a navy tint over water areas only (mask: white = ocean),
+    // so the land keeps its original colors while oceans get recolored
+    const marbleImg = new Image();
+    const waterImg = new Image();
+    marbleImg.crossOrigin = waterImg.crossOrigin = 'anonymous';
+    let earthLayersLoaded = 0;
+    const lightenOceans = () => {
+        if (++earthLayersLoaded < 2) return;
+        const compCanvas = document.createElement('canvas');
+        compCanvas.width = marbleImg.naturalWidth;
+        compCanvas.height = marbleImg.naturalHeight;
+        const ctx = compCanvas.getContext('2d');
+        ctx.drawImage(marbleImg, 0, 0);
+
+        const tintCanvas = document.createElement('canvas');
+        tintCanvas.width = compCanvas.width;
+        tintCanvas.height = compCanvas.height;
+        const tctx = tintCanvas.getContext('2d');
+        tctx.drawImage(waterImg, 0, 0, tintCanvas.width, tintCanvas.height);
+        tctx.globalCompositeOperation = 'multiply';
+        tctx.fillStyle = '#1e3a8a'; // deep navy ocean
+        tctx.fillRect(0, 0, tintCanvas.width, tintCanvas.height);
+
+        // 'lighten' raises the near-black oceans up to the navy tint; land areas
+        // (black in the tint layer) pass through unchanged
+        ctx.globalCompositeOperation = 'lighten';
+        ctx.drawImage(tintCanvas, 0, 0);
+
+        earthTexture.image = compCanvas;
+        earthTexture.needsUpdate = true;
+    };
+    marbleImg.onload = () => {
+        // Show the base map as soon as it arrives so the globe isn't blank,
+        // then the composite below replaces it once the mask is also ready
+        earthTexture.image = marbleImg;
+        earthTexture.needsUpdate = true;
+        lightenOceans();
+    };
+    waterImg.onload = lightenOceans;
+    marbleImg.src = 'https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg';
+    waterImg.src = 'https://unpkg.com/three-globe/example/img/earth-water.png';
+
+    // Initial state shows the Earth texture slightly dimmed so the small desk globe isn't too bright
+    colorWhiteState = new THREE.Color(0xdedede);
+    colorDimState = new THREE.Color(0x5a5a5a); // strong dim for the enlarged globe
 
     material = new THREE.MeshStandardMaterial({
         color: colorWhiteState,
-        roughness: 0.1,    // Glossy finish for premium look
-        metalness: 0.7,    // High metalness makes it look like polished silver when white
+        map: earthTexture,
+        roughness: 0.55,   // Matte enough for the texture to read naturally
+        metalness: 0.1,
+        // Soft self-illumination lifts the texture's dark oceans without washing out the scene
+        emissive: new THREE.Color(0xffffff),
+        emissiveMap: earthTexture,
+        emissiveIntensity: 0.32,
         bumpMap: bumpTexture,
         bumpScale: 0.08
     });
@@ -348,21 +418,27 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
         }, step2Start);
     }
 
-    // Fly Initial Text up and fade out
-    tl.to(".initial-text", {
+    // Fly Initial Text up and fade out.
+    // fromTo with explicit start values: a plain .to() lazily captures whatever
+    // opacity the elements happen to have on its first render — if that happens
+    // while the load intro still has them hidden, the tween locks in 0→0 and the
+    // hero content can never reappear when scrolling back.
+    tl.fromTo(".initial-text", { opacity: 1, y: 0 }, {
         opacity: 0,
         y: -50,
         duration: 0.6,
+        immediateRender: false,
         onReverseComplete: () => {
             gsap.set(".initial-text", { opacity: 1, y: 0 });
         }
     }, step2Start);
 
     // Fade out floating hero cards
-    tl.to(".initial-text-cards", {
+    tl.fromTo(".initial-text-cards", { opacity: 1, y: 0 }, {
         opacity: 0,
         y: 30,
         duration: 0.5,
+        immediateRender: false,
         onReverseComplete: () => {
             gsap.set(".initial-text-cards", { opacity: 1, y: 0 });
         }
@@ -414,16 +490,23 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
             }
         }, step2Start);
 
-        // Transition Globe Material Color to Dark Blue
+        // Strongly dim the globe as it enlarges so the overlaid text stays readable
         tl.to(material.color, {
-            r: colorBlueState.r,
-            g: colorBlueState.g,
-            b: colorBlueState.b,
+            r: colorDimState.r,
+            g: colorDimState.g,
+            b: colorDimState.b,
             duration: 0.8,
             ease: "none",
             onReverseComplete: () => {
-                // Ensure color resets to white when scrolling back
                 material.color.copy(colorWhiteState);
+            }
+        }, step2Start + 0.2);
+        tl.to(material, {
+            emissiveIntensity: 0,
+            duration: 0.8,
+            ease: "none",
+            onReverseComplete: () => {
+                material.emissiveIntensity = 0.32;
             }
         }, step2Start + 0.2);
     }
@@ -684,7 +767,7 @@ if (countryListEl && scrollContainer) {
 
     function resetCarouselAutoScroll() {
         clearInterval(carouselAutoScrollTimer);
-        carouselAutoScrollTimer = setInterval(moveToNextCountry, 5000);
+        carouselAutoScrollTimer = setInterval(moveToNextCountry, 2000);
     }
 
     scrollContainer.addEventListener('scroll', () => {
@@ -719,7 +802,7 @@ function startMobilePinRotation() {
         if (activePin) {
             activePin.classList.add('active-pin', 'active-layer');
         }
-    }, 3000);
+    }, 2000);
 }
 
 function stopMobilePinRotation() {
@@ -768,6 +851,18 @@ if (typeof gsap !== 'undefined') {
 
     window.addEventListener('load', () => {
         const preloader = document.getElementById('preloader');
+
+        // Re-apply the saved position before anything below reads window.scrollY.
+        // By load time all images are in and the pin spacers / JS-driven section
+        // heights exist, so the full document height is available to land on.
+        const restoreY = getSavedScrollY();
+        if (restoreY > 0) {
+            if (typeof lenis !== 'undefined' && lenis) {
+                lenis.scrollTo(restoreY, { immediate: true, force: true });
+            } else {
+                window.scrollTo(0, restoreY);
+            }
+        }
 
         const afterLoad = () => {
             if (window.scrollY <= 0) {
@@ -824,9 +919,6 @@ if (typeof gsap !== 'undefined') {
                 };
                 hideMidScrollNav();
                 document.addEventListener('headerLoaded', hideMidScrollNav, { once: true });
-                // Hero cards and initial text must be hidden when loaded mid/past pin
-                gsap.set([".initial-text", ".initial-text-cards"], { opacity: 0 });
-
                 const pinnedEl = document.getElementById('pinned-container');
                 const pinTop = pinnedEl ? pinnedEl.offsetTop : 0;
                 const pinScrollLength = 600;
@@ -844,7 +936,10 @@ if (typeof gsap !== 'undefined') {
                         standMaterial.opacity = 0;
                         standMaterial.transparent = true;
                         camera.position.z = 6;
-                        material.color.copy(colorBlueState);
+                        material.color.copy(colorDimState);
+                        material.roughness = 0.55;
+                        material.metalness = 0.1;
+                        material.emissiveIntensity = 0;
                         pinsVisible = true;
                         startCarousel();
                         const pinsContainer = document.getElementById('html-pins-container');
@@ -852,9 +947,13 @@ if (typeof gsap !== 'undefined') {
                     }
                     // Also set final-text visible and initial-text hidden for this state
                     gsap.set(".final-text", { opacity: 1, y: 0 });
+                    gsap.set([".initial-text", ".initial-text-cards"], { opacity: 0 });
                 } else {
                     // Mid-scrub inside the pin — reset to phase-1 baseline so
                     // ScrollTrigger.refresh() can scrub to the correct progress.
+                    // Hero text/cards must start VISIBLE here: the scrubbed timeline
+                    // hides them itself if the restored progress is past the fade-out.
+                    gsap.set([".initial-text", ".initial-text-cards"], { opacity: 1, y: 0 });
                     if (hasWebGL) {
                         globeGroup.scale.set(0.18, 0.18, 0.18);
                         globeGroup.position.set(initialX, initialY, -3.5);
@@ -866,6 +965,9 @@ if (typeof gsap !== 'undefined') {
                         standMaterial.transparent = true;
                         camera.position.z = 8;
                         material.color.copy(colorWhiteState);
+                        material.roughness = 0.55;
+                        material.metalness = 0.1;
+                        material.emissiveIntensity = 0.32;
                     }
                 }
             }
@@ -880,9 +982,6 @@ if (typeof gsap !== 'undefined') {
         if (preloader) {
             // Wait for 3D textures and buffering to completely clear
             setTimeout(() => {
-                // Force scroll to top now — body is still locked, so this is safe.
-                // Then unlock body so GSAP/Lenis can take over from position 0.
-                window.scrollTo(0, 0);
                 document.body.classList.remove('preloader-active');
 
                 // Fade out preloader
@@ -898,19 +997,20 @@ if (typeof gsap !== 'undefined') {
                 afterLoad();
             }, 1500);
         } else {
-            // No preloader — still remove lock and reset scroll
+            // No preloader — just remove the body lock; scroll stays where the
+            // browser restored it and afterLoad() handles that position
             document.body.classList.remove('preloader-active');
-            window.scrollTo(0, 0);
             afterLoad();
         }
     });
 } else {
     // Fallback if GSAP is not loaded
     window.addEventListener('load', () => {
+        const restoreY = getSavedScrollY();
+        if (restoreY > 0) window.scrollTo(0, restoreY);
         const preloader = document.getElementById('preloader');
         if (preloader) {
             setTimeout(() => {
-                window.scrollTo(0, 0);
                 document.body.classList.remove('preloader-active');
                 preloader.style.opacity = '0';
                 setTimeout(() => {
@@ -919,7 +1019,6 @@ if (typeof gsap !== 'undefined') {
             }, 1500);
         } else {
             document.body.classList.remove('preloader-active');
-            window.scrollTo(0, 0);
         }
     });
 }
