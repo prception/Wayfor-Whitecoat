@@ -135,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (scrollToTopBtn) {
         function updateBtnVisibility() {
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            if (scrollTop > 500) {
+            if (scrollTop > 50) {
                 scrollToTopBtn.classList.add('visible');
             } else {
                 scrollToTopBtn.classList.remove('visible');

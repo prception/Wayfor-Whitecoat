@@ -83,7 +83,7 @@ const locations = [
 let latLongToVector3 = () => { return { x: 0, y: 0, z: 0 }; };
 let updateHTMLPins = () => {};
 
-let scene, camera, renderer, globeGroup, standGroup, globeMesh, standMaterial, material;
+let scene, camera, renderer, globeGroup, standGroup, globeMesh, standMaterial, material, cornerLight;
 let colorWhiteState, colorDimState;
 let pinsVisible = false;
 let scrollProgress = 0;
@@ -157,7 +157,7 @@ if (hasWebGL) {
     waterImg.src = 'https://unpkg.com/three-globe/example/img/earth-water.png';
 
     // Initial state shows the Earth texture slightly dimmed so the small desk globe isn't too bright
-    colorWhiteState = new THREE.Color(0xdedede);
+    colorWhiteState = new THREE.Color(0xc8c8c8);
     colorDimState = new THREE.Color(0x5a5a5a); // strong dim for the enlarged globe
 
     material = new THREE.MeshStandardMaterial({
@@ -168,7 +168,7 @@ if (hasWebGL) {
         // Soft self-illumination lifts the texture's dark oceans without washing out the scene
         emissive: new THREE.Color(0xffffff),
         emissiveMap: earthTexture,
-        emissiveIntensity: 0.32,
+        emissiveIntensity: 0.26,
         bumpMap: bumpTexture,
         bumpScale: 0.08
     });
@@ -233,6 +233,16 @@ if (hasWebGL) {
     directionalLight.position.set(5, 3, 5);
     scene.add(directionalLight);
 
+    // Extra highlight on the globe coming down from the upper-right at a steep
+    // ~80° angle (almost overhead, nudged slightly to the right). The light
+    // follows the globe in the animation loop so the angle stays constant
+    // while the globe moves and enlarges on scroll.
+    cornerLight = new THREE.DirectionalLight(0xffffff, 0.7);
+    const cornerLightOffset = new THREE.Vector3(11, 19, 2.5);
+    cornerLight.position.copy(globeGroup.position).add(cornerLightOffset);
+    cornerLight.target = globeGroup;
+    scene.add(cornerLight);
+
     latLongToVector3 = function(lat, lng, radius) {
         const phi = (90 - lat) * (Math.PI / 180);
         const theta = (lng + 180) * (Math.PI / 180);
@@ -287,6 +297,10 @@ if (hasWebGL) {
     // 4. Animation loop
     const clock = new THREE.Clock();
     function tick() {
+        // Keep the corner light at the same upper-right angle relative to the
+        // globe, even while the globe moves and scales during the scroll.
+        cornerLight.position.copy(globeGroup.position).add(cornerLightOffset);
+
         // Smoothly rotate the earth texture (globeMesh)
         if (scrollProgress < 0.01) {
             globeMesh.rotation.y += 0.015;
@@ -506,9 +520,10 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
             duration: 0.8,
             ease: "none",
             onReverseComplete: () => {
-                material.emissiveIntensity = 0.32;
+                material.emissiveIntensity = 0.26;
             }
         }, step2Start + 0.2);
+
     }
 
     // ==========================================
@@ -967,7 +982,7 @@ if (typeof gsap !== 'undefined') {
                         material.color.copy(colorWhiteState);
                         material.roughness = 0.55;
                         material.metalness = 0.1;
-                        material.emissiveIntensity = 0.32;
+                        material.emissiveIntensity = 0.26;
                     }
                 }
             }
@@ -2032,7 +2047,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 
     function updateBtnVisibility() {
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        if (scrollTop > 500) {
+        if (scrollTop > 50) {
             scrollToTopBtn.classList.add('visible');
         } else {
             scrollToTopBtn.classList.remove('visible');
