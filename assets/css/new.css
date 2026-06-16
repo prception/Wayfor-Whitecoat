@@ -241,6 +241,10 @@ body.preloader-active {
     overflow: hidden;
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
     z-index: 0;
+    /* Neutral fill behind the image — matches the surrounding white frame so the
+       rounded corners never show a coloured lining if the cover image doesn't fill
+       the corner pixels exactly. */
+    background-color: var(--white-bg, #FFFFFF);
 }
 
 /* ==================================================
@@ -260,7 +264,24 @@ body.preloader-active {
 
 .hero-bg-img-1 {
     opacity: 1;
-    /* Visible on load */
+    /* Default visible; the JS intro fades it in together with the hero content
+       so the image and text/cards appear as one unit. */
+}
+
+/* Before the JS intro runs, keep the hero CONTENT hidden from the very first paint
+   so none of it (title, subtitle, button, cards, nav) flashes in early. The hero
+   background image is intentionally NOT hidden here — it's preloaded at high priority
+   and should paint as the very first thing the user sees, with the content lifting in
+   over it. The intro removes .hero-prep and reveals the content together. */
+html.hero-prep #nav-wrapper,
+html.hero-prep .nav-brand-corner,
+html.hero-prep .nav-cta-corner,
+html.hero-prep .image-hero-title,
+html.hero-prep .image-hero-subtitle,
+html.hero-prep .hero-cta-btn,
+html.hero-prep .hero-card-bl,
+html.hero-prep .hero-card-br {
+    opacity: 0 !important;
 }
 
 .hero-bg-img-2 {

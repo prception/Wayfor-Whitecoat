@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WayFor Whitecoat - Global Journey</title>
 
+    <!-- Set the page surround background before any stylesheet loads so the first
+         paint matches the white frame area around the hero (no flash, no dark edges). -->
+    <style>html,body{background:#ffffff;margin:0;}</style>
+
     <!-- Google Fonts — preconnect first so DNS+TLS resolves in parallel -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,7 +38,7 @@
     </noscript>
 
     <!-- Hero image — fetch immediately at high priority so the hero paints fast -->
-    <link rel="preload" as="image" href="assets/images/hero-new.png" fetchpriority="high">
+    <link rel="preload" as="image" href="assets/images/hero-new.webp" fetchpriority="high">
 
     <!-- external css -->
     <link rel="stylesheet" href="assets/css/new.css">
@@ -45,6 +49,27 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Mark the document as "hero not yet revealed" before first paint, so the hero
+         content (image, text, button, cards) stays hidden until the JS intro reveals
+         them all together — prevents any single element flashing in early. Only when
+         the page will actually start at the top (fresh load, not a restored scroll). -->
+    <script>
+        (function () {
+            try {
+                var nav = performance.getEntriesByType('navigation')[0];
+                var restoring = nav && (nav.type === 'reload' || nav.type === 'back_forward') &&
+                    parseFloat(sessionStorage.getItem('wfwc-scroll:' + location.pathname)) > 0;
+                if (!window.scrollY && !restoring) {
+                    document.documentElement.classList.add('hero-prep');
+                }
+            } catch (e) { document.documentElement.classList.add('hero-prep'); }
+            // Safety: never leave the hero hidden if the JS intro fails to run.
+            setTimeout(function () {
+                document.documentElement.classList.remove('hero-prep');
+            }, 2500);
+        })();
+    </script>
 </head>
 
 <body>
@@ -79,7 +104,35 @@
 
     <main>
         <header id="nav-wrapper">
-            <div id="header-container"></div>
+            <!-- Navbar inlined (not fetched) so it paints on first render — no JS/network wait -->
+            <div id="header-container" data-inlined="true">
+                <a href="index.html" class="nav-brand-corner">
+                    <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    WayFor<span class="brand-highlight">Whitecoat</span>
+                </a>
+
+                <a href="#contact" class="nav-cta-corner">Get Started</a>
+
+                <nav class="liquid-navbar">
+                    <ul class="nav-links">
+                        <li><a href="index.html" class="nav-item">Home</a></li>
+                        <li><a href="about.html" class="nav-item">About</a></li>
+                        <li><a href="countries.html" class="nav-item">Countries</a></li>
+                        <li><a href="gallery.html" class="nav-item">Gallery</a></li>
+                        <li><a href="contact.html" class="nav-item">Contact</a></li>
+                        <li class="nav-mobile-cta"><a href="#contact" class="nav-mobile-cta-btn">Get Started</a></li>
+                    </ul>
+                    <button class="mobile-toggle">
+                        <svg viewBox="0 0 24 24" width="22" height="22" stroke="currentColor" stroke-width="2" fill="none">
+                            <line x1="3" y1="12" x2="21" y2="12"></line>
+                            <line x1="3" y1="6" x2="21" y2="6"></line>
+                            <line x1="3" y1="18" x2="21" y2="18"></line>
+                        </svg>
+                    </button>
+                </nav>
+            </div>
         </header>
 
         <!-- Master pinned container -->
@@ -87,8 +140,8 @@
 
             <!-- Rounded image frame — bg layers clipped inside this -->
             <div class="hero-image-frame">
-                <div class="hero-bg-layer hero-bg-img-1" style="background-image: url('assets/images/hero-new.png');"></div>
-                <div class="hero-bg-layer hero-bg-img-2" style="background-image: url('assets/images/hero-new.png');"></div>
+                <div class="hero-bg-layer hero-bg-img-1" style="background-image: url('assets/images/hero-new.webp');"></div>
+                <div class="hero-bg-layer hero-bg-img-2" style="background-image: url('assets/images/hero-new.webp');"></div>
                 <div class="hero-bg-layer hero-dark-overlay"></div>
             </div>
 
