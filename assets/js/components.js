@@ -134,26 +134,55 @@ window.__initNavScrollBehaviour = (function () {
     /**
      * Initialize Scroll To Top Button
      */
+    let scrollToTopInit = false;
     function initScrollToTop() {
         const scrollBtn = document.getElementById('scrollToTopBtn');
-        if (!scrollBtn) return;
+        if (!scrollBtn || scrollToTopInit) return;
+        scrollToTopInit = true;
 
-        // Show/Hide on scroll
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
+        function updateVisibility(scrollY) {
+            const y = (typeof scrollY === 'number') ? scrollY : (window.scrollY || document.documentElement.scrollTop);
+            if (y > 50) {
                 scrollBtn.classList.add('visible');
             } else {
                 scrollBtn.classList.remove('visible');
             }
-        });
+        }
+
+        // Show/Hide on native scroll and Lenis scroll (these pages use Lenis,
+        // which can suppress native window scroll events)
+        window.addEventListener('scroll', () => updateVisibility(), { passive: true });
+
+        // Lenis is initialised in the page's own DOMContentLoaded handler, which
+        // may run after this one — bind as soon as window.lenis is available.
+        let lenisBound = false;
+        function bindLenis() {
+            if (lenisBound) return true;
+            if (window.lenis) {
+                window.lenis.on('scroll', ({ scroll }) => updateVisibility(scroll));
+                lenisBound = true;
+                return true;
+            }
+            return false;
+        }
+        if (!bindLenis()) {
+            let tries = 0;
+            const lenisTimer = setInterval(() => {
+                if (bindLenis() || ++tries > 40) clearInterval(lenisTimer);
+            }, 100);
+        }
 
         // Smooth scroll to top
         scrollBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            if (window.lenis) {
+                window.lenis.scrollTo(0, { duration: 1.5 });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         });
+
+        // Set correct initial state
+        updateVisibility();
     }
 
     /**
@@ -248,6 +277,11 @@ window.__initNavScrollBehaviour = (function () {
 
     // Load components when DOM is ready
     document.addEventListener('DOMContentLoaded', function () {
+        // Wire the scroll-to-top button for pages with an inline footer (e.g.
+        // contact, gallery) — the button markup is already in the page even
+        // when no footer-container component is loaded. Idempotent, so a later
+        // footer-container load won't double-bind.
+        initScrollToTop();
         Promise.all([
             loadComponent(components.header, 'header-container'),
             loadComponent(components.footer, 'footer-container')

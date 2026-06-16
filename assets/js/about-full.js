@@ -36,24 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
             );
         }
 
-        const revealUps = gsap.utils.toArray(".reveal-up");
-        if (revealUps.length > 0) {
-            ScrollTrigger.batch(revealUps, {
-                onEnter: (elements) => {
-                    gsap.to(elements, {
-                        autoAlpha: 1,
-                        y: 0,
-                        duration: 1,
-                        ease: "power3.out",
-                        stagger: 0.15,
-                        overwrite: true
-                    });
-                },
-                start: "top 85%", 
-                once: true
-            });
-        }
-        
+        // NOTE: the .reveal-up reveal is handled by the single GLOBAL REVEAL-UP
+        // HANDLER below (start "top 88%"). A second batch here previously
+        // re-triggered the same elements at a different threshold, causing the
+        // portrait cards to flicker/lag as the two animations overwrote each
+        // other. Keep only the initial hidden state (gsap.set above) here.
+
         setTimeout(() => { ScrollTrigger.refresh(); }, 100);
     }
 
@@ -179,10 +167,10 @@ runOnReady(() => {
         if (revealUps.length > 0) {
             ScrollTrigger.batch(revealUps, {
                 onEnter: (batch) => {
-                    gsap.fromTo(batch, 
-                        { opacity: 0, y: 40 },
+                    gsap.fromTo(batch,
+                        { autoAlpha: 0, y: 40 },
                         {
-                            opacity: 1,
+                            autoAlpha: 1,
                             y: 0,
                             duration: 1,
                             ease: "power3.out",
@@ -199,6 +187,30 @@ runOnReady(() => {
                 },
                 start: "top 88%",
                 once: true
+            });
+        }
+
+        // 2b. Portrait team cards — revealed as one coordinated stagger from a
+        // single trigger on their row. Using a per-element batch here caused the
+        // 2nd/3rd cards to split into separate batches and re-trigger, producing
+        // a blink/lag, so they get their own dedicated timeline instead.
+        const portraitCards = gsap.utils.toArray(".portrait-reveal");
+        const portraitRow = document.querySelector(".portrait-cards-row");
+        if (portraitCards.length > 0 && portraitRow) {
+            gsap.set(portraitCards, { autoAlpha: 0, y: 40 });
+            gsap.to(portraitCards, {
+                scrollTrigger: {
+                    trigger: portraitRow,
+                    start: "top 85%",
+                    once: true
+                },
+                autoAlpha: 1,
+                y: 0,
+                duration: 0.9,
+                ease: "power3.out",
+                stagger: 0.15,
+                overwrite: true,
+                clearProps: "transform,opacity,visibility"
             });
         }
 
