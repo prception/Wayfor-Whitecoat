@@ -864,6 +864,54 @@ if (typeof gsap !== 'undefined') {
         });
     }
 
+    // --- Early hero intro (top of page only) -------------------------------
+    // The hero text / cards / nav don't depend on any image, so animate them in
+    // as soon as the DOM + GSAP are ready instead of waiting for window 'load'
+    // (which blocks on the ~2MB hero image). Removes the visible hero lag.
+    let introStarted = false;
+    const startHeroIntro = () => {
+        if (introStarted) return;
+        if (getSavedScrollY() > 0 || window.scrollY > 0) return; // only when at top
+        if (!document.getElementById('pinned-container')) return; // home page only
+        if (!document.querySelector('.image-hero-title')) return; // hero in DOM yet?
+        if (!document.querySelector('.nav-brand-corner')) return;  // wait for async header
+        introStarted = true;
+
+        // Split hero title into words for the cinematic reveal animation
+        const heroTitleEl = document.querySelector('.image-hero-title');
+        if (heroTitleEl) {
+            const text = heroTitleEl.innerHTML;
+            const words = text.split(/(<br.*?>)/);
+            heroTitleEl.innerHTML = words.map(w => {
+                if (w.includes('<br')) return w;
+                return ` <span class="hero-word" style="display:inline-block; opacity:0; transform:translateY(30px)">${w}</span>`;
+            }).join('');
+        }
+
+        gsap.set("#nav-wrapper", { y: -30, opacity: 0, visibility: 'visible' });
+        gsap.set([".nav-brand-corner", ".nav-cta-corner"], { visibility: 'visible', opacity: 0, y: -10 });
+        gsap.set(".image-hero-subtitle", { y: 30, opacity: 0 });
+        gsap.set(".hero-cta-btn", { y: 20, opacity: 0 });
+        gsap.set(".hero-card-bl", { y: 30, opacity: 0 });
+        gsap.set(".hero-card-br", { y: 30, opacity: 0 });
+
+        introTl.to("#nav-wrapper", { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.1)
+            .to([".nav-brand-corner", ".nav-cta-corner"], { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.1)
+            .to(".hero-word", { y: 0, opacity: 1, duration: 0.8, stagger: 0.07, ease: "power4.out" }, 0.2)
+            .to(".image-hero-subtitle", { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.5)
+            .to(".hero-cta-btn", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.65)
+            .to(".hero-card-bl", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.8)
+            .to(".hero-card-br", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.9);
+        introTl.play();
+    };
+    // Fire as soon as DOM is parsed; if header loads async, retry on its event.
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', startHeroIntro);
+    } else {
+        startHeroIntro();
+    }
+    document.addEventListener('headerLoaded', startHeroIntro);
+
     window.addEventListener('load', () => {
         const preloader = document.getElementById('preloader');
 
@@ -881,46 +929,23 @@ if (typeof gsap !== 'undefined') {
 
         const afterLoad = () => {
             if (window.scrollY <= 0) {
-                // Split hero title into words for the cinematic reveal animation
-                const heroTitleEl = document.querySelector('.image-hero-title');
-                if (heroTitleEl) {
-                    const text = heroTitleEl.innerHTML;
-                    const words = text.split(/(<br.*?>)/);
-                    heroTitleEl.innerHTML = words.map(w => {
-                        if (w.includes('<br')) return w;
-                        return ` <span class="hero-word" style="display:inline-block; opacity:0; transform:translateY(30px)">${w}</span>`;
-                    }).join('');
-                }
+                // The hero text/cards intro already started early (DOMContentLoaded)
+                // so it doesn't wait on the hero image. Make sure it ran, then just
+                // add the WebGL globe scale-in (WebGL isn't ready until 'load').
+                startHeroIntro();
 
-                // Set initial hidden states for hero elements before intro animates them in
-                gsap.set("#nav-wrapper", { y: -30, opacity: 0, visibility: 'visible' });
-                gsap.set([".nav-brand-corner", ".nav-cta-corner"], { visibility: 'visible', opacity: 0, y: -10 });
-                gsap.set(".image-hero-subtitle", { y: 30, opacity: 0 });
-                gsap.set(".hero-cta-btn", { y: 20, opacity: 0 });
-                gsap.set(".hero-card-bl", { y: 30, opacity: 0 });
-                gsap.set(".hero-card-br", { y: 30, opacity: 0 });
-
-                // Build the intro timeline tweens — tightened timing so content appears fast
-                introTl.to("#nav-wrapper", { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.1)
-                    .to([".nav-brand-corner", ".nav-cta-corner"], { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.1)
-                    .to(".hero-word", { y: 0, opacity: 1, duration: 0.8, stagger: 0.07, ease: "power4.out" }, 0.2)
-                    .to(".image-hero-subtitle", { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.5)
-                    .to(".hero-cta-btn", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.65)
-                    .to(".hero-card-bl", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.8)
-                    .to(".hero-card-br", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.9);
-
-                // Loading at the top — play the globe scale-in as part of the intro animation
+                // Loading at the top — animate the globe scale-in. Run it as its own
+                // tween (not appended to introTl, which may already have finished by
+                // the time WebGL is ready) so it always plays.
                 if (hasWebGL) {
                     globeGroup.scale.set(0.001, 0.001, 0.001);
                     standGroup.scale.set(0.001, 0.001, 0.001);
-                    introTl.fromTo(
+                    gsap.fromTo(
                         [globeGroup.scale, standGroup.scale],
                         { x: 0.001, y: 0.001, z: 0.001 },
-                        { x: 0.18, y: 0.18, z: 0.18, duration: 1.4, ease: "power4.out" },
-                        0.1
+                        { x: 0.18, y: 0.18, z: 0.18, duration: 1.4, ease: "power4.out", delay: 0.1 }
                     );
                 }
-                introTl.play();
             } else {
                 // Mid-scroll load — hide nav, hide hero-only UI elements immediately.
                 // Apply once now (in case header is already in DOM) and again on headerLoaded
