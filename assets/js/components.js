@@ -74,11 +74,10 @@ window.__initNavScrollBehaviour = (function () {
         window.dispatchEvent(new Event('resize'));
     }
 
-    // Only hide body at top of page — mid-scroll loads must not flash invisible
-    // (pin spacings are recalculated after injection anyway)
-    if (window.scrollY <= 0) {
-        document.documentElement.style.visibility = 'hidden';
-    }
+    // NOTE: We no longer hide the whole <html> while components load. The navbar is
+    // inlined in the home page (known height at first paint, so no layout shift), and
+    // the hero content is held by the CSS `.hero-prep` rule until the JS intro reveals
+    // it. Hiding the document here only produced a white blank flash, so it's removed.
 
     /**
      * Load a component into a container element
@@ -88,6 +87,30 @@ window.__initNavScrollBehaviour = (function () {
     function loadComponent(componentPath, containerId) {
         const container = document.getElementById(containerId);
         if (!container) return;
+
+        // If the markup is already inlined in the page (e.g. the navbar on the
+        // home page), skip the network fetch entirely and just run the init so
+        // it appears on first paint with no round-trip.
+        if (container.dataset.inlined === 'true') {
+            if (containerId === 'header-container') {
+                highlightActiveNav();
+                initMobileNavbar();
+                if (!document.getElementById('pinned-container')) {
+                    const navEls = ['#nav-wrapper', '.nav-brand-corner', '.nav-cta-corner'];
+                    if (typeof gsap !== 'undefined') {
+                        gsap.set(navEls, { opacity: 1, visibility: 'visible', pointerEvents: 'auto', y: 0 });
+                    } else {
+                        navEls.forEach(sel => {
+                            const el = document.querySelector(sel);
+                            if (el) { el.style.opacity = '1'; el.style.visibility = 'visible'; }
+                        });
+                    }
+                    window.__initNavScrollBehaviour();
+                }
+                document.dispatchEvent(new CustomEvent('headerLoaded'));
+            }
+            return Promise.resolve();
+        }
 
         return fetch(componentPath, { cache: 'default' })
             .then(response => {
@@ -282,18 +305,16 @@ window.__initNavScrollBehaviour = (function () {
         // when no footer-container component is loaded. Idempotent, so a later
         // footer-container load won't double-bind.
         initScrollToTop();
-        Promise.all([
-            loadComponent(components.header, 'header-container'),
-            loadComponent(components.footer, 'footer-container')
-        ]).then(() => {
-            // Both components are in the DOM — do one clean layout refresh
-            // then reveal the page so ScrollTrigger pin spacings are always correct
-            requestAnimationFrame(() => {
-                refreshScrollLayout();
-                requestAnimationFrame(() => {
-                    document.documentElement.style.visibility = '';
-                });
-            });
+
+        // Header: inlined on the home page, so this resolves synchronously with no
+        // fetch. Just refresh layout once it's in (page was never hidden).
+        Promise.resolve(loadComponent(components.header, 'header-container')).then(() => {
+            requestAnimationFrame(refreshScrollLayout);
+        });
+
+        // Footer loads independently; refresh layout once it's in.
+        Promise.resolve(loadComponent(components.footer, 'footer-container')).then(() => {
+            refreshScrollLayout();
         });
     });
 

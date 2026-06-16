@@ -842,6 +842,7 @@ if (window.matchMedia('(max-width: 768px)').matches && typeof gsap !== 'undefine
 // 7. Preloader Logic & GSAP Entrance Animations
 // ==============================================
 let introTl;
+console.log('[hero] script.js running. gsap loaded?', typeof gsap !== 'undefined');
 if (typeof gsap !== 'undefined') {
 
     // Set up the entrance timeline
@@ -869,13 +870,14 @@ if (typeof gsap !== 'undefined') {
     // as soon as the DOM + GSAP are ready instead of waiting for window 'load'
     // (which blocks on the ~2MB hero image). Removes the visible hero lag.
     let introStarted = false;
-    const startHeroIntro = () => {
-        if (introStarted) return;
-        if (getSavedScrollY() > 0 || window.scrollY > 0) return; // only when at top
-        if (!document.getElementById('pinned-container')) return; // home page only
-        if (!document.querySelector('.image-hero-title')) return; // hero in DOM yet?
-        if (!document.querySelector('.nav-brand-corner')) return;  // wait for async header
+    const buildHeroIntro = () => {
+        if (introStarted) { console.log('[hero] skip: already started'); return; }
+        if (getSavedScrollY() > 0 || window.scrollY > 0) { console.log('[hero] skip: not at top', window.scrollY, getSavedScrollY()); return; }
+        if (!document.getElementById('pinned-container')) { console.log('[hero] skip: no pinned-container'); return; }
+        if (!document.querySelector('.image-hero-title')) { console.log('[hero] skip: no title'); return; }
+        if (!document.querySelector('.nav-brand-corner')) { console.log('[hero] skip: no nav'); return; }
         introStarted = true;
+        console.log('[hero] BUILDING intro animation');
 
         // Split hero title into words for the cinematic reveal animation
         const heroTitleEl = document.querySelector('.image-hero-title');
@@ -884,26 +886,51 @@ if (typeof gsap !== 'undefined') {
             const words = text.split(/(<br.*?>)/);
             heroTitleEl.innerHTML = words.map(w => {
                 if (w.includes('<br')) return w;
-                return ` <span class="hero-word" style="display:inline-block; opacity:0; transform:translateY(30px)">${w}</span>`;
+                return ` <span class="hero-word" style="display:inline-block; opacity:0; transform:translateY(20px)">${w}</span>`;
             }).join('');
         }
 
-        gsap.set("#nav-wrapper", { y: -30, opacity: 0, visibility: 'visible' });
-        gsap.set([".nav-brand-corner", ".nav-cta-corner"], { visibility: 'visible', opacity: 0, y: -10 });
-        gsap.set(".image-hero-subtitle", { y: 30, opacity: 0 });
-        gsap.set(".hero-cta-btn", { y: 20, opacity: 0 });
-        gsap.set(".hero-card-bl", { y: 30, opacity: 0 });
-        gsap.set(".hero-card-br", { y: 30, opacity: 0 });
+        // Set explicit hidden states via GSAP inline styles, THEN drop the CSS
+        // pre-paint hide so its `opacity:0 !important` can't fight the tween. Order
+        // matters: set-hidden before class-removal means no flash of visible content.
+        gsap.set(["#nav-wrapper", ".nav-brand-corner", ".nav-cta-corner",
+                  ".hero-word", ".image-hero-subtitle", ".hero-cta-btn",
+                  ".hero-card-bl", ".hero-card-br"], { opacity: 0 });
+        gsap.set(".image-hero-title", { opacity: 1 }); // container shown; words carry the reveal
+        document.documentElement.classList.remove('hero-prep');
 
-        introTl.to("#nav-wrapper", { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.1)
-            .to([".nav-brand-corner", ".nav-cta-corner"], { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.1)
-            .to(".hero-word", { y: 0, opacity: 1, duration: 0.8, stagger: 0.07, ease: "power4.out" }, 0.2)
-            .to(".image-hero-subtitle", { y: 0, opacity: 1, duration: 0.7, ease: "power3.out" }, 0.5)
-            .to(".hero-cta-btn", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.65)
-            .to(".hero-card-bl", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.8)
-            .to(".hero-card-br", { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.9);
-        introTl.play();
+        // One coordinated reveal — fromTo with explicit start values so it animates
+        // regardless of whatever opacity the elements happen to have right now.
+        introTl.fromTo("#nav-wrapper",
+            { y: -20, opacity: 0, visibility: 'visible' },
+            { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0)
+            .fromTo([".nav-brand-corner", ".nav-cta-corner"],
+                { y: -10, opacity: 0, visibility: 'visible' },
+                { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0)
+            .fromTo(".hero-word",
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.6, stagger: 0.04, ease: "power3.out" }, 0.05)
+            .fromTo(".image-hero-subtitle",
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.6, ease: "power3.out" }, 0.05)
+            .fromTo(".hero-cta-btn",
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.05)
+            .fromTo(".hero-card-bl",
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.1)
+            .fromTo(".hero-card-br",
+                { y: 20, opacity: 0 },
+                { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" }, 0.1);
+        console.log('[hero] PLAY — timeline duration:', introTl.duration(), 'words:', document.querySelectorAll('.hero-word').length);
+        introTl.play(0);
     };
+
+    // The hero background image paints on its own (CSS, preloaded high-priority) as
+    // the first thing on screen. The content (nav, text, button, cards) lifts in over
+    // it as soon as GSAP + DOM are ready — no need to gate on the image, so there's
+    // no blank/coloured frame before the picture shows.
+    const startHeroIntro = () => { buildHeroIntro(); };
     // Fire as soon as DOM is parsed; if header loads async, retry on its event.
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', startHeroIntro);
@@ -929,10 +956,10 @@ if (typeof gsap !== 'undefined') {
 
         const afterLoad = () => {
             if (window.scrollY <= 0) {
-                // The hero text/cards intro already started early (DOMContentLoaded)
-                // so it doesn't wait on the hero image. Make sure it ran, then just
-                // add the WebGL globe scale-in (WebGL isn't ready until 'load').
-                startHeroIntro();
+                // The hero intro already started early (gated on the decoded hero
+                // image). By 'load' the image is certainly ready, so force the build
+                // directly as a fallback, then add the WebGL globe scale-in.
+                buildHeroIntro();
 
                 // Loading at the top — animate the globe scale-in. Run it as its own
                 // tween (not appended to introTl, which may already have finished by
