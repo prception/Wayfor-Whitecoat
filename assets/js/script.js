@@ -1367,9 +1367,21 @@ if (document.querySelector('.reality-section') && typeof gsap !== 'undefined' &&
         }
     }
 
-    window.addEventListener('scroll', checkNavVisibility, { passive: true });
+    // Coalesce to one check per frame — bound to both window + Lenis scroll,
+    // which on mobile fire for the same native scroll.
+    let navTicking = false;
+    function requestNavCheck() {
+        if (navTicking) return;
+        navTicking = true;
+        requestAnimationFrame(() => {
+            navTicking = false;
+            checkNavVisibility();
+        });
+    }
+
+    window.addEventListener('scroll', requestNavCheck, { passive: true });
     if (typeof lenis !== 'undefined') {
-        lenis.on('scroll', checkNavVisibility);
+        lenis.on('scroll', requestNavCheck);
     }
 })();
 
@@ -2025,12 +2037,26 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         thumb.style.transform = 'translateY(' + thumbTop + 'px)';
     }
 
-    // Update on native scroll (fallback) and on Lenis scroll events
-    window.addEventListener('scroll', updateThumb, { passive: true });
-    if (typeof lenis !== 'undefined') {
-        lenis.on('scroll', updateThumb);
+    // On mobile (smoothTouch:false) Lenis still emits a scroll event for every
+    // native scroll, so binding the same handler to both window and Lenis runs
+    // it twice per frame — and each run forces a reflow (reads scrollHeight).
+    // Coalesce to at most one update per animation frame.
+    let thumbTicking = false;
+    function requestThumbUpdate() {
+        if (thumbTicking) return;
+        thumbTicking = true;
+        requestAnimationFrame(() => {
+            thumbTicking = false;
+            updateThumb();
+        });
     }
-    window.addEventListener('resize', updateThumb);
+
+    // Update on native scroll (fallback) and on Lenis scroll events
+    window.addEventListener('scroll', requestThumbUpdate, { passive: true });
+    if (typeof lenis !== 'undefined') {
+        lenis.on('scroll', requestThumbUpdate);
+    }
+    window.addEventListener('resize', requestThumbUpdate);
 
     // Drag support — dragging the thumb scrolls the page
     let isDragging = false;
@@ -2106,10 +2132,21 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         }
     }
 
+    // Coalesce to one update per frame (bound to both window + Lenis scroll).
+    let btnTicking = false;
+    function requestBtnUpdate() {
+        if (btnTicking) return;
+        btnTicking = true;
+        requestAnimationFrame(() => {
+            btnTicking = false;
+            updateBtnVisibility();
+        });
+    }
+
     // Update on native scroll and Lenis scroll
-    window.addEventListener('scroll', updateBtnVisibility, { passive: true });
+    window.addEventListener('scroll', requestBtnUpdate, { passive: true });
     if (typeof lenis !== 'undefined') {
-        lenis.on('scroll', updateBtnVisibility);
+        lenis.on('scroll', requestBtnUpdate);
     }
 
     scrollToTopBtn.addEventListener('click', () => {
