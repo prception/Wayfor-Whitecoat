@@ -7540,3 +7540,109 @@ textarea.form-control {
         height: 140px;
     }
 }
+
+/* ------------------------------------------------------------------ *
+ * Mobile scroll performance
+ *
+ * On touch / small screens, stacked `backdrop-filter: blur()` glass
+ * layers force the GPU to re-rasterize the blurred backdrop every time
+ * an element re-enters the viewport. Scrolling DOWN is cheap (layers
+ * leaving view get discarded); scrolling UP re-composites them all,
+ * which is what caused the upward-scroll lag / stutter on mobile.
+ *
+ * The cards/panels already use a semi-opaque background, so dropping the
+ * backdrop blur keeps them readable while removing the per-frame cost.
+ * Large decorative `filter: blur()` glows are also collapsed since they
+ * are purely cosmetic.
+ *
+ * The stutter shows up across EVERY section (not just the hero) because
+ * almost every glass card / badge / panel on the page uses backdrop-filter,
+ * and each one re-composites as it scrolls back into view. So the fix is a
+ * blanket removal of backdrop-filter on touch devices plus capping the big
+ * decorative `filter: blur()` glows.
+ * ------------------------------------------------------------------ */
+
+/* Width-based fallback for browsers without (pointer: coarse) support. */
+@media (max-width: 991px) {
+    .globe-detail-badge,
+    .urgency-badge,
+    .btn-secondary,
+    .liquid-glass-btn,
+    .hero-bl-card-inner,
+    .hero-card-br,
+    .glass-card,
+    .glass-card-solution,
+    .glass-dossier,
+    .promise-plaque,
+    .glass-badge,
+    .zero-icon-wrap,
+    .scroll-to-top,
+    .anatomy-card-img-label,
+    .gc-perk,
+    .gc-card,
+    .gc-card-solution,
+    .gc-card-red,
+    .gc-card-amber {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    /* The card panels lose their frosted look without the blur, so make
+       their backgrounds opaque enough to stay legible over content. */
+    .gc-card,
+    .gc-card-solution,
+    .gc-card-red,
+    .gc-card-amber {
+        background-color: rgba(244, 241, 252, 0.96) !important;
+    }
+    .glass-dossier,
+    .hero-bl-card-inner {
+        background-color: rgba(255, 255, 255, 0.96) !important;
+    }
+    .hero-card-br {
+        background-color: rgba(244, 241, 252, 0.96) !important;
+    }
+}
+
+/* Real touch devices: the same removal, applied regardless of width, plus
+   the heavy decorative blur glows. (pointer: coarse) avoids touching
+   narrow-window desktops, which can render the glass cheaply.) */
+@media (hover: none) and (pointer: coarse) {
+    .globe-detail-badge,
+    .urgency-badge,
+    .btn-secondary,
+    .liquid-glass-btn,
+    .hero-bl-card-inner,
+    .hero-card-br,
+    .glass-card,
+    .glass-card-solution,
+    .glass-dossier,
+    .promise-plaque,
+    .glass-badge,
+    .zero-icon-wrap,
+    .scroll-to-top,
+    .anatomy-card-img-label,
+    .gc-perk,
+    .gc-card,
+    .gc-card-solution,
+    .gc-card-red,
+    .gc-card-amber {
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+    }
+
+    /* Large decorative glow shapes: cap blur radius and stop any continuous
+       animation. A 100-140px animated blur is among the costliest things a
+       mobile GPU repaints and feeds directly into the scroll stutter. */
+    .contact-bg-shapes,
+    .bento-glow,
+    .solution-card-glow {
+        filter: blur(24px) !important;
+    }
+
+    .bg-shape,
+    .hero-orb {
+        filter: blur(40px) !important;
+        animation: none !important;
+    }
+}
