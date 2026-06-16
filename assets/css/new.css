@@ -5748,10 +5748,70 @@ body:has(.scroll-to-top.visible) .whatsapp-float {
 }
 
 .contact-hero-section {
-    border-bottom-left-radius: 40px;
-    border-bottom-right-radius: 40px;
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     z-index: 2;
+}
+
+/* White frame to match home-page hero — the section is a white box with 10px
+   padding; an inset rounded dark layer (::before) holds the hero, and a rounded
+   white ring (::after) sits on top of the edges so the dark area is clipped to
+   clean rounded corners with no hard cuts. */
+.contact-hero-section,
+.about-hero-section {
+    background-color: var(--white-bg, #FFFFFF);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Inset rounded dark fill — the hero background */
+.contact-hero-section::before,
+.about-hero-section::before {
+    content: "";
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    background-color: #020617;
+    border-radius: 40px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* White ring on top — masks any orb/overlay bleed at the rounded corners so the
+   frame stays crisp (inner radius matches the dark fill's 40px) */
+.contact-hero-section::after,
+.about-hero-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 10px solid var(--white-bg, #FFFFFF);
+    border-radius: 50px;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Mobile/tablet: hero goes full-bleed — no white frame, matching the home page */
+@media (max-width: 991px) {
+    .contact-hero-section,
+    .about-hero-section {
+        padding: 0;
+        background-color: #020617;
+    }
+
+    .contact-hero-section::before,
+    .about-hero-section::before {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 0;
+    }
+
+    .contact-hero-section::after,
+    .about-hero-section::after {
+        display: none;
+    }
 }
 
 /* Ambient Orbs */
@@ -5846,6 +5906,38 @@ body:has(.scroll-to-top.visible) .whatsapp-float {
     will-change: transform;
 }
 
+/* Mobile/tablet: smaller, equal-sized contact pills */
+@media (max-width: 991px) {
+    .anti-gravity-container {
+        gap: 0.75rem !important;
+    }
+
+    .anti-gravity-container .floating-pill {
+        flex: 1 1 220px;
+        max-width: 320px;
+        justify-content: center;
+        padding: 0.6rem 1rem !important;
+        gap: 0.6rem !important;
+    }
+
+    .anti-gravity-container .floating-pill .icon-circle {
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    .anti-gravity-container .floating-pill .icon-circle i {
+        font-size: 0.9rem !important;
+    }
+
+    .anti-gravity-container .floating-pill span.d-block {
+        font-size: 0.85rem;
+    }
+
+    .anti-gravity-container .floating-pill .small {
+        font-size: 0.72rem !important;
+    }
+}
+
 @keyframes anti-gravity {
 
     0%,
@@ -5877,8 +5969,8 @@ body:has(.scroll-to-top.visible) .whatsapp-float {
     }
 
     .contact-hero-section {
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
     }
 }
 
@@ -6063,7 +6155,8 @@ textarea.form-control {
 ================================================== */
 
 .about-hero-section {
-    background-color: #020617;
+    /* background-color handled by the white-frame rule above; keep this dark
+       fill on the inset ::before, not the section, so the white frame shows */
     z-index: 1;
 }
 

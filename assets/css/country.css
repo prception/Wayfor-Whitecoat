@@ -22,22 +22,36 @@
     min-height: 100vh;
     color: #fff;
     isolation: isolate;
-    background: var(--country-ink);
+    /* White frame to match home-page hero — navbar's white concave shape blends into this strip */
+    background: var(--white-bg, #FFFFFF);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Rounded image frame — clips the hero bg layers, leaving the white frame visible around it */
+.country-hero-v2 > .country-hero-image,
+.country-hero-v2 > .country-hero-scrim,
+.country-hero-v2 > .country-orbit {
+    border-radius: 40px;
 }
 
 .country-hero-image {
     position: absolute;
-    inset: 0;
+    inset: 10px;
     background-image: url("https://cdn.kimkim.com/files/a/images/7aaa4a085a1b10a36146cf8fc252419e1ba3dec9/original-69fd4c20c9d29d5ec05e44cfca05be03.jpg");
     background-size: cover;
     background-position: 58% center;
     transform: scale(1.04);
     filter: saturate(1.12) brightness(1.08);
+    border-radius: 40px;
+    overflow: hidden;
 }
 
 .country-hero-scrim {
     position: absolute;
-    inset: 0;
+    inset: 10px;
+    border-radius: 40px;
+    overflow: hidden;
     background:
         linear-gradient(90deg, rgba(2, 6, 23, 0.96) 0%, rgba(4, 26, 59, 0.76) 48%, rgba(2, 6, 23, 0.12) 100%),
         radial-gradient(circle at 78% 36%, rgba(14, 165, 233, 0.18), transparent 34%),
