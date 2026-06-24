@@ -1,0 +1,18 @@
+/* TEAM */
+
+Site: WayForWhitecoat
+Description: MBBS-abroad education consultancy helping students reach
+             globally recognised (NMC & WHO-approved) medical universities.
+Contact: see /contact.html
+Location: India
+
+/* SITE */
+
+Standards: HTML5, CSS3, JavaScript
+Components: Bootstrap 5, GSAP, Three.js, Font Awesome, Flag Icons
+Language: English
+Doctype: HTML5
+
+/* THANKS */
+
+To our students and partner universities across 26+ countries.

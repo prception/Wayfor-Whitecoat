@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Block non-public / template files from indexing
+Disallow: /sample.html
+Disallow: /temp.html
+Disallow: /navbar.html
+Disallow: /footer.html
+Disallow: /country-template.html
+Disallow: /components/
+
+Sitemap: https://www.wayforwhitecoat.com/sitemap.xml
+
+# AI / LLM content guide
+# LLMs: https://www.wayforwhitecoat.com/llms.txt

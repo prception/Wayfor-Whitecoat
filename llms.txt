@@ -1,0 +1,46 @@
+# WayForWhitecoat
+
+> WayForWhitecoat is an MBBS-abroad consultancy that helps Indian students study medicine at globally recognised (NMC & WHO-approved) universities across 26+ countries, with transparent fees, end-to-end admission guidance, and visa support.
+
+WayForWhitecoat provides free counselling on university selection, eligibility (NEET), course duration, fees, scholarships, and the admission & student-visa process. The site is organised into a home page, an about page, a country directory, per-country guides, a gallery, and a contact page.
+
+## Main pages
+
+- [Home](https://www.wayforwhitecoat.com/): Overview of MBBS-abroad services and destinations.
+- [About Us](https://www.wayforwhitecoat.com/about.html): Who WayForWhitecoat is and how the counselling process works.
+- [MBBS Abroad Destinations](https://www.wayforwhitecoat.com/countries.html): Directory of all 26+ countries to study MBBS.
+- [Gallery](https://www.wayforwhitecoat.com/gallery.html): Student stories, campus visits and events.
+- [Contact](https://www.wayforwhitecoat.com/contact.html): Enquiry form and contact details for free counselling.
+
+## Country guides
+
+- [MBBS in Armenia](https://www.wayforwhitecoat.com/countries/MBBS-in-Armania.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Armenia.
+- [MBBS in Bangladesh](https://www.wayforwhitecoat.com/countries/MBBS-in-Bangladesh.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Bangladesh.
+- [MBBS in Belarus](https://www.wayforwhitecoat.com/countries/MBBS-in-Belarus.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Belarus.
+- [MBBS in Bulgaria](https://www.wayforwhitecoat.com/countries/MBBS-In-Bulgaria.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Bulgaria.
+- [MBBS in China](https://www.wayforwhitecoat.com/countries/MBBS-in-China.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in China.
+- [MBBS in Egypt](https://www.wayforwhitecoat.com/countries/MBBS-in-Egypt.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Egypt.
+- [MBBS in France](https://www.wayforwhitecoat.com/countries/MBBS-in-France.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in France.
+- [MBBS in Georgia](https://www.wayforwhitecoat.com/countries/MBBS-in-Georgio.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Georgia.
+- [MBBS in Germany](https://www.wayforwhitecoat.com/countries/MBBS-In-Germany.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Germany.
+- [MBBS in Ireland](https://www.wayforwhitecoat.com/countries/MBBS-in-Ireland.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Ireland.
+- [MBBS in Italy](https://www.wayforwhitecoat.com/countries/MBBS-In-Italy.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Italy.
+- [MBBS in Kazakhstan](https://www.wayforwhitecoat.com/countries/MBBS-In-Kazakhstan.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Kazakhstan.
+- [MBBS in Kyrgyzstan](https://www.wayforwhitecoat.com/countries/MBBS-in-Kyrgyzstan.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Kyrgyzstan.
+- [MBBS in Lithuania](https://www.wayforwhitecoat.com/countries/MBBS-In-Lithuania.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Lithuania.
+- [MBBS in Malaysia](https://www.wayforwhitecoat.com/countries/MBBS-in-Malaysia.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Malaysia.
+- [MBBS in Nepal](https://www.wayforwhitecoat.com/countries/MBBS-In-Nepal.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Nepal.
+- [MBBS in Netherlands](https://www.wayforwhitecoat.com/countries/MBBS-in-Netherland.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Netherlands.
+- [MBBS in Romania](https://www.wayforwhitecoat.com/countries/MBBS-In-Romania.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Romania.
+- [MBBS in Russia](https://www.wayforwhitecoat.com/countries/MBBS-in-Russia.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Russia.
+- [MBBS in Saudi Arabia](https://www.wayforwhitecoat.com/countries/MBBS-in-Saudi-Arabia.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Saudi Arabia.
+- [MBBS in Singapore](https://www.wayforwhitecoat.com/countries/MBBS-in-Singapore.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Singapore.
+- [MBBS in Tajikistan](https://www.wayforwhitecoat.com/countries/MBBS-in-Tajikistan.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Tajikistan.
+- [MBBS in UAE](https://www.wayforwhitecoat.com/countries/MBBS-In-UAE.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in UAE.
+- [MBBS in UK](https://www.wayforwhitecoat.com/countries/MBBS-In-UK.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in UK.
+- [MBBS in Uzbekistan](https://www.wayforwhitecoat.com/countries/MBBS-in-Uzbekistan.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Uzbekistan.
+- [MBBS in Philippines](https://www.wayforwhitecoat.com/countries/MBBS-Philippines.html): Universities, fees, eligibility, duration and admission/visa process for studying MBBS in Philippines.
+
+## Optional
+
+- [Sitemap](https://www.wayforwhitecoat.com/sitemap.xml): Full list of indexable URLs.
