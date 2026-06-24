@@ -8,20 +8,39 @@
 const SCROLL_RESTORE_KEY = 'wfwc-scroll:' + location.pathname;
 window.addEventListener('pagehide', () => {
     try {
-        sessionStorage.setItem(SCROLL_RESTORE_KEY, String(window.scrollY || window.pageYOffset || 0));
+        // Save the position as a FRACTION of the total scrollable height, not an
+        // absolute pixel Y. The page has several pinned sections whose spacer
+        // heights change with viewport width (hero pin, reality word-reveal,
+        // editorial panel all use width-dependent pin durations), so an absolute
+        // Y saved on one screen size points to a different section on another.
+        // A ratio re-maps correctly onto whatever the current layout's height is.
+        const scrollTop = window.scrollY || window.pageYOffset || 0;
+        const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+        const ratio = maxScroll > 0 ? scrollTop / maxScroll : 0;
+        sessionStorage.setItem(SCROLL_RESTORE_KEY, String(ratio));
     } catch (e) { /* storage unavailable */ }
 });
-function getSavedScrollY() {
+// Returns the saved fraction (0–1) of scroll progress, or -1 if there is none
+// / restoration shouldn't happen. Callers convert this to pixels against the
+// CURRENT layout height so it lands on the right section at any screen size.
+function getSavedScrollRatio() {
     try {
         const nav = performance.getEntriesByType('navigation')[0];
         // Only restore on reload / back-forward — a fresh link navigation
         // should start at the top like the browser's native behaviour.
-        if (!nav || (nav.type !== 'reload' && nav.type !== 'back_forward')) return 0;
-        const y = parseFloat(sessionStorage.getItem(SCROLL_RESTORE_KEY));
-        return isNaN(y) ? 0 : y;
+        if (!nav || (nav.type !== 'reload' && nav.type !== 'back_forward')) return -1;
+        const r = parseFloat(sessionStorage.getItem(SCROLL_RESTORE_KEY));
+        return isNaN(r) ? -1 : Math.min(1, Math.max(0, r));
     } catch (e) {
-        return 0;
+        return -1;
     }
+}
+// Convert the saved ratio to a pixel offset against the current document height.
+function getSavedScrollY() {
+    const ratio = getSavedScrollRatio();
+    if (ratio < 0) return 0;
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    return ratio * maxScroll;
 }
 
 let lenis;
@@ -184,7 +203,18 @@ if (hasWebGL) {
     const isMobileGlobe = sizes.width <= 768;
     const isTabletGlobe = sizes.width > 768 && sizes.width <= 1024;
     const initialX = isMobileGlobe ? -0.6 : isTabletGlobe ? -1.35 : -1.8;
-    const initialY = (isMobileGlobe || isTabletGlobe) ? -1.85 : -1.6;
+    // The hero image uses `background-size: cover`, so on screens wider than a
+    // standard laptop the books rise in the frame while the 3D globe stays at a
+    // fixed world Y — leaving the globe floating below them. Laptops (<= 1440px,
+    // incl. MacBook Air) keep their tuned -1.6 baseline; only larger monitors lift
+    // the globe continuously with viewport width so it keeps resting on the books.
+    let desktopY = -1.6;
+    if (!isMobileGlobe && !isTabletGlobe && sizes.width > 1440) {
+        // Lift ~1.8 units per 1000px of extra width, capped so it never overshoots.
+        const lift = Math.min((sizes.width - 1440) * 0.0018, 2.0);
+        desktopY = -1.6 + lift;
+    }
+    const initialY = (isMobileGlobe || isTabletGlobe) ? -1.85 : desktopY;
     globeGroup.position.set(initialX, initialY, -3.5);
     globeGroup.rotation.y = -Math.PI / 2;
     globeGroup.rotation.x = 0.2;
@@ -943,14 +973,20 @@ if (typeof gsap !== 'undefined') {
         const preloader = document.getElementById('preloader');
 
         // Re-apply the saved position before anything below reads window.scrollY.
-        // By load time all images are in and the pin spacers / JS-driven section
-        // heights exist, so the full document height is available to land on.
-        const restoreY = getSavedScrollY();
-        if (restoreY > 0) {
+        // We hold onto the saved RATIO (0–1) and convert it to pixels against the
+        // live document height each time we seek — the height is still growing as
+        // pin spacers settle, so a ratio stays correct where an absolute Y wouldn't.
+        const restoreRatio = getSavedScrollRatio();
+        const restoreYNow = () => {
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            return restoreRatio * maxScroll;
+        };
+        if (restoreRatio > 0) {
+            const y = restoreYNow();
             if (typeof lenis !== 'undefined' && lenis) {
-                lenis.scrollTo(restoreY, { immediate: true, force: true });
+                lenis.scrollTo(y, { immediate: true, force: true });
             } else {
-                window.scrollTo(0, restoreY);
+                window.scrollTo(0, y);
             }
         }
 
@@ -1043,6 +1079,27 @@ if (typeof gsap !== 'undefined') {
             if (typeof ScrollTrigger !== 'undefined') {
                 ScrollTrigger.refresh();
                 requestAnimationFrame(() => ScrollTrigger.update());
+
+                // ScrollTrigger.refresh() re-measures every pin spacer, and those
+                // spacer heights differ per breakpoint (hero pin, reality, editorial
+                // all use width-dependent pin durations). The early restore at the top
+                // of 'load' ran against pre-refresh offsets, so on larger/smaller
+                // screens the saved position could land in the wrong section. Re-assert
+                // it now that the final layout is settled — recomputing pixels from the
+                // saved ratio against the freshly-measured document height.
+                if (restoreRatio > 0) {
+                    const reapply = () => {
+                        const y = restoreYNow();
+                        if (typeof lenis !== 'undefined' && lenis) {
+                            lenis.scrollTo(y, { immediate: true, force: true });
+                        } else {
+                            window.scrollTo(0, y);
+                        }
+                        ScrollTrigger.update();
+                    };
+                    // Two rafs: let refresh's layout writes flush before we re-seek.
+                    requestAnimationFrame(() => requestAnimationFrame(reapply));
+                }
             }
         };
 
