@@ -2423,6 +2423,19 @@ select.form-control option {
     box-shadow: 0 14px 36px rgba(26, 31, 110, 0.5);
 }
 
+.hero-cta-btn-outline {
+    background: transparent;
+    color: #1a1f6e;
+    border: 1.5px solid #1a1f6e;
+    box-shadow: none;
+}
+
+.hero-cta-btn-outline:hover {
+    background: #1a1f6e;
+    color: #ffffff;
+    box-shadow: 0 14px 36px rgba(26, 31, 110, 0.35);
+}
+
 .hero-cta-btn svg {
     flex-shrink: 0;
     transition: transform 0.3s ease;

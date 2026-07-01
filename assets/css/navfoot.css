@@ -48,8 +48,10 @@
 /* Logo — top-left corner, aligned to Bootstrap container left edge */
 .nav-brand-corner {
     position: fixed;
-    top: 32px;
-    left: max(24px, calc((100vw - 1320px) / 2 + 24px));
+    top: 0px;
+    /* Align the logo's left edge to the Bootstrap .container the hero text sits in:
+       max-width 1320px, 12px (0.75rem) horizontal gutter. */
+    left: max(12px, calc((100vw - 1320px) / 2 + 12px));
     display: flex;
     align-items: center;
     gap: 8px;
@@ -74,11 +76,29 @@
     color: var(--primary-mid, #2563eb);
 }
 
+/* Image logo — sized to match the previous icon + wordmark footprint.
+   The PNG is a 1254x1254 square with ~8.85% transparent padding on the left,
+   so at 110px height the visible artwork sits ~9.7px in from the box edge.
+   Pull it left by that amount so the visible logo edge lines up exactly with
+   the hero text (both then start on the Bootstrap .container left line). */
+.brand-logo-img {
+    height: 110px;
+    width: auto;
+    display: block;
+    margin-left: -9.7px;
+}
+
+.footer-logo-img {
+    height: 110px;
+    width: auto;
+    display: block;
+}
+
 /* "Get Started" button — top-right corner, mirrored from logo left edge */
 .nav-cta-corner {
     position: fixed;
     top: 26px;
-    right: max(24px, calc((100vw - 1320px) / 2 + 24px));
+    right: max(12px, calc((100vw - 1320px) / 2 + 12px));
     display: inline-flex;
     align-items: center;
     padding: 10px 24px;
@@ -315,7 +335,7 @@
     /* Logo stays top-left, slightly tightened */
     .nav-brand-corner {
         top: 24px;
-        left: 16px;
+        left: 12px;
         font-size: 0.95rem;
     }
 }
