@@ -157,4 +157,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
         updateBtnVisibility();
     }
+
+    // 8. Curriculum Accordion Toggle
+    const accordionHeaders = document.querySelectorAll('.custom-accordion .accordion-header');
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const box = header.closest('.accordion-box');
+            const content = box.querySelector('.accordion-content');
+            const isOpen = box.classList.contains('active');
+
+            // Close all boxes (single-open accordion)
+            document.querySelectorAll('.custom-accordion .accordion-box').forEach(b => {
+                b.classList.remove('active');
+                const c = b.querySelector('.accordion-content');
+                if (c) c.classList.add('d-none');
+            });
+
+            // Open the clicked one unless it was already open
+            if (!isOpen) {
+                box.classList.add('active');
+                if (content) content.classList.remove('d-none');
+            }
+
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.refresh();
+            }
+        });
+    });
 });
