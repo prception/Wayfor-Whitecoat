@@ -186,6 +186,25 @@
     padding: 4px;
 }
 
+.toggle-line {
+    transform-box: fill-box;
+    transform-origin: center;
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Morph the three bars into an X when the menu is open */
+.mobile-toggle.active .toggle-line-top {
+    transform: translate(0, 6px) rotate(45deg);
+}
+
+.mobile-toggle.active .toggle-line-mid {
+    opacity: 0;
+}
+
+.mobile-toggle.active .toggle-line-bottom {
+    transform: translate(0, -6px) rotate(-45deg);
+}
+
 /* ==================================================
    DYNAMIC SCROLL MODE (Dark Background Adaptation)
 ================================================== */
@@ -273,7 +292,9 @@
         width: auto;
         padding: 0;
         gap: 0;
-        margin: 16px 16px 0 0;
+        /* 27px top margin centers the 46px hamburger on the logo's midline
+           (logo: top 8px + 84px height → center 50px; 50 − 23 = 27) */
+        margin: 27px 16px 0 0;
         background: transparent;
         -webkit-mask-image: none;
         mask-image: none;
@@ -334,9 +355,16 @@
 
     /* Logo stays top-left, slightly tightened */
     .nav-brand-corner {
-        top: 24px;
+        top: 8px;
         left: 12px;
         font-size: 0.95rem;
+    }
+
+    /* Smaller logo on phones; margin compensates the PNG's ~8.85%
+       transparent left padding at this size (84px × 0.0885 ≈ 7.4px) */
+    .brand-logo-img {
+        height: 84px;
+        margin-left: -7.4px;
     }
 }
 

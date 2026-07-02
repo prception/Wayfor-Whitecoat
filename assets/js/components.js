@@ -224,14 +224,19 @@ window.__initNavScrollBehaviour = (function () {
                 customToggle.addEventListener('click', (e) => {
                     e.stopPropagation();
                     customLinks.classList.toggle('active');
+                    customToggle.classList.toggle('active');
                 });
                 // Close the menu after tapping a link or anywhere outside it
                 customLinks.querySelectorAll('a').forEach(link => {
-                    link.addEventListener('click', () => customLinks.classList.remove('active'));
+                    link.addEventListener('click', () => {
+                        customLinks.classList.remove('active');
+                        customToggle.classList.remove('active');
+                    });
                 });
                 document.addEventListener('click', (e) => {
-                    if (!customLinks.contains(e.target)) {
+                    if (!customLinks.contains(e.target) && !customToggle.contains(e.target)) {
                         customLinks.classList.remove('active');
+                        customToggle.classList.remove('active');
                     }
                 });
                 customToggle.dataset.listenerAttached = "true";

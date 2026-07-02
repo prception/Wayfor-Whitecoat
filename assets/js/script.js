@@ -82,6 +82,95 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     ScrollTrigger.config({ ignoreMobileResize: true });
 }
 
+// In-page anchor links (e.g. hero "Book a Consultation" → #contact): Lenis
+// re-applies its own animated scroll position every frame, which swallows the
+// browser's native hash jump — route the scroll through Lenis instead.
+document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href^="#"]');
+    if (!link) return;
+    const hash = link.getAttribute('href');
+    if (hash.length < 2) return; // bare "#"
+    const target = document.getElementById(hash.slice(1));
+    if (!target) return;
+    e.preventDefault();
+
+    const jumpTo = () => {
+        const y = target.getBoundingClientRect().top + (window.scrollY || document.documentElement.scrollTop);
+        // Lenis caches its own max-scroll limit and clamps scrollTo() to it.
+        // That limit was measured BEFORE ScrollTrigger's pin spacers grew the
+        // page, so for a late target like #contact Lenis clamps far short — and
+        // because its RAF loop keeps writing that clamped value back every frame,
+        // it drags a native window.scrollTo() back up into the reality-section.
+        // Force Lenis to re-measure the (now taller) page first, THEN scroll.
+        if (lenis) {
+            if (typeof lenis.resize === 'function') lenis.resize();
+            lenis.scrollTo(y, { immediate: true, force: true });
+        }
+        window.scrollTo(0, y);
+    };
+
+    if (window.matchMedia('(max-width: 1024px)').matches) {
+        // Mobile/tablet: the URL bar collapses during a long animated scroll,
+        // resizing every 100vh section mid-flight — the pre-computed destination
+        // lands off-target and then visibly snaps. Jump instantly instead, and
+        // re-align once the browser chrome / layout has settled.
+        //
+        // The bigger problem for late targets like #contact: several
+        // ScrollTrigger `pin: true` sections sit between the hero and #contact,
+        // and their pin spacers inflate the page height. If we jump before that
+        // layout is measured, we land *inside* the reality-section (the first
+        // pinned block). So: refresh ScrollTrigger to lay out the pin spacers,
+        // let Lenis re-measure the taller page (inside jumpTo), then jump — and
+        // keep re-aligning until the target actually sits at the top, because
+        // the URL-bar/pin layout keeps settling for several frames.
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+
+        // Two things try to yank scroll away from #contact after we arrive:
+        //   1. Lenis re-applies its own (stale, clamped) scroll every RAF frame.
+        //   2. When the mobile URL bar collapses it fires a resize, and
+        //      ScrollTrigger.refresh() then RESTORES scroll to preserve a pinned
+        //      section's progress — pulling us back up to the section above.
+        // The old loop ran on a fixed timer and released too early, so a late
+        // refresh (2) snapped the page back after the loop had finished.
+        //
+        // Fix: stop Lenis, and keep re-jumping on EVERY ScrollTrigger refresh
+        // for a short window so any late URL-bar refresh is immediately undone.
+        // Then resync Lenis and resume.
+        if (lenis && typeof lenis.stop === 'function') lenis.stop();
+        jumpTo();
+
+        const onRefresh = () => jumpTo();
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.addEventListener('refresh', onRefresh);
+        }
+
+        let tries = 0;
+        const hold = () => {
+            jumpTo();
+            if (++tries < 18) {           // ~1.8s of holding through settle
+                setTimeout(hold, 100);
+                return;
+            }
+            // Release: stop undoing refreshes and hand control back to Lenis at
+            // the final resting position.
+            if (typeof ScrollTrigger !== 'undefined') {
+                ScrollTrigger.removeEventListener('refresh', onRefresh);
+            }
+            if (lenis) {
+                const finalY = window.scrollY || document.documentElement.scrollTop;
+                if (typeof lenis.resize === 'function') lenis.resize();
+                if (typeof lenis.scrollTo === 'function') lenis.scrollTo(finalY, { immediate: true, force: true });
+                if (typeof lenis.start === 'function') lenis.start();
+            }
+        };
+        setTimeout(hold, 100);
+    } else if (lenis) {
+        lenis.scrollTo(target, { duration: 1.4 });
+    } else {
+        target.scrollIntoView({ behavior: 'smooth' });
+    }
+});
+
 const canvas = document.getElementById('webgl-canvas');
 const sizes = { width: window.innerWidth, height: window.innerHeight };
 const hasWebGL = typeof THREE !== 'undefined' && canvas;
