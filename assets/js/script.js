@@ -202,7 +202,7 @@ if (hasWebGL) {
     // Three tiers: phones sit lower-left, tablets lower and toward center, desktop unchanged
     const isMobileGlobe = sizes.width <= 768;
     const isTabletGlobe = sizes.width > 768 && sizes.width <= 1024;
-    const initialX = isMobileGlobe ? -0.6 : isTabletGlobe ? -1.35 : -1.8;
+    const initialX = isMobileGlobe ? 0.85 : isTabletGlobe ? 0.15 : -1.8;
     // The hero image uses `background-size: cover`, so on screens wider than a
     // standard laptop the books rise in the frame while the 3D globe stays at a
     // fixed world Y — leaving the globe floating below them. Laptops (<= 1440px,
@@ -331,13 +331,10 @@ if (hasWebGL) {
         // globe, even while the globe moves and scales during the scroll.
         cornerLight.position.copy(globeGroup.position).add(cornerLightOffset);
 
-        // Smoothly rotate the earth texture (globeMesh)
-        if (scrollProgress < 0.01) {
-            globeMesh.rotation.y += 0.015;
-        } else {
-            const target = Math.round(globeMesh.rotation.y / (Math.PI * 2)) * Math.PI * 2;
-            globeMesh.rotation.y += (target - globeMesh.rotation.y) * 0.05;
-        }
+        // Keep the small desk globe gently rotating at all scroll positions.
+        // (Previously it snapped to a fixed angle once the enlarge transition
+        // began; the globe no longer expands, so it just keeps spinning.)
+        globeMesh.rotation.y += 0.015;
 
         // Render first so matrixWorld is fully up to date, then project pins once per frame
         renderer.render(scene, camera);
@@ -352,6 +349,12 @@ if (hasWebGL) {
 
     // Resize Handle
     window.addEventListener('resize', () => {
+        // On phones/tablets the address bar collapsing while scrolling fires a
+        // height-only resize; re-projecting the camera then makes the globe
+        // visibly jump. Ignore height-only resizes on touch devices — only a
+        // real width change (rotation, split-screen) re-projects.
+        const isTouch = window.matchMedia('(pointer: coarse)').matches;
+        if (isTouch && window.innerWidth === sizes.width) return;
         sizes.width = window.innerWidth;
         sizes.height = window.innerHeight;
         camera.aspect = sizes.width / sizes.height;
@@ -371,6 +374,7 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
             end: "+=600",
             pin: true,
             pinSpacing: true,
+            anticipatePin: 1, // pre-pin on touch scroll so the hero (globe) doesn't slide before the pin catches
             scrub: 0.5,
             onUpdate: (self) => {
                 scrollProgress = self.progress;
@@ -396,12 +400,8 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
                 // Scrub timeline re-runs in reverse from progress=1 (phase-2 state).
                 // Ensure final-text is visible as phase-2 starting point.
                 gsap.set(".final-text", { opacity: 1, y: 0 });
-                // Force stand back to its correct phase-2 state (large globe, stand hidden)
-                // so the scrub reverse can animate it correctly back to phase-1.
-                if (hasWebGL && standMaterial) {
-                    standMaterial.transparent = true;
-                    standMaterial.opacity = 0;
-                }
+                // Stand stays visible in phase 2 now (globe no longer expands),
+                // so no stand-state reset is needed here.
             }
         }
     });
@@ -451,16 +451,19 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
         ease: "power2.inOut"
     }, step2Start);
 
-    // Fade out Vignette & Globe Stand
+    // Fade out Vignette.
     tl.to(".img-vignette", { opacity: 0, duration: 0.8, ease: "power2.inOut" }, step2Start);
-    if (hasWebGL) {
-        // Fade the stand out quickly, before the camera zoom becomes visible —
-        // otherwise the zoom makes the (stationary) stand appear to slide and grow.
-        tl.to(standMaterial, {
-            opacity: 0, duration: 0.15, ease: "power1.out",
-            onReverseComplete: () => { standMaterial.opacity = 1; }
-        }, step2Start);
-    }
+
+    // Fade the globe out entirely — it should ONLY be visible in the hero (phase 1).
+    // Fades the whole WebGL layer (globe + stand) so nothing lingers into phase 2.
+    tl.to(".webgl-container", {
+        opacity: 0,
+        duration: 0.6,
+        ease: "power2.inOut",
+        onReverseComplete: () => {
+            gsap.set(".webgl-container", { opacity: 1 });
+        }
+    }, step2Start);
 
     // Fly Initial Text up and fade out.
     // fromTo with explicit start values: a plain .to() lazily captures whatever
@@ -488,73 +491,11 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
         }
     }, step2Start);
 
-    if (hasWebGL) {
-        // Move camera back to fit scaled globe
-        tl.to(camera.position, {
-            z: 6,
-            duration: 1.2,
-            ease: "power2.inOut",
-            onReverseComplete: () => {
-                // Reset camera when scrolling back
-                camera.position.z = 8;
-            }
-        }, step2Start);
-
-        // Move globe to center and scale up massively
-        tl.to(globeGroup.position, {
-            x: 0, y: -0.2, z: 0,
-            duration: 1.2,
-            ease: "power2.inOut",
-            onReverseComplete: () => {
-                pinsVisible = false;
-                const pinsContainer = document.getElementById('html-pins-container');
-                if (pinsContainer) pinsContainer.style.opacity = '0';
-                globeGroup.position.set(initialX, initialY, -3.5);
-            }
-        }, step2Start);
-
-        tl.to(globeGroup.scale,
-            { x: 0.68, y: 0.68, z: 0.68, duration: 1.2, ease: "power2.inOut",
-              onReverseComplete: () => {
-                  globeGroup.scale.set(0.18, 0.18, 0.18);
-              }
-            },
-        step2Start);
-
-        // Rotate the globe so Central Asia/Eurasia faces the camera perfectly
-        tl.to(globeGroup.rotation, {
-            y: Math.PI * 1.02,
-            x: Math.PI * 0.15,
-            duration: 1.2,
-            ease: "power2.inOut",
-            onReverseComplete: () => {
-                // Reset rotation when scrolling back
-                globeGroup.rotation.y = -Math.PI / 2;
-                globeGroup.rotation.x = 0.2;
-            }
-        }, step2Start);
-
-        // Strongly dim the globe as it enlarges so the overlaid text stays readable
-        tl.to(material.color, {
-            r: colorDimState.r,
-            g: colorDimState.g,
-            b: colorDimState.b,
-            duration: 0.8,
-            ease: "none",
-            onReverseComplete: () => {
-                material.color.copy(colorWhiteState);
-            }
-        }, step2Start + 0.2);
-        tl.to(material, {
-            emissiveIntensity: 0,
-            duration: 0.8,
-            ease: "none",
-            onReverseComplete: () => {
-                material.emissiveIntensity = 0.26;
-            }
-        }, step2Start + 0.2);
-
-    }
+    // NOTE: The globe expansion (camera pull-back, move-to-center, massive
+    // scale-up, reorientation, and dimming) was intentionally removed. The globe
+    // now stays small in its desk position and keeps only its idle rotation
+    // (handled in the animation loop). The destination panel replaces the old
+    // enlarged-Earth backdrop, so no expand/zoom transition is needed.
 
     // ==========================================
     // STEP 3: Phase 2 Content Reveal (Dashboard)
@@ -568,23 +509,14 @@ if (pinnedContainer && typeof gsap !== 'undefined' && typeof ScrollTrigger !== '
         duration: 0.6
     }, step3Start);
 
-    // Reveal Pins on the globe
-    tl.to("#html-pins-container", {
-        opacity: 1,
-        duration: 0.4,
-        onStart: () => {
-            pinsVisible = true;
-            startCarousel();
-        },
-        onReverseComplete: () => {
-            pinsVisible = false;
-            stopCarousel();
-            const pinsContainer = document.getElementById('html-pins-container');
-            if (pinsContainer) pinsContainer.style.opacity = '0';
-            const medicalElements = document.getElementById('medical-bg-elements');
-            if (medicalElements) medicalElements.style.opacity = '0';
-        }
-    }, step3Start + 0.2);
+    // Globe pins are no longer revealed — the destination panel replaces the
+    // old globe-pin picker, and the small globe stays behind the opaque panel.
+    // Keep the container hidden and pin projection off.
+    if (typeof pinsVisible !== 'undefined') pinsVisible = false;
+    (function hideGlobePins() {
+        const pinsContainer = document.getElementById('html-pins-container');
+        if (pinsContainer) pinsContainer.style.opacity = '0';
+    })();
 
     // Reveal Medical Background Elements gracefully
     tl.to("#medical-bg-elements", {
@@ -855,6 +787,128 @@ function stopMobilePinRotation() {
     mobilePinTimer = null;
 }
 
+// ==============================================
+// 6b. Destination — Split list + live preview
+// ==============================================
+// Extra display data keyed by country name. Cost bands are indicative —
+// replace with official figures. Images reuse the university photos.
+const DEST_DISPLAY = {
+    'Russia':      { cost: '₹20–30L', univ: '12', img: 'assets/images/universities/kazan-federal.jpg' },
+    'Kazakhstan':  { cost: '₹18–25L', univ: '8',  img: 'assets/images/universities/al-farabi.jpg' },
+    'Uzbekistan':  { cost: '₹18–26L', univ: '5',  img: 'assets/images/universities/tashkent-medical.jpg' },
+    'Kyrgyzstan':  { cost: '₹15–22L', univ: '6',  img: 'assets/images/universities/bishkek-kyrgyz.jpg' },
+    'Georgia':     { cost: '₹25–35L', univ: '9',  img: 'assets/images/universities/tbilisi-state.jpg' },
+    'Egypt':       { cost: '₹22–30L', univ: '7',  img: 'assets/images/universities/cairo-kasr-alainy.jpg' },
+    'Tajikistan':  { cost: '₹14–20L', univ: '4',  img: 'assets/images/universities/avicenna-tajik.jpg' },
+    'Bangladesh':  { cost: '₹25–40L', univ: '10', img: 'assets/images/universities/dhaka-national.jpg' },
+    'Nepal':       { cost: '₹40–60L', univ: '6',  img: 'assets/images/universities/kathmandu-dhulikhel.jpg' },
+};
+const FLAG_CODE = {
+    'Russia': 'ru', 'Kazakhstan': 'kz', 'Uzbekistan': 'uz', 'Kyrgyzstan': 'kg',
+    'Georgia': 'ge', 'Egypt': 'eg', 'Tajikistan': 'tj', 'Bangladesh': 'bd', 'Nepal': 'np',
+};
+
+(function initDestSplit() {
+    const dsList = document.getElementById('dsList');
+    const dsPreview = document.getElementById('dsPreview');
+    if (!dsList || !dsPreview) return;
+
+    const items = locations.map((loc) => {
+        const extra = DEST_DISPLAY[loc.name] || {};
+        return { ...loc, flag: FLAG_CODE[loc.name] || '', cost: extra.cost || '', univ: extra.univ || '', img: extra.img || '' };
+    });
+
+    let currentDest = 0;
+
+    // Build list + preloaded preview images
+    items.forEach((d, i) => {
+        const item = document.createElement('div');
+        item.className = 'ds-item' + (i === 0 ? ' active' : '');
+        item.innerHTML =
+            '<span class="ds-left"><img class="ds-flag" src="https://flagcdn.com/' + d.flag + '.svg" alt="">' + d.name + '</span>' +
+            '<span class="ds-arrow">&#8594;</span>' +
+            '<span class="ds-progress"></span>';
+        // Manual hover/click selects and pauses the auto-cycle. Listen for
+        // mousemove (not mouseenter) so an item that merely scrolls under a
+        // stationary pointer doesn't hijack the selection.
+        item.addEventListener('mousemove', () => { if (currentDest !== i) setDest(i); });
+        item.addEventListener('click', () => setDest(i));
+        dsList.appendChild(item);
+
+        const img = document.createElement('div');
+        img.className = 'ds-img' + (i === 0 ? ' show' : '');
+        img.style.backgroundImage = "url('" + d.img + "')";
+        img.dataset.index = i;
+        dsPreview.appendChild(img);
+    });
+
+    const body = document.createElement('div');
+    body.className = 'ds-pbody';
+    dsPreview.appendChild(body);
+
+    // Counter chip (01 / 09) and big outlined country name over the photo
+    const counter = document.createElement('div');
+    counter.className = 'ds-counter';
+    dsPreview.appendChild(counter);
+
+    const ghost = document.createElement('div');
+    ghost.className = 'ds-ghost';
+    dsPreview.appendChild(ghost);
+
+    function setDest(i) {
+        currentDest = i;
+        const d = items[i];
+        Array.from(dsList.children).forEach((c, ci) => c.classList.toggle('active', ci === i));
+        dsPreview.querySelectorAll('.ds-img').forEach((img) => img.classList.toggle('show', +img.dataset.index === i));
+        body.innerHTML =
+            '<div class="ds-flagname"><img src="https://flagcdn.com/' + d.flag + '.svg" alt=""><span class="ds-name">' + d.name + '</span></div>' +
+            '<div class="ds-stats">' +
+                '<div class="ds-stat"><b>' + d.cost + '</b><small>Total est.</small></div>' +
+                '<div class="ds-stat"><b>' + d.univ + '</b><small>Universities</small></div>' +
+                '<div class="ds-stat"><b>6 Yrs</b><small>Duration</small></div>' +
+            '</div>' +
+            '<a class="ds-cta" href="' + d.page + '">View Details &#8594;</a>';
+        // Update counter and ghost name, restarting their entrance animations.
+        counter.innerHTML = '<b>' + String(i + 1).padStart(2, '0') + '</b> / ' + String(items.length).padStart(2, '0');
+        ghost.textContent = d.name;
+        // Restart the staggered caption + ghost entrance animations on every change.
+        body.classList.remove('ds-animate');
+        ghost.classList.remove('ds-animate');
+        void body.offsetWidth; // force reflow so the animations replay
+        body.classList.add('ds-animate');
+        ghost.classList.add('ds-animate');
+    }
+    setDest(0);
+
+    // Auto-cycle: advance to the next country every 2s. Pauses while the user
+    // hovers the list or preview, and resumes on leave.
+    let autoTimer = null;
+    function startAuto() {
+        if (autoTimer) return;
+        dsList.classList.remove('ds-paused');
+        // Restart the countdown bar from zero so it matches the fresh 2s window.
+        const bar = dsList.children[currentDest] && dsList.children[currentDest].querySelector('.ds-progress');
+        if (bar) { bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = ''; }
+        autoTimer = setInterval(() => {
+            setDest((currentDest + 1) % items.length);
+        }, 2000);
+    }
+    function stopAuto() {
+        if (!autoTimer) return; // already paused (stopAuto fires on every mousemove)
+        clearInterval(autoTimer);
+        autoTimer = null;
+        dsList.classList.add('ds-paused'); // freezes the countdown bar
+    }
+    [dsList, dsPreview].forEach((el) => {
+        // Pause on mousemove rather than mouseenter: when the section scrolls
+        // under a stationary pointer the browser fires mouseenter, which would
+        // freeze the auto-cycle; a real hover always produces mousemove.
+        el.addEventListener('mousemove', stopAuto);
+        el.addEventListener('mouseleave', startAuto);
+    });
+    startAuto();
+})();
+
 // Start on mobile when phase 2 becomes visible; stop when it leaves
 if (window.matchMedia('(max-width: 768px)').matches && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     ScrollTrigger.create({
@@ -1028,26 +1082,29 @@ if (typeof gsap !== 'undefined') {
                 const pinBottom = pinTop + pinScrollLength;
 
                 if (window.scrollY >= pinBottom) {
-                    // Fully past the hero pin — lock everything into phase-2 end state
+                    // Fully past the hero pin — lock into phase-2 end state.
+                    // Globe no longer expands: keep it small on the desk with the
+                    // stand visible, pins off, normal (undimmed) colour.
                     if (hasWebGL) {
-                        globeGroup.scale.set(0.68, 0.68, 0.68);
-                        globeGroup.position.set(0, -0.2, 0);
-                        globeGroup.rotation.y = Math.PI * 1.02;
-                        globeGroup.rotation.x = Math.PI * 0.15;
+                        globeGroup.scale.set(0.18, 0.18, 0.18);
+                        globeGroup.position.set(initialX, initialY, -3.5);
+                        globeGroup.rotation.y = -Math.PI / 2;
+                        globeGroup.rotation.x = 0.2;
                         standGroup.scale.set(0.18, 0.18, 0.18);
                         standGroup.position.set(initialX, initialY, -3.5);
-                        standMaterial.opacity = 0;
+                        standMaterial.opacity = 1;
                         standMaterial.transparent = true;
-                        camera.position.z = 6;
-                        material.color.copy(colorDimState);
+                        camera.position.z = 8;
+                        material.color.copy(colorWhiteState);
                         material.roughness = 0.55;
                         material.metalness = 0.1;
-                        material.emissiveIntensity = 0;
-                        pinsVisible = true;
-                        startCarousel();
+                        material.emissiveIntensity = 0.26;
+                        pinsVisible = false;
                         const pinsContainer = document.getElementById('html-pins-container');
-                        if (pinsContainer) pinsContainer.style.opacity = '1';
+                        if (pinsContainer) pinsContainer.style.opacity = '0';
                     }
+                    // Globe is hidden in phase 2 — it only shows in the hero.
+                    gsap.set(".webgl-container", { opacity: 0 });
                     // Also set final-text visible and initial-text hidden for this state
                     gsap.set(".final-text", { opacity: 1, y: 0 });
                     gsap.set([".initial-text", ".initial-text-cards"], { opacity: 0 });
@@ -1057,6 +1114,8 @@ if (typeof gsap !== 'undefined') {
                     // Hero text/cards must start VISIBLE here: the scrubbed timeline
                     // hides them itself if the restored progress is past the fade-out.
                     gsap.set([".initial-text", ".initial-text-cards"], { opacity: 1, y: 0 });
+                    // Globe visible in the hero (phase 1).
+                    gsap.set(".webgl-container", { opacity: 1 });
                     if (hasWebGL) {
                         globeGroup.scale.set(0.18, 0.18, 0.18);
                         globeGroup.position.set(initialX, initialY, -3.5);

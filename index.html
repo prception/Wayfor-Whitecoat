@@ -333,40 +333,20 @@
                     <p class="hero-br-quote">"The guidance I received here changed my entire perspective on medicine and my future." <span>– Ananya, Medical Student</span></p>
                 </div>
 
-                <!-- Phase 2 Content -->
-                <div
-                    class="content-block final-text w-100 h-100 d-flex align-items-center justify-content-between px-4 px-lg-5">
+                <!-- Phase 2 Content — Split list + live preview -->
+                <div class="content-block final-text w-100 h-100 d-flex flex-column justify-content-center">
 
-                    <!-- Subheading at completely top of section -->
-                    <div class="final-text-header">
-                        <h2 class="glass-text display-5">Where Will You Study Medicine?</h2>
-                        <p class="light-para">World-class universities, affordable fees, and a seat with your name on it — pick your destination.</p>
-                    </div>
-
-                    <!-- Left side: Description and CTA -->
-                    <div class="country-info ps-lg-5">
-                        <div class="globe-detail-badge d-inline-block px-3 py-1 rounded-pill">Featured Destination</div>
-                        <h3 id="country-title" class="fw-bold">Russia</h3>
-                        <div class="dest-divider"></div>
-                        <p id="country-desc" class="text-white">Experience world-class medical education
-                            with advanced facilities and highly affordable tuition fees.</p>
-                        <div class="mt-4">
-                            <div class="button-wrap dark-theme-btn">
-                                <a href="countries/MBBS-in-Russia.html" id="country-view-details" class="premium-glass-btn">
-                                    <span>View Details</span>
-                                </a>
-                                <div class="button-shadow"></div>
-                            </div>
+                    <div class="dest-split">
+                        <!-- Header -->
+                        <div class="ds-head">
+                            <span class="ds-eyebrow">Where Will You Study Medicine?</span>
+                            <h2 class="ds-title">Pick your destination. <span>Every one NMC approved.</span></h2>
                         </div>
-                    </div>
 
-                    <!-- Right side: Vertical Carousel -->
-                    <div class="country-carousel pe-lg-5 d-none d-md-block">
-                        <div class="carousel-title text-end">Select Country</div>
-                        <div class="vertical-carousel-container position-relative" id="country-scroll-container">
-                            <ul class="country-list list-unstyled m-0 p-0 text-end" id="country-list">
-                                <!-- Items generated dynamically or static -->
-                            </ul>
+                        <!-- Split: list + preview -->
+                        <div class="ds-body">
+                            <div class="ds-list" id="dsList"><!-- injected --></div>
+                            <div class="ds-preview" id="dsPreview"><!-- injected --></div>
                         </div>
                     </div>
                 </div>
