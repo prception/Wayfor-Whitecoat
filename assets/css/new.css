@@ -2015,6 +2015,16 @@ select.form-control option {
         font-size: 2.8rem;
     }
 
+    /* #contact is the last section (only the footer follows), so the page may
+       not have a full viewport of scrollable content after it — the browser
+       clamps at max-scroll and can't bring the section's top all the way up,
+       leaving a sliver of the previous section visible. Anchor the content to
+       the top and add a viewport of bottom room so it can scroll fully up. */
+    .contact-section {
+        align-items: flex-start;
+        padding-bottom: calc(80px + 100vh);
+    }
+
     .contact-title {
         font-size: 2.2rem;
     }
@@ -2870,13 +2880,18 @@ select.form-control option {
     }
 
     .image-hero-subtitle {
-        font-size: 1.15rem;
-        font-weight: 900;
-        /* White text reads over the dark parts of the photo; the thin dark
-           edge-shadow keeps it legible over the light parts too. */
+        /* Condensed poster font — naturally thick strokes, so no text-stroke
+           needed and letters stay crisp over the busy photo */
+        font-family: 'Anton', sans-serif;
+        font-size: 1.35rem;
+        font-weight: 400;
+        text-transform: uppercase;
+        line-height: 1.55;
+        letter-spacing: 1px;
+        word-spacing: 4px;
         color: #ffffff;
         text-shadow: none;
-        -webkit-text-stroke: 0.7px #ffffff;
+        -webkit-text-stroke: 0;
     }
 
     .initial-text {
@@ -2917,13 +2932,9 @@ select.form-control option {
     }
 
     .image-hero-subtitle {
-        font-size: 1.1rem;
+        font-size: 1.3rem;
         max-width: 92%;
         margin-bottom: 1.5rem !important;
-        font-weight: 900;
-        color: #ffffff;
-        text-shadow: none;
-        -webkit-text-stroke: 0.7px #ffffff;
     }
 
     .initial-text {
@@ -2974,11 +2985,7 @@ select.form-control option {
     }
 
     .image-hero-subtitle {
-        font-size: 1.05rem;
-        font-weight: 900;
-        color: #ffffff;
-        text-shadow: none;
-        -webkit-text-stroke: 0.7px #ffffff;
+        font-size: 1.2rem;
     }
 }
 
@@ -3406,6 +3413,22 @@ select.form-control option {
     .country-info {
         align-self: flex-end;
         margin-bottom: 80px;
+    }
+
+    /* "Pick your destination" split section: center content and let the
+       preview image take up more of the extra vertical space instead of
+       leaving a large empty gap below the list/image. */
+    .final-text:has(.dest-split) {
+        justify-content: center !important;
+        align-items: center !important;
+    }
+
+    .dest-split {
+        width: 100%;
+    }
+
+    .ds-preview {
+        min-height: 380px;
     }
 }
 
