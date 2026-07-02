@@ -885,6 +885,277 @@ html.hero-prep .hero-card-br {
     padding-bottom: 150px !important;
 }
 
+/* ============================================================
+   DESTINATION — Split list + live preview (Phase 2 overlay)
+   Sized to fit within the 100vh pinned container. Uses the same
+   navy backdrop already behind .final-text; no extra background.
+   ============================================================ */
+.dest-split {
+    pointer-events: auto;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 clamp(1.25rem, 4vw, 3.5rem);
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+.ds-head { margin-bottom: clamp(1rem, 2.2vh, 1.75rem); text-align: center; }
+.ds-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .68rem;
+    font-weight: 600;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--accent-orange, #f97316);
+    margin-bottom: .55rem;
+}
+.ds-title {
+    font-weight: 800;
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin: 0;
+}
+.ds-title span { color: var(--sec-muted); font-weight: 500; }
+
+.ds-body {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(1.25rem, 3vw, 2.75rem);
+    align-items: stretch;
+}
+
+/* ---- Left: list ---- */
+.ds-list { display: flex; flex-direction: column; gap: .15rem; }
+.ds-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: .6rem .9rem;
+    border-radius: 11px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    font-weight: 600;
+    font-size: clamp(.95rem, 1.4vw, 1.25rem);
+    color: var(--sec-muted);
+    overflow: hidden;
+    transition: color .3s, background .3s, padding-left .3s, border-color .3s;
+}
+/* Animated orange indicator bar that grows on the active row */
+.ds-item::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 50%;
+    width: 3px; height: 0;
+    background: #f97316;
+    border-radius: 2px;
+    transform: translateY(-50%);
+    transition: height .4s cubic-bezier(.19, 1, .22, 1);
+}
+.ds-item.active::before { height: 60%; }
+
+/* Countdown bar: fills along the bottom of the active row during the 2s
+   auto-cycle window; pauses with the cycle when the user hovers. */
+.ds-item .ds-progress {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #f97316, rgba(249, 115, 22, .35));
+    transform: scaleX(0);
+    transform-origin: left;
+}
+.ds-item.active .ds-progress {
+    animation: dsProgress 2s linear forwards;
+}
+.ds-list.ds-paused .ds-item.active .ds-progress {
+    animation-play-state: paused;
+}
+@keyframes dsProgress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+}
+.ds-item .ds-left { display: flex; align-items: center; }
+.ds-item .ds-flag {
+    width: 24px; height: 17px;
+    object-fit: cover;
+    border-radius: 3px;
+    margin-right: .7rem;
+    opacity: .55;
+    transition: opacity .3s;
+}
+.ds-item .ds-arrow { opacity: 0; transform: translateX(-6px); color: #f97316; transition: .3s; }
+.ds-item:hover { color: #fff; padding-left: 1.3rem; }
+.ds-item.active {
+    color: #fff;
+    background: linear-gradient(90deg, rgba(249, 115, 22, .18), rgba(249, 115, 22, 0));
+    border-color: rgba(249, 115, 22, .4);
+}
+.ds-item.active .ds-flag,
+.ds-item:hover .ds-flag { opacity: 1; }
+.ds-item.active .ds-arrow { opacity: 1; transform: translateX(0); }
+
+/* ---- Right: preview ---- */
+.ds-preview {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    min-height: 300px;
+    background: var(--primary-mid);
+    transition: transform .5s cubic-bezier(.19, 1, .22, 1), box-shadow .5s;
+}
+.ds-preview:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 45px rgba(0, 0, 0, .4);
+}
+.ds-img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity .6s ease;
+}
+/* Active image wipes in from the left, then slowly drifts (Ken Burns) */
+.ds-img.show {
+    opacity: 1;
+    animation: dsWipe .7s cubic-bezier(.19, 1, .22, 1) both,
+               dsKenBurns 8s ease-out forwards;
+}
+@keyframes dsWipe {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0 0 0); }
+}
+@keyframes dsKenBurns {
+    from { transform: scale(1.02); }
+    to   { transform: scale(1.12); }
+}
+
+/* Big outlined country name sliding in over the photo */
+.ds-ghost {
+    position: absolute;
+    top: .9rem;
+    right: 1.1rem;
+    z-index: 2;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.8rem, 3.6vw, 3rem);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: .02em;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, .3);
+    pointer-events: none;
+    opacity: 0;
+}
+.ds-ghost.ds-animate {
+    animation: dsGhostIn .65s cubic-bezier(.19, 1, .22, 1) .1s forwards;
+}
+@keyframes dsGhostIn {
+    from { opacity: 0; transform: translateX(28px); }
+    to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Counter chip (01 / 09) */
+.ds-counter {
+    position: absolute;
+    top: .9rem;
+    left: 1.1rem;
+    z-index: 2;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: .72rem;
+    letter-spacing: .18em;
+    color: rgba(255, 255, 255, .9);
+    background: rgba(5, 12, 58, .45);
+    backdrop-filter: blur(6px);
+    padding: .32rem .7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, .15);
+    pointer-events: none;
+}
+.ds-counter b { color: #f97316; font-weight: 700; }
+.ds-img::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(5, 12, 58, .94) 8%, transparent 62%);
+}
+.ds-pbody {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: clamp(1rem, 2.5vw, 1.75rem);
+    z-index: 2;
+}
+/* Staggered entrance for the caption block on every country change.
+   The .ds-animate class is toggled from JS to restart these keyframes. */
+.ds-pbody.ds-animate > * {
+    opacity: 0;
+    animation: dsRise .55s cubic-bezier(.19, 1, .22, 1) forwards;
+}
+.ds-pbody.ds-animate > *:nth-child(1) { animation-delay: .05s; }
+.ds-pbody.ds-animate > *:nth-child(2) { animation-delay: .14s; }
+.ds-pbody.ds-animate > *:nth-child(3) { animation-delay: .23s; }
+@keyframes dsRise {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.ds-flagname { display: flex; align-items: center; gap: .6rem; margin-bottom: .35rem; }
+.ds-flagname img { width: 28px; height: 20px; border-radius: 3px; object-fit: cover; }
+.ds-name {
+    font-weight: 800;
+    font-size: clamp(1.3rem, 2.6vw, 2rem);
+    letter-spacing: -.02em;
+    color: #fff;
+    line-height: 1;
+}
+.ds-stats { display: flex; gap: 1.5rem; margin: .75rem 0 1rem; }
+.ds-stat b { font-weight: 700; font-size: 1.05rem; display: block; color: #fff; }
+.ds-stat small {
+    color: var(--sec-muted);
+    font-size: .62rem;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+}
+.ds-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    font-weight: 600;
+    font-size: .9rem;
+    color: var(--primary-deep);
+    background: #f97316;
+    padding: .55rem 1.1rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform .3s, box-shadow .3s;
+}
+.ds-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(249, 115, 22, .35); }
+
+/* ---- Responsive ---- */
+@media (max-width: 991px) {
+    .ds-body { grid-template-columns: 1fr; gap: 1.25rem; }
+    .ds-preview { min-height: 230px; }
+    /* Two equal columns so the country pills line up in straight rows
+       instead of zig-zagging with variable pill widths. */
+    .ds-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: .4rem; }
+    .ds-item { padding: .45rem .75rem; font-size: .9rem; justify-content: flex-start; }
+    .ds-item .ds-arrow { display: none; }
+}
+@media (max-height: 760px) {
+    .ds-preview { min-height: 240px; }
+    .ds-item { padding: .5rem .9rem; }
+}
+
 /* Typography */
 h1,
 h2 {
@@ -1055,25 +1326,6 @@ p {
     .initial-text {
         top: 20%;
         padding: 0 5%;
-    }
-
-    .initial-text::before {
-        content: '';
-        position: absolute;
-        inset: -40px -30px;
-        border-radius: 0;
-        background: radial-gradient(ellipse at 40% 50%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, transparent 75%);
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        -webkit-mask-image: radial-gradient(ellipse at 40% 50%, black 30%, transparent 75%);
-        mask-image: radial-gradient(ellipse at 40% 50%, black 30%, transparent 75%);
-        z-index: 0;
-        pointer-events: none;
-    }
-
-    .initial-text > * {
-        position: relative;
-        z-index: 1;
     }
 }
 
@@ -2606,41 +2858,29 @@ select.form-control option {
     }
 
     .image-hero-title {
-        font-size: 4rem;
+        font-size: 4.3rem;
         font-weight: 900 !important;
-        letter-spacing: -0.5px;
+        letter-spacing: 0;
+        line-height: 1.05;
+        /* Brand navy with a thick same-colour stroke for poster boldness;
+           soft light shadow keeps it readable — no panel behind the text. */
+        color: #1a1f6e;
+        -webkit-text-stroke: 2.6px #1a1f6e;
         text-shadow: none;
-        -webkit-text-stroke: 0;
     }
 
     .image-hero-subtitle {
-        font-size: 1.05rem;
+        font-size: 1.15rem;
         font-weight: 900;
+        /* White text reads over the dark parts of the photo; the thin dark
+           edge-shadow keeps it legible over the light parts too. */
+        color: #ffffff;
         text-shadow: none;
+        -webkit-text-stroke: 0.7px #ffffff;
     }
 
     .initial-text {
-        top: -4%;
-    }
-
-    /* Blur overlay behind hero content on tablet — same radial spread as mobile */
-    .initial-text::before {
-        content: '';
-        position: absolute;
-        inset: -40px -30px;
-        border-radius: 0;
-        background: radial-gradient(ellipse at 40% 50%, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 50%, transparent 75%);
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-        -webkit-mask-image: radial-gradient(ellipse at 40% 50%, black 30%, transparent 75%);
-        mask-image: radial-gradient(ellipse at 40% 50%, black 30%, transparent 75%);
-        z-index: 0;
-        pointer-events: none;
-    }
-
-    .initial-text > * {
-        position: relative;
-        z-index: 1;
+        top: 16%;
     }
 }
 
@@ -2667,24 +2907,27 @@ select.form-control option {
     }
 
     .image-hero-title {
-        font-size: 3rem;
-        line-height: 1.15;
+        font-size: 3.4rem;
+        line-height: 1.08;
         font-weight: 900 !important;
-        letter-spacing: -0.5px;
+        letter-spacing: 0;
+        color: #1a1f6e;
+        -webkit-text-stroke: 2.4px #1a1f6e;
         text-shadow: none;
-        -webkit-text-stroke: 0;
     }
 
     .image-hero-subtitle {
-        font-size: 1rem;
+        font-size: 1.1rem;
         max-width: 92%;
         margin-bottom: 1.5rem !important;
         font-weight: 900;
+        color: #ffffff;
         text-shadow: none;
+        -webkit-text-stroke: 0.7px #ffffff;
     }
 
     .initial-text {
-        top: -2%;
+        top: 18%;
     }
 
     /* Phone cover-crop shows ~1/3 of the image width — pull focus further right */
@@ -2721,17 +2964,21 @@ select.form-control option {
 
 @media (max-width: 576px) {
     .image-hero-title {
-        font-size: 2.5rem;
+        font-size: 2.9rem;
         font-weight: 900 !important;
-        letter-spacing: -0.5px;
+        letter-spacing: 0;
+        line-height: 1.08;
+        color: #1a1f6e;
+        -webkit-text-stroke: 2.2px #1a1f6e;
         text-shadow: none;
-        -webkit-text-stroke: 0;
     }
 
     .image-hero-subtitle {
-        font-size: 0.95rem;
+        font-size: 1.05rem;
         font-weight: 900;
+        color: #ffffff;
         text-shadow: none;
+        -webkit-text-stroke: 0.7px #ffffff;
     }
 }
 
